@@ -1,9 +1,11 @@
 from rest_framework import serializers
-from accounts.models.profiles.business import BusinessProfile
 from django.shortcuts import get_object_or_404
+
+from accounts.models.profiles.business import BusinessProfile
 from accounts.models.UserRegistration import UserRegistration
-from accounts.models.admin_data_confirm import AdminDataConfirm
+
 from .utils.create_admin_data_confirm import create_admin_data_confirm
+from business_service.model_serializers.utils.check_admin_confirm_latest import check_admin_confirm_latest
 
 
 class BusinessProfileSerializer(serializers.ModelSerializer):
@@ -35,33 +37,11 @@ class BusinessProfileSerializer(serializers.ModelSerializer):
 
         instance.company_name = validated_data.get('company_name', instance.company_name)
 
-        company_name_admin = get_object_or_404(AdminDataConfirm,
-                                               business_profile=instance,
-                                               data_type='company_name',
-                                               is_latest=True)
-
-        if company_name_admin.admin_profile is not None:
-            company_name_admin.is_latest = False
-            company_name_admin.save()
-            create_admin_data_confirm(instance, 'company_name', validated_data['company_name'])
-        else:
-            company_name_admin.data_value = validated_data['company_name']
-            company_name_admin.save()
+        check_admin_confirm_latest(instance, 'company_name', validated_data['company_name'])
 
         instance.company_phone_number = validated_data.get('company_phone_number', instance.company_phone_number)
 
-        company_phone_number_admin = get_object_or_404(AdminDataConfirm,
-                                                       business_profile=instance,
-                                                       data_type='company_phone_number',
-                                                       is_latest=True)
-
-        if company_phone_number_admin.admin_profile is not None:
-            company_phone_number_admin.is_latest = False
-            company_phone_number_admin.save()
-            create_admin_data_confirm(instance, 'company_phone_number', validated_data['company_phone_number'])
-        else:
-            company_phone_number_admin.data_value = validated_data['company_phone_number']
-            company_phone_number_admin.save()
+        check_admin_confirm_latest(instance, 'company_phone_number', validated_data['company_phone_number'])
 
         instance.bio = validated_data.get('bio', instance.bio)
 

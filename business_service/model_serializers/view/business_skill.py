@@ -10,4 +10,4 @@ class BusinessSkillViewSerializer(serializers.ModelSerializer):
     class Meta:
 
         model = BusinessSkill
-        fields = ['score', 'valid_skill']
+        fields = ['score', 'valid_skill', 'id']

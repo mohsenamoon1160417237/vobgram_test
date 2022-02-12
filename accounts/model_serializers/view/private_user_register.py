@@ -15,7 +15,8 @@ class PrivateUserRegisterViewSerializer(serializers.ModelSerializer):
 
         model = UserRegistration
         fields = ['personal_profile',
-                  'phone_number']
+                  'phone_number',
+                  'id']
 
     def get_personal_profile(self, obj):
 

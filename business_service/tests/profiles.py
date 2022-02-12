@@ -17,7 +17,7 @@ class TestProfiles(APITransactionTestCase):
     add_valid_skill_url = reverse('add_valid_skill')
     choose_skill_url = reverse('choose_skill')
     business_data_url = reverse('update_business_data')
-    view_profile_url = reverse('view_profile', kwargs={'id': 2})
+    view_profile_url = reverse('view_profile', kwargs={'id': 3})
 
 
     def test_search_business_no_profiles(self):

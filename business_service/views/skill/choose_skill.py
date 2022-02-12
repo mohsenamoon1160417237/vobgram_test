@@ -24,9 +24,10 @@ class ChooseBusinessSkill(GenericAPIView):
 
         user = request.user
         business_profile = user.business_profile
-        serializer = PrivateBusinessProfileViewSerializer(business_profile)
-        return Response({'status': 'get business profile',
-                         'business_profile': serializer.data})
+        business_skills = business_profile.business_skills.all()
+        serializer = BusinessSkillSerializer(business_skills, many=True)
+        return Response({'status': 'get business skills',
+                         'skills': serializer.data})
 
     def post(self, request):
 

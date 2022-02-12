@@ -32,14 +32,13 @@ class PrivateBusinessProfileViewSerializer(serializers.ModelSerializer):
 
     def get_products(self, obj):
 
-        products = BusinessProduct.objects.filter(admin_data_confirm__is_confirmed=True,
-                                                  business_profile=obj)
+        products = BusinessProduct.objects.filter(business_profile=obj)
         serializer = BusinessProductViewSerializer(instance=products, many=True)
         return serializer.data
 
     def get_skills(self, obj):
 
-        skills = BusinessSkill.objects.filter(score__gt=0, business_profile=obj)
+        skills = BusinessSkill.objects.filter(business_profile=obj)
         serializer = BusinessSkillViewSerializer(instance=skills, many=True)
         return serializer.data
 

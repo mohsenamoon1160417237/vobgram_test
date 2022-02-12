@@ -14,7 +14,8 @@ class PublicUserRegisterViewSerializer(serializers.ModelSerializer):
     class Meta:
 
         model = UserRegistration
-        fields = ['personal_profile']
+        fields = ['personal_profile',
+                  'id']
 
     def get_personal_profile(self, obj):
 

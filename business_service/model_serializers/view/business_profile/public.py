@@ -33,7 +33,7 @@ class PublicBusinessProfileViewSerializer(serializers.ModelSerializer):
 
     def get_products(self, obj):
 
-        products = BusinessProduct.objects.filter(score__gt=0, business_profile=obj)
+        products = BusinessProduct.objects.filter(admin_data_confirm=True, business_profile=obj)
         serializer = BusinessProductViewSerializer(instance=products, many=True)
         return serializer.data
 
