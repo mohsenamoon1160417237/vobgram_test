@@ -12,7 +12,8 @@ class ValidSkillSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
 
-        admin_confirm = create_admin_data_confirm(None, 'valid_skill', validated_data['title'])
-        return ValidSkill.objects.create(title=validated_data['title'],
-                                         description=validated_data['description'],
-                                         admin_data_confirm=admin_confirm)
+        valid_skill = ValidSkill.objects.create(title=validated_data['title'],
+                                                description=validated_data['description'])
+        admin_confirm = create_admin_data_confirm(valid_skill, None, None)
+
+        return valid_skill

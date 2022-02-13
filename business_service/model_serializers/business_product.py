@@ -33,13 +33,13 @@ class BusinessProductSerializer(serializers.ModelSerializer):
         business_skill = get_object_or_404(BusinessSkill,
                                            id=validated_data['business_skill_id'])
         try:
-            admin_confirm = create_admin_data_confirm(business_profile, 'business_product', validated_data['title'])
 
             product = BusinessProduct.objects.create(business_profile=business_profile,
                                                      business_skill=business_skill,
                                                      title=validated_data['title'],
-                                                     description=validated_data['description'],
-                                                     admin_data_confirm=admin_confirm)
+                                                     description=validated_data['description'])
+
+            admin_confirm = create_admin_data_confirm(product, None, None)
             return product
 
         except IntegrityError:
@@ -55,8 +55,6 @@ class BusinessProductSerializer(serializers.ModelSerializer):
 
         try:
             instance.save()
-            update_admin_confirm(instance.business_profile, 'business_product', validated_data['title'])
-
             return instance
         
         except IntegrityError:

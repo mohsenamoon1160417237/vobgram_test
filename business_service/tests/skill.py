@@ -1,6 +1,8 @@
 from rest_framework.test import APITestCase, APITransactionTestCase
+
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
+from django.contrib.contenttypes.models import ContentType
 
 from accounts.tests.utils.create_first_step import create_first_step
 
@@ -22,11 +24,8 @@ class TestSkill(APITransactionTestCase):
 
         skill = ValidSkill.objects.create(title='web',
                                           description='web development')
-        admin_confirm = AdminDataConfirm.objects.create(data_type='valid_skill',
-                                                        data_value='web',
+        admin_confirm = AdminDataConfirm.objects.create(target=skill,
                                                         is_confirmed=True)
-        skill.admin_data_confirm = admin_confirm
-        skill.save()
         return skill
 
     def test_search_skill_at_least_one_result(self):
@@ -71,13 +70,12 @@ class TestSkill(APITransactionTestCase):
         assert valid_skill.title == 'web'
         assert valid_skill.description == 'web development'
 
-        admin_confirms = AdminDataConfirm.objects.filter(data_type='valid_skill',
-                                                         data_value='web')
+        cnt = ContentType.objects.get_for_model(valid_skill)
+
+        admin_confirms = AdminDataConfirm.objects.filter(target_ct=cnt,
+                                                         target_id=valid_skill.id)
         assert admin_confirms.exists()
         assert admin_confirms.count() == 1
-        admin_confirm = admin_confirms[0]
-
-        assert valid_skill.admin_data_confirm == admin_confirm
 
     def test_choose_skill(self):
 
@@ -92,12 +90,8 @@ class TestSkill(APITransactionTestCase):
         valid_skill = ValidSkill.objects.create(title='web',
                                                 description='web development')
 
-        admin_confirm = AdminDataConfirm.objects.create(data_type='valid_skill',
-                                                        data_value='web',
+        admin_confirm = AdminDataConfirm.objects.create(target=valid_skill,
                                                         is_confirmed=True)
-
-        valid_skill.admin_data_confirm = admin_confirm
-        valid_skill.save()
 
         post_data = {'title': 'web'}
         response = self.client.post(self.choose_skill_url, post_data)
@@ -121,9 +115,15 @@ class TestSkill(APITransactionTestCase):
         post_data = {'title': 'web',
                      'description': 'web development'}
         self.client.post(self.add_skill_url, post_data)
+
+        valid_Skill = get_object_or_404(ValidSkill,
+                                        title='web')
+
+        cnt =  ContentType.objects.get_for_model(valid_Skill)
+
         admin_confirm = get_object_or_404(AdminDataConfirm,
-                                          data_type='valid_skill',
-                                          data_value='web')
+                                          target_ct=cnt,
+                                          target_id=valid_Skill.id)
 
         admin_confirm.is_confirmed = True
         admin_confirm.save()
@@ -139,7 +139,7 @@ class TestSkill(APITransactionTestCase):
         valid_skill = get_object_or_404(ValidSkill, title='web')
 
         business_skills = BusinessSkill.objects.filter(business_profile=user.business_profile,
-                                                      valid_skill=valid_skill)
+                                                       valid_skill=valid_skill)
 
         assert not business_skills.exists()
         assert business_skills.count() == 0

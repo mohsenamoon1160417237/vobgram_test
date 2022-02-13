@@ -1,6 +1,7 @@
 from rest_framework.test import APITestCase, APITransactionTestCase
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
+from django.contrib.contenttypes.models import ContentType
 
 from accounts.tests.utils.create_first_step import create_first_step
 from accounts.models.admin_data_confirm import AdminDataConfirm
@@ -45,7 +46,12 @@ class TestProfiles(APITransactionTestCase):
 
         valid_skill = get_object_or_404(ValidSkill,
                                         title='web')
-        admin_confirm = valid_skill.admin_data_confirm
+
+        cnt = ContentType.objects.get_for_model(valid_skill)
+        admin_confirm = get_object_or_404(AdminDataConfirm,
+                                          target_ct=cnt,
+                                          target_id=valid_skill.id)
+
         admin_confirm.is_confirmed = True
         admin_confirm.save()
 
@@ -53,13 +59,17 @@ class TestProfiles(APITransactionTestCase):
                                              company_name='mohsen',
                                              company_phone_number='123123',
                                              user=user)
+
+        cnt = ContentType.objects.get_for_model(business_profile)
         company_name_admin = get_object_or_404(AdminDataConfirm,
-                                               business_profile=business_profile,
+                                               target_ct=cnt,
+                                               target_id=business_profile.id,
                                                data_type='company_name')
         company_name_admin.is_confirmed = True
         company_name_admin.save()
         company_phone_number_admin = get_object_or_404(AdminDataConfirm,
-                                                       business_profile=business_profile,
+                                                       target_ct=cnt,
+                                                       target_id=business_profile.id,
                                                        data_type='company_phone_number')
         company_phone_number_admin.is_confirmed = True
         company_phone_number_admin.save()

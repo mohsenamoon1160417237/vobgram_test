@@ -3,9 +3,11 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
 from django.shortcuts import get_object_or_404
+from django.contrib.contenttypes.models import ContentType
 
 from business_service.models.valid_skill import ValidSkill
 from business_service.models.business_skill import BusinessSkill
+from accounts.models.admin_data_confirm import AdminDataConfirm
 
 from accounts.permissions.profile_first_step import ProfileFirstStep
 from accounts.permissions.has_business_profile import HasBusinessProfile
@@ -33,20 +35,30 @@ class ChooseBusinessSkill(GenericAPIView):
 
         business_profile = request.user.business_profile
         business_profile_id = business_profile.id
+
         valid_skill = get_object_or_404(ValidSkill,
-                                        title=request.data['title'],
-                                        admin_data_confirm__is_confirmed=True)
+                                        title=request.data['title'])
 
-        data = {
-            'valid_skill_id': valid_skill.id,
-            'business_profile_id': business_profile_id
-        }
+        cnt = ContentType.objects.get_for_model(valid_skill)
+        admin_confirm = get_object_or_404(AdminDataConfirm,
+                                          target_ct=cnt,
+                                          target_id=valid_skill.id)
 
-        serializer = BusinessSkillSerializer(data=data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response({'status': 'choosed skill',
-                         'skill': serializer.data})
+        if admin_confirm.is_confirmed is True:
+
+            data = {
+                'valid_skill_id': valid_skill.id,
+                'business_profile_id': business_profile_id
+            }
+
+            serializer = BusinessSkillSerializer(data=data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response({'status': 'choosed skill',
+                             'skill': serializer.data})
+        else:
+
+            return Response({'error': 'illegal action'})
 
     def delete(self, request):
 

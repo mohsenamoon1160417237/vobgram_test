@@ -7,7 +7,7 @@ from business_service.models.business_skill import BusinessSkill
 
 from accounts.model_serializers.view.private_user_register import PrivateUserRegisterViewSerializer
 from business_service.model_serializers.view.business_skill import BusinessSkillViewSerializer
-from business_service.model_serializers.view.business_product import BusinessProductViewSerializer
+from business_service.model_serializers.view.business_product.private import PrivateBusinessProductViewSerializer
 
 
 
@@ -33,7 +33,7 @@ class PrivateBusinessProfileViewSerializer(serializers.ModelSerializer):
     def get_products(self, obj):
 
         products = BusinessProduct.objects.filter(business_profile=obj)
-        serializer = BusinessProductViewSerializer(instance=products, many=True)
+        serializer = PrivateBusinessProductViewSerializer(instance=products, many=True)
         return serializer.data
 
     def get_skills(self, obj):

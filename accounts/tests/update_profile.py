@@ -10,6 +10,8 @@ from accounts.models.profiles.admin import AdminProfile
 from accounts.model_serializers.business_profile import BusinessProfileSerializer
 
 from django.shortcuts import get_object_or_404
+from django.contrib.contenttypes.models import ContentType
+
 from .utils.create_user import create_user
 from .utils.create_first_step import create_first_step
 
@@ -183,7 +185,9 @@ class UpdateProfile(APITestCase):
         assert company_phone_number == '2342342'
         assert bio == 'hello'
 
-        admin_confirms = AdminDataConfirm.objects.filter(business_profile=business_profile)
+        cnt = ContentType.objects.get_for_model(business_profile)
+        admin_confirms = AdminDataConfirm.objects.filter(target_ct=cnt,
+                                                         target_id=business_profile.id)
         assert admin_confirms.exists()
         assert admin_confirms.count() == 2
 
@@ -227,7 +231,9 @@ class UpdateProfile(APITestCase):
         assert company_phone_number == '2342342'
         assert bio == 'hello2'
 
-        admin_confirms = AdminDataConfirm.objects.filter(business_profile=business_profile)
+        cnt = ContentType.objects.get_for_model(business_profile)
+        admin_confirms = AdminDataConfirm.objects.filter(target_ct=cnt,
+                                                         target_id=business_profile.id)
         assert admin_confirms.exists()
         assert admin_confirms.count() == 2
 
@@ -246,11 +252,15 @@ class UpdateProfile(APITestCase):
                      'company_phone_number': '23478343',
                      'bio': 'hello',
                      'user_id': user.id}
+
         serializer = BusinessProfileSerializer(data=post_data)
         serializer.is_valid(raise_exception=True)
         business_profile = serializer.save()
         admin_profile = AdminProfile.objects.create(user=user)
-        admin_confirms = AdminDataConfirm.objects.filter(business_profile=business_profile)
+
+        cnt = ContentType.objects.get_for_model(business_profile)
+        admin_confirms = AdminDataConfirm.objects.filter(target_ct=cnt,
+                                                         target_id=business_profile.id)
         company_name_admin = admin_confirms.filter(data_type='company_name')[0]
         company_phone_number_admin = admin_confirms.filter(data_type='company_phone_number')[0]
 
@@ -278,7 +288,9 @@ class UpdateProfile(APITestCase):
         assert company_name == 'mohsen1'
         assert company_phone_number == '2342342'
 
-        admin_confirms = AdminDataConfirm.objects.filter(business_profile=business_profile,
+        cnt = ContentType.objects.get_for_model(business_profile)
+        admin_confirms = AdminDataConfirm.objects.filter(target_ct=cnt,
+                                                         target_id=business_profile.id,
                                                          is_latest=True)
 
         company_name_admin = admin_confirms.filter(data_type='company_name')[0]

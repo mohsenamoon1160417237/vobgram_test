@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
 from django.shortcuts import get_object_or_404
+from django.contrib.contenttypes.models import ContentType
 
 from accounts.permissions.profile_first_step import ProfileFirstStep
 from accounts.permissions.has_business_profile import HasBusinessProfile
@@ -10,7 +11,8 @@ from accounts.models.admin_data_confirm import AdminDataConfirm
 
 from business_service.models.business_product import BusinessProduct
 from business_service.models.business_skill import BusinessSkill
-from business_service.model_serializers.view.business_product import BusinessProductViewSerializer
+
+from business_service.model_serializers.view.business_product.private import PrivateBusinessProductViewSerializer
 from business_service.model_serializers.business_product import BusinessProductSerializer
 
 
@@ -24,7 +26,7 @@ class AddBusinessProduct(GenericAPIView):
         business_profile = user.business_profile
         products = business_profile.business_products
 
-        serializer = BusinessProductViewSerializer(products, many=True)
+        serializer = PrivateBusinessProductViewSerializer(products, many=True)
         return Response({'status': 'get business products',
                          'products': serializer.data})
 
@@ -80,10 +82,11 @@ class AddBusinessProduct(GenericAPIView):
 
         product = get_object_or_404(BusinessProduct, id=prod_id)
 
+        cnt = ContentType.objects.get_for_model(product)
+
         admin_confirm = get_object_or_404(AdminDataConfirm,
-                                          business_profile=request.user.business_profile,
-                                          data_type='business_product',
-                                          data_value=product.title)
+                                          target_ct=cnt,
+                                          target_id=product.id)
 
         product.delete()
 
