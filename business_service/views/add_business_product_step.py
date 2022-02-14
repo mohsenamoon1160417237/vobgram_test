@@ -56,3 +56,24 @@ class AddBusinessProductStep(GenericAPIView):
         serializer.is_valid(raise_exception=True)
         return Response({'status': 'updated business product step',
                          'product step': serializer.data})
+
+    def delete(self, request, prod_id, prod_step_id):
+
+        product = get_object_or_404(BusinessProduct, id=prod_id)
+        product_step = get_object_or_404(BusinessProductStep, id=prod_step_id)
+
+        step_number = product_step.step_number
+
+        product_step.delete()
+
+        product_steps = BusinessProductStep.objects.filter(business_product=product,
+                                                           step_number__gt=step_number)
+        for p_step in product_steps:
+
+            p_step.step_number -= 1
+            p_step.save()
+
+        product.max_step_number -= 1
+        product.save()
+
+        return Response({'status': 'deleted product step'})
