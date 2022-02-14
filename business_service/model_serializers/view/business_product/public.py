@@ -6,6 +6,7 @@ from business_service.models.business_product import BusinessProduct
 from business_service.models.business_product_step import BusinessProductStep
 
 from business_service.model_serializers.view.business_product_step import BusinessProductStepViewSerializer
+from business_service.model_serializers.view.business_product_vote import BusinessProductVoteViewSerializer
 
 from accounts.model_serializers.view.admin_data_confirm import AdminDataConfirmViewSerializer
 from accounts.models.admin_data_confirm import AdminDataConfirm
@@ -14,6 +15,7 @@ from accounts.models.admin_data_confirm import AdminDataConfirm
 class PublicBusinessProductViewSerializer(serializers.ModelSerializer):
 
     product_steps = serializers.SerializerMethodField()
+    product_votes = serializers.SerializerMethodField('get_votes')
 
     class Meta:
 
@@ -51,4 +53,10 @@ class PublicBusinessProductViewSerializer(serializers.ModelSerializer):
                 product_steps = product_steps.exclude(id=product_step.id)
 
         serializer = BusinessProductStepViewSerializer(instance=product_steps, many=True)
+        return serializer.data
+
+    def get_votes(self, obj):
+
+        votes = obj.product_votes.all()
+        serializer = BusinessProductVoteViewSerializer(votes, many=True)
         return serializer.data

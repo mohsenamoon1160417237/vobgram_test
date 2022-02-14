@@ -13,7 +13,6 @@ from accounts.permissions.profile_first_step import ProfileFirstStep
 from accounts.permissions.has_business_profile import HasBusinessProfile
 
 from business_service.model_serializers.business_skill import BusinessSkillSerializer
-from business_service.model_serializers.view.business_profile.private import PrivateBusinessProfileViewSerializer
 
 
 
@@ -21,15 +20,6 @@ from business_service.model_serializers.view.business_profile.private import Pri
 class ChooseBusinessSkill(GenericAPIView):
 
     permission_classes = [IsAuthenticated, ProfileFirstStep, HasBusinessProfile]
-
-    def get(self, request):
-
-        user = request.user
-        business_profile = user.business_profile
-        business_skills = business_profile.business_skills.all()
-        serializer = BusinessSkillSerializer(business_skills, many=True)
-        return Response({'status': 'get business skills',
-                         'skills': serializer.data})
 
     def post(self, request):
 

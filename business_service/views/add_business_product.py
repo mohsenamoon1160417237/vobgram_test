@@ -20,15 +20,12 @@ class AddBusinessProduct(GenericAPIView):
 
     permission_classes = [IsAuthenticated, ProfileFirstStep, HasBusinessProfile]
 
-    def get(self, request):
+    def get(self, request, prod_id):
 
-        user = request.user
-        business_profile = user.business_profile
-        products = business_profile.business_products
-
-        serializer = PrivateBusinessProductViewSerializer(products, many=True)
-        return Response({'status': 'get business products',
-                         'products': serializer.data})
+        product = get_object_or_404(BusinessProduct, id=prod_id)
+        serializer = PrivateBusinessProductViewSerializer(product)
+        return Response({'status': 'get a product object',
+                         'product': serializer.data})
 
     def post(self, request):
 
