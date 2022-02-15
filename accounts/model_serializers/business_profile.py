@@ -18,7 +18,8 @@ class BusinessProfileSerializer(serializers.ModelSerializer):
         fields = ['user_id',
                   'company_name',
                   'company_phone_number',
-                  'bio']
+                  'bio',
+                  'id']
 
     def create(self, validated_data):
 

@@ -12,7 +12,7 @@ from accounts.models.admin_data_confirm import AdminDataConfirm
 from business_service.models.business_product import BusinessProduct
 from business_service.models.business_skill import BusinessSkill
 
-from business_service.model_serializers.view.business_product.private import PrivateBusinessProductViewSerializer
+from business_service.model_serializers.view.private.business_product import PrivateBusinessProductViewSerializer
 from business_service.model_serializers.business_product import BusinessProductSerializer
 
 

@@ -8,4 +8,5 @@ class AdminDataConfirmViewSerializer(serializers.ModelSerializer):
     class Meta:
 
         model = AdminDataConfirm
-        fields = ['is_confirmed']
+        fields = ['admin_profile',
+                  'is_confirmed']

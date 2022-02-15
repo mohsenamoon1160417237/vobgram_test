@@ -11,7 +11,7 @@ from business_service.models.business_skill import BusinessSkill
 from accounts.models.admin_data_confirm import AdminDataConfirm
 from accounts.models.profiles.business import BusinessProfile
 
-from business_service.model_serializers.view.business_profile.public import PublicBusinessProfileViewSerializer
+from business_service.model_serializers.view.public.business_profile import PublicBusinessProfileViewSerializer
 
 
 

@@ -11,7 +11,8 @@ class BusinessProduct(models.Model):
                                          related_name='business_products')
     business_skill = models.ForeignKey(BusinessSkill,
                                        on_delete=models.DO_NOTHING,
-                                       related_name='business_products')
+                                       related_name='business_products',
+                                       null=True)
     title = models.CharField(max_length=50)
     description = models.TextField()
     max_step_number = models.PositiveIntegerField(default=0)

@@ -5,12 +5,12 @@ from rest_framework.permissions import IsAuthenticated
 from accounts.permissions.profile_first_step import ProfileFirstStep
 from accounts.permissions.has_business_profile import HasBusinessProfile
 
-from business_service.model_serializers.view.business_product.private import PrivateBusinessProductViewSerializer
+from business_service.model_serializers.view.private.business_product import PrivateBusinessProductViewSerializer
 
 
 
 
-class UserBusinessProductList(GenericAPIView):
+class PrivateUserBusinessProductList(GenericAPIView):
 
     permission_classes = [IsAuthenticated, ProfileFirstStep, HasBusinessProfile]
 

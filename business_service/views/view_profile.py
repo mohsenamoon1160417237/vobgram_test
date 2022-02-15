@@ -7,8 +7,8 @@ from django.shortcuts import get_object_or_404
 from accounts.permissions.profile_first_step import ProfileFirstStep
 from accounts.models.profiles.business import BusinessProfile
 
-from business_service.model_serializers.view.business_profile.public import PublicBusinessProfileViewSerializer
-from business_service.model_serializers.view.business_profile.private import PrivateBusinessProfileViewSerializer
+from business_service.model_serializers.view.public.business_profile import PublicBusinessProfileViewSerializer
+from business_service.model_serializers.view.private.business_profile import PrivateBusinessProfileViewSerializer
 
 
 

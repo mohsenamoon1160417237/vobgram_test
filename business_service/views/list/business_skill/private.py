@@ -9,7 +9,7 @@ from business_service.model_serializers.view.business_skill import BusinessSkill
 
 
 
-class UserBusinessSkillList(GenericAPIView):
+class PrivateUserBusinessSkillList(GenericAPIView):
 
     permission_classes = [IsAuthenticated, ProfileFirstStep, HasBusinessProfile]
 
