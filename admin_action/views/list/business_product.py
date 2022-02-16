@@ -12,7 +12,7 @@ from accounts.models.admin_data_confirm import AdminDataConfirm
 from business_service.models.business_product import BusinessProduct
 
 
-class AdminBusinessProductList(GenericAPIView):
+class AdminNotConfirmedBusinessProductList(GenericAPIView):
 
     permission_classes = [IsAuthenticated, IsAdmin]
 
@@ -32,9 +32,9 @@ class AdminBusinessProductList(GenericAPIView):
 
                 product_steps = product.product_steps.all()
 
-                for p_step in product_steps:
+                all_confirmed = True
 
-                    all_confirmed = True
+                for p_step in product_steps:
 
                     cnt = ContentType.objects.get_for_model(p_step)
 
@@ -46,9 +46,9 @@ class AdminBusinessProductList(GenericAPIView):
 
                         all_confirmed = False
 
-                    if all_confirmed is True:
+                if all_confirmed is True:
 
-                        products = products.exclude(id=product.id)
+                    products = products.exclude(id=product.id)
 
         serializer = AdminBusinessProductViewSerializer(products, many=True)
 

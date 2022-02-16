@@ -11,7 +11,7 @@ from accounts.models.admin_data_confirm import AdminDataConfirm
 from accounts.models.profiles.business import BusinessProfile
 
 
-class AdminBusinessDataList(GenericAPIView):
+class AdminNotConfirmedBusinessDataList(GenericAPIView):
 
     permission_classes = [IsAuthenticated, IsAdmin]
 

@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404
 from django.db import IntegrityError
 
 from accounts.model_serializers.utils.create_admin_data_confirm import create_admin_data_confirm
-from business_service.model_serializers.utils.update_admin_confirm import update_admin_confirm
+from .utils.check_admin_confirm_latest import check_admin_confirm_latest
 
 from business_service.models.business_product import BusinessProduct
 from business_service.models.business_skill import BusinessSkill
@@ -39,7 +39,7 @@ class BusinessProductSerializer(serializers.ModelSerializer):
                                                      title=validated_data['title'],
                                                      description=validated_data['description'])
 
-            admin_confirm = create_admin_data_confirm(product, None, None)
+            create_admin_data_confirm(product, None, None)
             return product
 
         except IntegrityError:
@@ -54,6 +54,9 @@ class BusinessProductSerializer(serializers.ModelSerializer):
         instance.description = validated_data.get('description', instance.description)
 
         try:
+
+            check_admin_confirm_latest(instance, None, None)
+
             instance.save()
             return instance
         

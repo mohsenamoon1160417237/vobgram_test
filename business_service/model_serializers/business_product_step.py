@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from django.shortcuts import get_object_or_404
-from django.contrib.contenttypes.models import ContentType
+
+from .utils.check_admin_confirm_latest import check_admin_confirm_latest
 
 from business_service.models.business_product_step import BusinessProductStep
 from business_service.models.business_product import BusinessProduct
@@ -47,6 +48,9 @@ class BusinessProductStepSerializer(serializers.ModelSerializer):
         instance.step_url = validated_data['step_url']
         instance.from_date = validated_data['from_date']
         instance.to_date = validated_data['to_date']
+
+        check_admin_confirm_latest(instance, None, None)
+
         instance.save()
 
         return instance

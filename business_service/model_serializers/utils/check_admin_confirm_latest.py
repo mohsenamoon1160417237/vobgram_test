@@ -5,13 +5,13 @@ from django.shortcuts import get_object_or_404
 from django.contrib.contenttypes.models import ContentType
 
 
-def check_admin_confirm_latest(business_prof_obj, data_type, data_value):
+def check_admin_confirm_latest(obj, data_type, data_value):
 
-    cnt = ContentType.objects.get_for_model(business_prof_obj)
+    cnt = ContentType.objects.get_for_model(obj)
 
     admin_confirm = get_object_or_404(AdminDataConfirm,
                                       target_ct=cnt,
-                                      target_id=business_prof_obj.id,
+                                      target_id=obj.id,
                                       data_type=data_type,
                                       is_latest=True)
 
@@ -24,4 +24,4 @@ def check_admin_confirm_latest(business_prof_obj, data_type, data_value):
         admin_confirm.is_latest = False
         admin_confirm.save()
 
-        create_admin_data_confirm(business_prof_obj, data_type, data_value)
+        create_admin_data_confirm(obj, data_type, data_value)
