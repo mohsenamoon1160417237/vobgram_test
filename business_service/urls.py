@@ -13,7 +13,10 @@ from .views.business_product_vote import AddBusinessProductVote
 
 from .views.list.business_skill.private import PrivateUserBusinessSkillList
 from .views.list.business_product.private import PrivateUserBusinessProductList
+from .views.list.service_request import UserServiceRequestList
 
+from .views.service_request import AddServiceRequest
+from .views.send_service_request import SendServiceRequest
 
 urlpatterns = [
 
@@ -27,8 +30,17 @@ urlpatterns = [
     path('add_product/<int:prod_id>/', AddBusinessProduct.as_view(), name='update_delete_get_business_product'),
     path('list/products/', PrivateUserBusinessProductList.as_view(), name='user_business_product_list'),
     path('add_product_step/<int:prod_id>/', AddBusinessProductStep.as_view(), name='add_business_product_step'),
+
     path('edit_product_step/<int:prod_step_id>/', AddBusinessProductStep.as_view(),
          name='update_delete_get_business_product_step'),
+
     path('vote_business_product/<int:prod_id>/', AddBusinessProductVote.as_view(), name='add_business_product_vote'),
     path('vote_business_product/<int:vote_id>/', AddBusinessProductVote.as_view(), name='delete_get_business_product_vote'),
+    path('add_service_request/', AddServiceRequest.as_view(), name='add_service_request'),
+
+    path('edit_get_service_request/<int:serv_id>/', AddServiceRequest.as_view(),
+         name='update_delete_get_service_request'),
+
+    path('send_service_request/<int:prof_id>/<int:serv_id>/', SendServiceRequest.as_view(), name='send_service_request'),
+    path('list/service_requests/', UserServiceRequestList.as_view(), name='service_request_list'),
 ]
