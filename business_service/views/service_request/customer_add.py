@@ -7,11 +7,11 @@ from django.shortcuts import get_object_or_404
 from accounts.permissions.profile_first_step import ProfileFirstStep
 
 from business_service.model_serializers.service_request import ServiceRequestSerializer
-from business_service.model_serializers.view.service_request import ServiceRequestViewSerializer
+from business_service.model_serializers.view.service_request.customer import CustomerServiceRequestViewSerializer
 from business_service.models.service_request import ServiceRequest
 
 
-class AddServiceRequest(GenericAPIView):
+class CustomerAddServiceRequest(GenericAPIView):
 
     permission_classes = [IsAuthenticated, ProfileFirstStep]
 
@@ -19,7 +19,7 @@ class AddServiceRequest(GenericAPIView):
 
         service_request = get_object_or_404(ServiceRequest, id=serv_id)
 
-        serializer = ServiceRequestViewSerializer(service_request)
+        serializer = CustomerServiceRequestViewSerializer(service_request)
 
         return Response({'status': 'get a service request object',
                          'service_request': serializer.data})
@@ -34,7 +34,8 @@ class AddServiceRequest(GenericAPIView):
                            'title': data['title'],
                            'note': data['note'],
                            'least_budget': data['least_budget'],
-                           'max_budget': data['max_budget']}
+                           'max_budget': data['max_budget'],
+                           'max_days': data['max_days']}
 
         serializer = ServiceRequestSerializer(data=serializer_data)
         serializer.is_valid(raise_exception=True)
@@ -56,7 +57,8 @@ class AddServiceRequest(GenericAPIView):
                            'title': data['title'],
                            'note': data['note'],
                            'least_budget': data['least_budget'],
-                           'max_budget': data['max_budget']}
+                           'max_budget': data['max_budget'],
+                           'max_days': data['max_days']}
 
         serializer = ServiceRequestSerializer(service_request, data=serializer_data)
         serializer.is_valid(raise_exception=True)

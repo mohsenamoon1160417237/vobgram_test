@@ -13,10 +13,15 @@ from .views.business_product_vote import AddBusinessProductVote
 
 from .views.list.business_skill.private import PrivateUserBusinessSkillList
 from .views.list.business_product.private import PrivateUserBusinessProductList
-from .views.list.service_request import UserServiceRequestList
+from .views.list.service_request.customer import CustomerServiceRequestList
+from .views.list.service_request.server_received import ServerReceivedServiceRequestList
+from .views.list.service_request_bid import ServiceRequestBidList
 
-from .views.service_request import AddServiceRequest
-from .views.send_service_request import SendServiceRequest
+from .views.service_request.customer_add import CustomerAddServiceRequest
+from .views.service_request.customer_send import CustomerSendServiceRequest
+from .views.service_request.server_bid import ServerServiceRequestBid
+from .views.service_request.customer_accept_bid import CustomerAcceptBid
+
 
 urlpatterns = [
 
@@ -36,11 +41,15 @@ urlpatterns = [
 
     path('vote_business_product/<int:prod_id>/', AddBusinessProductVote.as_view(), name='add_business_product_vote'),
     path('vote_business_product/<int:vote_id>/', AddBusinessProductVote.as_view(), name='delete_get_business_product_vote'),
-    path('add_service_request/', AddServiceRequest.as_view(), name='add_service_request'),
+    path('add_service_request/', CustomerAddServiceRequest.as_view(), name='add_service_request'),
 
-    path('edit_get_service_request/<int:serv_id>/', AddServiceRequest.as_view(),
+    path('edit_get_service_request/<int:serv_id>/', CustomerAddServiceRequest.as_view(),
          name='update_delete_get_service_request'),
 
-    path('send_service_request/<int:prof_id>/<int:serv_id>/', SendServiceRequest.as_view(), name='send_service_request'),
-    path('list/service_requests/', UserServiceRequestList.as_view(), name='service_request_list'),
+    path('send_service_request/<int:prof_id>/<int:serv_id>/', CustomerSendServiceRequest.as_view(), name='send_service_request'),
+    path('bid_service_request/<int:serv_id>/', ServerServiceRequestBid.as_view(), name='bid_service_request'),
+    path('accept_bid/<int:bid_id>/', CustomerAcceptBid.as_view(), name='customer_accept_bid'),
+    path('list/customer/service_requests/', CustomerServiceRequestList.as_view(), name='customer_service_request_list'),
+    path('list/server/service_requests/', ServerReceivedServiceRequestList.as_view(), name='server_service_request_list'),
+    path('list/bids/<int:serv_id>/', ServiceRequestBidList.as_view(), name='service_request_bid_list'),
 ]

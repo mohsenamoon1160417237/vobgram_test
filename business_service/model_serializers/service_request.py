@@ -18,7 +18,8 @@ class ServiceRequestSerializer(serializers.ModelSerializer):
                   'title',
                   'note',
                   'least_budget',
-                  'max_budget']
+                  'max_budget',
+                  'max_days']
 
     def create(self, validated_data):
 
@@ -29,7 +30,8 @@ class ServiceRequestSerializer(serializers.ModelSerializer):
                                                         title=validated_data['title'],
                                                         note=validated_data['note'],
                                                         least_budget=validated_data['least_budget'],
-                                                        max_budget=validated_data['max_budget'])
+                                                        max_budget=validated_data['max_budget'],
+                                                        max_days=validated_data['max_days'])
 
         return service_request
 
@@ -40,6 +42,7 @@ class ServiceRequestSerializer(serializers.ModelSerializer):
         instance.note = validated_data['note']
         instance.least_budget = validated_data['least_budget']
         instance.max_budget = validated_data['max_budget']
+        instance.max_days = validated_data['max_days']
 
         instance.save()
 

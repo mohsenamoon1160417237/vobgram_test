@@ -10,7 +10,7 @@ from business_service.models.service_request import ServiceRequest
 from accounts.models.profiles.business import BusinessProfile
 
 
-class SendServiceRequest(GenericAPIView):
+class CustomerSendServiceRequest(GenericAPIView):
 
     permission_classes = [IsAuthenticated, ProfileFirstStep]
 

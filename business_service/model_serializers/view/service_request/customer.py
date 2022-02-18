@@ -3,8 +3,7 @@ from rest_framework import serializers
 from business_service.models.service_request import ServiceRequest
 
 
-
-class ServiceRequestViewSerializer(serializers.ModelSerializer):
+class CustomerServiceRequestViewSerializer(serializers.ModelSerializer):
 
     class Meta:
 
@@ -14,5 +13,6 @@ class ServiceRequestViewSerializer(serializers.ModelSerializer):
                   'note',
                   'least_budget',
                   'max_budget',
+                  'max_days',
                   'finished',
                   'id']

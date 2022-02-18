@@ -14,6 +14,7 @@ class ServiceRequest(models.Model):
     note = models.TextField()
     least_budget = models.PositiveIntegerField()
     max_budget = models.PositiveIntegerField()
+    max_days = models.PositiveIntegerField(null=True)
     receivers = models.ManyToManyField(BusinessProfile,
                                        related_name='service_requests')
     finished = models.BooleanField(default=False)
