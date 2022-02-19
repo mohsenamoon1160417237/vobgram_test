@@ -6,3 +6,4 @@ from .business_product_vote import BusinessProductVote
 from .service_request import ServiceRequest
 from .service_request_bid import ServiceRequestBid
 from .service_contract import ServiceContract
+from .service_review import ServiceReview

@@ -8,6 +8,7 @@ from .utils.create_business_profile import create_business_profile
 from business_service.models.service_request import ServiceRequest
 from business_service.models.service_request_bid import ServiceRequestBid
 from business_service.models.service_contract import ServiceContract
+from business_service.models.service_review import ServiceReview
 
 
 class TestServiceRequest(APITestCase):
@@ -18,6 +19,7 @@ class TestServiceRequest(APITestCase):
                                                                        'serv_id': 1})
     bid_service_request_url = reverse('bid_service_request', kwargs={'serv_id': 1})
     accept_bid_url = reverse('customer_accept_bid', kwargs={'bid_id': 1})
+    add_service_review_url = reverse('add_service_review', kwargs={'serv_id': 1})
 
     def test_add_service_request(self):
 
@@ -133,3 +135,39 @@ class TestServiceRequest(APITestCase):
                                                    bid=bid)
 
         assert contracts.exists()
+
+    def test_add_service_review(self):
+
+        user = create_first_step()
+        create_business_profile(user)
+        self.client.force_authenticate(user)
+        request = ServiceRequest.objects.create(requester=user.personal_profile,
+                                                title='p',
+                                                note='...',
+                                                least_budget=12,
+                                                max_budget=20)
+
+        request.receivers.add(user.business_profile)
+        request.save()
+
+        bid = ServiceRequestBid.objects.create(bidder=user.business_profile,
+                                               service_request=request,
+                                               suggestion_text='hello',
+                                               price=15,
+                                               days=5)
+
+        contract = ServiceContract.objects.create(service_request=request,
+                                                  server=user.business_profile,
+                                                  days=5,
+                                                  price=15,
+                                                  bid=bid)
+
+        post_data = {'service_rating': 3,
+                     'service_note': 'hello'}
+
+        self.client.post(self.add_service_review_url, post_data)
+
+        reviews = ServiceReview.objects.filter(service_request=request,
+                                               service_contract=contract)
+
+        assert reviews.exists()

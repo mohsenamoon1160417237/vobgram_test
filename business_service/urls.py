@@ -21,6 +21,7 @@ from .views.service_request.customer_add import CustomerAddServiceRequest
 from .views.service_request.customer_send import CustomerSendServiceRequest
 from .views.service_request.server_bid import ServerServiceRequestBid
 from .views.service_request.customer_accept_bid import CustomerAcceptBid
+from .views.service_request.add_service_review import AddServiceReview
 
 
 urlpatterns = [
@@ -49,6 +50,7 @@ urlpatterns = [
     path('send_service_request/<int:prof_id>/<int:serv_id>/', CustomerSendServiceRequest.as_view(), name='send_service_request'),
     path('bid_service_request/<int:serv_id>/', ServerServiceRequestBid.as_view(), name='bid_service_request'),
     path('accept_bid/<int:bid_id>/', CustomerAcceptBid.as_view(), name='customer_accept_bid'),
+    path('add/review/<int:serv_id>/', AddServiceReview.as_view(), name='add_service_review'),
     path('list/customer/service_requests/', CustomerServiceRequestList.as_view(), name='customer_service_request_list'),
     path('list/server/service_requests/', ServerReceivedServiceRequestList.as_view(), name='server_service_request_list'),
     path('list/bids/<int:serv_id>/', ServiceRequestBidList.as_view(), name='service_request_bid_list'),
