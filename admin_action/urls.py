@@ -1,20 +1,23 @@
 from django.urls import path
 
-from .views.list.valid_skill import AdminNotconfirmedValidSkillList
-from .views.list.business_data import AdminNotConfirmedBusinessDataList
-from .views.list.business_product import AdminNotConfirmedBusinessProductList
-
 from .views.valid_skill.accept import AdminAcceptValidSkill
 from .views.valid_skill.reject import AdminRejectValidSKill
+from .views.valid_skill.list import AdminNotconfirmedValidSkillList
 
 from .views.business_data.accept import AdminAcceptBusinessData
 from .views.business_data.reject import AdminRejectBusinessData
+from .views.business_data.list import AdminNotConfirmedBusinessDataList
 
 from .views.business_product_step.accept import AdminAcceptBusinessProductStep
 from .views.business_product_step.reject import AdminRejectBusinessProductStep
 
 from .views.business_product.accept import AdminAcceptBusinessProduct
 from .views.business_product.reject import AdminRejectBusinessProduct
+from .views.business_product.list import AdminNotConfirmedBusinessProductList
+
+from .views.business_specialty.list import AdminNotConfirmedBusinessSpecialtyList
+from .views.business_specialty.accept import AdminBusinessSpecialtyAccept
+from .views.business_specialty.reject import AdminBusinessSpecialtyReject
 
 
 urlpatterns = [
@@ -41,5 +44,12 @@ urlpatterns = [
          name='admin_accept_product'),
 
     path('product/reject/<int:prod_id>/', AdminRejectBusinessProduct.as_view(),
-         name='admin_reject_product')
+         name='admin_reject_product'),
+
+    path('list/specialties/', AdminNotConfirmedBusinessSpecialtyList.as_view(), name='admin_business_specialty_list'),
+    path('specialty/accept/<int:spec_id>/', AdminBusinessSpecialtyAccept.as_view(),
+         name='admin_accept_business_specialty'),
+
+    path('specialty/reject/<int:spec_id>/', AdminBusinessSpecialtyReject.as_view(),
+         name='admin_reject_business_specialty')
 ]

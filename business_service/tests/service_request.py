@@ -14,7 +14,7 @@ from business_service.models.service_review import ServiceReview
 class TestServiceRequest(APITestCase):
 
     add_service_request_url = reverse('add_service_request')
-    del_service_request_url = reverse('update_delete_get_service_request', kwargs={'serv_id': 1})
+    del_service_request_url = reverse('edit_get_service_request', kwargs={'serv_id': 1})
     send_service_request_url = reverse('send_service_request', kwargs={'prof_id': 1,
                                                                        'serv_id': 1})
     bid_service_request_url = reverse('bid_service_request', kwargs={'serv_id': 1})

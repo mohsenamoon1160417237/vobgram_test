@@ -9,10 +9,12 @@ from accounts.models.admin_data_confirm import AdminDataConfirm
 
 from business_service.models.business_product import BusinessProduct
 from business_service.models.business_skill import BusinessSkill
+from business_service.models.business_specialty import BusinessSpecialty
 
 from accounts.model_serializers.view.public_user_register import PublicUserRegisterViewSerializer
 from business_service.model_serializers.view.business_skill import BusinessSkillViewSerializer
 from business_service.model_serializers.view.public.business_product import PublicBusinessProductViewSerializer
+from business_service.model_serializers.view.business_specialty import BusinessSpecialtyViewSerializer
 
 
 
@@ -20,6 +22,7 @@ class PublicBusinessProfileViewSerializer(serializers.ModelSerializer):
 
     business_skills = SerializerMethodField('get_skills')
     business_products = SerializerMethodField('get_products')
+    business_specialties = serializers.SerializerMethodField('get_specialties')
     user = SerializerMethodField()
 
     class Meta:
@@ -33,7 +36,8 @@ class PublicBusinessProfileViewSerializer(serializers.ModelSerializer):
                   'service_number',
                   'service_rate',
                   'business_skills',
-                  'business_products']
+                  'business_products',
+                  'business_specialties']
 
 
     def get_products(self, obj):
@@ -64,4 +68,12 @@ class PublicBusinessProfileViewSerializer(serializers.ModelSerializer):
 
         user = obj.user
         serializer = PublicUserRegisterViewSerializer(instance=user)
+        return serializer.data
+
+    def get_specialties(self, obj):
+
+        specialties = BusinessSpecialty.objects.filter(business_profile=obj)
+
+        serializer = BusinessSpecialtyViewSerializer(specialties, many=True)
+
         return serializer.data

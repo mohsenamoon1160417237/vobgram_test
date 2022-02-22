@@ -14,7 +14,7 @@ class TestProductStep(APITransactionTestCase):
 
     create_product_url = reverse('add_business_product')
     add_product_step_url = reverse('add_business_product_step', kwargs={'prod_id': 1})
-    edit_get_product_step_url = reverse('update_delete_get_business_product_step', kwargs={'prod_step_id': 1})
+    edit_get_product_step_url = reverse('edit_get_business_product_step', kwargs={'prod_step_id': 1})
 
     def test_delete_product_step(self):
 

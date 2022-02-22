@@ -14,9 +14,9 @@ from business_service.models.business_product_step import BusinessProductStep
 class TestProducts(APITestCase):
 
     create_product_url = reverse('add_business_product')
-    update_delete_get_product_url = reverse('update_delete_get_business_product', kwargs={'prod_id': 1})
+    update_delete_get_product_url = reverse('edit_get_business_product', kwargs={'prod_id': 1})
     add_product_step_url = reverse('add_business_product_step', kwargs={'prod_id': 1})
-    edit_get_product_step_url = reverse('update_delete_get_business_product_step', kwargs={'prod_step_id': 1})
+    edit_get_product_step_url = reverse('edit_get_business_product_step', kwargs={'prod_step_id': 1})
 
     def test_create_product(self):
 

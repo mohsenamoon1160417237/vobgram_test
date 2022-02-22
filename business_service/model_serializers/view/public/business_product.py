@@ -46,7 +46,9 @@ class PublicBusinessProductViewSerializer(serializers.ModelSerializer):
 
             admin_confirm = get_object_or_404(AdminDataConfirm,
                                               target_ct=cnt,
-                                              target_id=product_step.id)
+                                              target_id=product_step.id,
+                                              is_confirmed=True,
+                                              is_latest=True)
 
             if admin_confirm.is_confirmed is False:
 

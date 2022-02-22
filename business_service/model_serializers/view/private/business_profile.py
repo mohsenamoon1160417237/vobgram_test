@@ -4,10 +4,12 @@ from rest_framework.serializers import SerializerMethodField
 from accounts.models.profiles.business import BusinessProfile
 from business_service.models.business_product import BusinessProduct
 from business_service.models.business_skill import BusinessSkill
+from business_service.models.business_specialty import BusinessSpecialty
 
 from accounts.model_serializers.view.private_user_register import PrivateUserRegisterViewSerializer
 from business_service.model_serializers.view.business_skill import BusinessSkillViewSerializer
 from business_service.model_serializers.view.private.business_product import PrivateBusinessProductViewSerializer
+from business_service.model_serializers.view.business_specialty import BusinessSpecialtyViewSerializer
 
 
 
@@ -15,6 +17,7 @@ class PrivateBusinessProfileViewSerializer(serializers.ModelSerializer):
 
     business_skills = SerializerMethodField('get_skills')
     business_products = SerializerMethodField('get_products')
+    business_specialties = serializers.SerializerMethodField('get_specialties')
     user = SerializerMethodField()
 
     class Meta:
@@ -28,7 +31,8 @@ class PrivateBusinessProfileViewSerializer(serializers.ModelSerializer):
                   'service_number',
                   'service_rate',
                   'business_skills',
-                  'business_products']
+                  'business_products',
+                  'business_specialties']
 
     def get_products(self, obj):
 
@@ -46,4 +50,12 @@ class PrivateBusinessProfileViewSerializer(serializers.ModelSerializer):
 
         user = obj.user
         serializer = PrivateUserRegisterViewSerializer(instance=user)
+        return serializer.data
+
+    def get_specialties(self, obj):
+
+        specialties = BusinessSpecialty.objects.filter(business_profile=obj)
+
+        serializer = BusinessSpecialtyViewSerializer(specialties, many=True)
+
         return serializer.data
