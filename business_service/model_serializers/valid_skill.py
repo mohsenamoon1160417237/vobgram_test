@@ -8,7 +8,11 @@ class ValidSkillSerializer(serializers.ModelSerializer):
     class Meta:
 
         model = ValidSkill
-        fields = ['title', 'description']
+        fields = ['title',
+                  'description',
+                  'id']
+
+        read_only_fields = ['id']
 
     def create(self, validated_data):
 

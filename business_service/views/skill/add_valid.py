@@ -2,8 +2,13 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
+from django.contrib.contenttypes.models import ContentType
+from django.shortcuts import get_object_or_404
+
 from accounts.permissions.profile_first_step import ProfileFirstStep
 from accounts.permissions.has_business_profile import HasBusinessProfile
+
+from accounts.models.admin_data_confirm import AdminDataConfirm
 
 from business_service.model_serializers.valid_skill import ValidSkillSerializer
 from business_service.model_serializers.business_skill import BusinessSkillSerializer
@@ -19,7 +24,17 @@ class AddValidSkill(GenericAPIView):
         serializer.is_valid(raise_exception=True)
         skill = serializer.save()
 
+        cnt = ContentType.objects.get_for_model(skill)
+        admin_conf = get_object_or_404(AdminDataConfirm,
+                                       target_ct=cnt,
+                                       target_id=skill.id,
+                                       is_latest=True)
+
         business_profile = request.user.business_profile
+
+        admin_conf.business_profile = business_profile
+        admin_conf.save()
+
         business_profile_id = business_profile.id
 
         data = {

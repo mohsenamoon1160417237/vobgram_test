@@ -3,6 +3,8 @@ from django.db import models
 from accounts.models.profiles.business import BusinessProfile
 from accounts.models.profiles.personal import PersonalProfile
 
+from business_service.models.valid_skill import ValidSkill
+
 
 class ServiceRequest(models.Model):
 
@@ -18,3 +20,5 @@ class ServiceRequest(models.Model):
     receivers = models.ManyToManyField(BusinessProfile,
                                        related_name='service_requests')
     finished = models.BooleanField(default=False)
+    skills = models.ManyToManyField(ValidSkill,
+                                    related_name='service_requests')

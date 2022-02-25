@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404
 from accounts.models.profiles.business import BusinessProfile
 from accounts.models.admin_data_confirm import AdminDataConfirm
 
-from accounts.model_serializers.view.admin_data_confirm import AdminDataConfirmViewSerializer
+from accounts.model_serializers.admin_data_confirm import AdminDataConfirmSerializer
 
 
 
@@ -34,7 +34,7 @@ class AdminBusinessProfileViewSerializer(serializers.ModelSerializer):
                                        target_id=obj.id,
                                        data_type='company_name')
 
-        serializer = AdminDataConfirmViewSerializer(admin_conf)
+        serializer = AdminDataConfirmSerializer(admin_conf)
         return serializer.data
 
     def get_company_phone_number_conf(self, obj):
@@ -46,5 +46,5 @@ class AdminBusinessProfileViewSerializer(serializers.ModelSerializer):
                                        target_id=obj.id,
                                        data_type='company_phone_number')
 
-        serializer = AdminDataConfirmViewSerializer(admin_conf)
+        serializer = AdminDataConfirmSerializer(admin_conf)
         return serializer.data

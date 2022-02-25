@@ -8,7 +8,7 @@ from business_service.models.business_product_step import BusinessProductStep
 
 from accounts.models.admin_data_confirm import AdminDataConfirm
 
-from accounts.model_serializers.view.admin_data_confirm import AdminDataConfirmViewSerializer
+from accounts.model_serializers.admin_data_confirm import AdminDataConfirmSerializer
 from .business_product_step import AdminBusinessProductStepViewSerializer
 
 
@@ -42,5 +42,5 @@ class AdminBusinessProductViewSerializer(serializers.ModelSerializer):
                                        target_ct=cnt,
                                        target_id=obj.id)
 
-        serializer = AdminDataConfirmViewSerializer(admin_conf)
+        serializer = AdminDataConfirmSerializer(admin_conf)
         return serializer.data

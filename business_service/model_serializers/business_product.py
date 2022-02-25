@@ -39,13 +39,16 @@ class BusinessProductSerializer(serializers.ModelSerializer):
                                                      title=validated_data['title'],
                                                      description=validated_data['description'])
 
-            create_admin_data_confirm(product, None, None)
+            create_admin_data_confirm(product, business_profile, None)
             return product
 
         except IntegrityError:
             raise serializers.ValidationError({'error': 'You already have a product with this title'})
 
     def update(self, instance, validated_data):
+
+        business_profile = get_object_or_404(BusinessProfile,
+                                             id=validated_data['business_profile_id'])
 
         business_skill = get_object_or_404(BusinessSkill,
                                            id=validated_data['business_skill_id'])
@@ -55,7 +58,7 @@ class BusinessProductSerializer(serializers.ModelSerializer):
 
         try:
 
-            check_admin_confirm_latest(instance, None, None)
+            check_admin_confirm_latest(instance, business_profile, None)
 
             instance.save()
             return instance

@@ -1,5 +1,4 @@
 from django.db import models
-from accounts.models.admin_data_confirm import AdminDataConfirm
 
 
 class ValidSkill(models.Model):

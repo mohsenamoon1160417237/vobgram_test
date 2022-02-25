@@ -19,9 +19,14 @@ from .views.service_request.server_bid import ServerServiceRequestBid
 from .views.service_request.customer_bid_list import ServiceRequestBidList
 from .views.service_request.customer_accept_bid import CustomerAcceptBid
 from .views.service_request.add_review import AddServiceReview
+from .views.service_request.customer_add_skill import CustomerAddSkillToServiceRequest
 
 from .views.service_request.list.customer import CustomerServiceRequestList
 from .views.service_request.list.server_received import ServerReceivedServiceRequestList
+
+from .views.service_request.contract_assign.get import GetContractAssign
+from .views.service_request.contract_assign.customer import CustomerAssignContract
+from .views.service_request.contract_assign.server import ServerAssignContract
 
 from .views.business_specialty.add import ServerAddBusinessSpecialty
 from .views.business_specialty.list import ServerBusinessSpecialtyList
@@ -54,6 +59,8 @@ urlpatterns = [
     path('bid_service_request/<int:serv_id>/', ServerServiceRequestBid.as_view(), name='bid_service_request'),
     path('accept_bid/<int:bid_id>/', CustomerAcceptBid.as_view(), name='customer_accept_bid'),
     path('add/review/<int:serv_id>/', AddServiceReview.as_view(), name='add_service_review'),
+    path('add/service_request/skill/<int:req_id>/<str:skill_ttl>/', CustomerAddSkillToServiceRequest.as_view(),
+         name='customer_add_skill_to_service_request'),
     path('list/customer/service_requests/', CustomerServiceRequestList.as_view(), name='customer_service_request_list'),
     path('list/server/service_requests/', ServerReceivedServiceRequestList.as_view(), name='server_service_request_list'),
     path('list/bids/<int:serv_id>/', ServiceRequestBidList.as_view(), name='service_request_bid_list'),
@@ -62,4 +69,8 @@ urlpatterns = [
     path('edit/business_specialty/<int:spec_id>/', ServerAddBusinessSpecialty.as_view(),
          name='edit_get_business_specialty'),
     path('list/business_specialty/', ServerBusinessSpecialtyList.as_view(), name='business_specialty_list'),
+
+    path('get/contract_assign/<int:ctr_asgn_id>/', GetContractAssign.as_view(), name='get_contract_assign'),
+    path('assign/customer/<int:ctr_asgn_id>/', CustomerAssignContract.as_view(), name='customer_assign_contract'),
+    path('assign/server/<int:ctr_asgn_id>/', ServerAssignContract.as_view(), name='server_assign_contract'),
 ]

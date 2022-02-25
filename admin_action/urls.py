@@ -19,6 +19,8 @@ from .views.business_specialty.list import AdminNotConfirmedBusinessSpecialtyLis
 from .views.business_specialty.accept import AdminBusinessSpecialtyAccept
 from .views.business_specialty.reject import AdminBusinessSpecialtyReject
 
+from .views.contract_assign.list import AdminNotConfirmedContractAssignList
+
 
 urlpatterns = [
 
@@ -51,5 +53,7 @@ urlpatterns = [
          name='admin_accept_business_specialty'),
 
     path('specialty/reject/<int:spec_id>/', AdminBusinessSpecialtyReject.as_view(),
-         name='admin_reject_business_specialty')
+         name='admin_reject_business_specialty'),
+
+    path('list/contract_assigns/', AdminNotConfirmedContractAssignList.as_view(), name='admin_contract_assigns_list')
 ]

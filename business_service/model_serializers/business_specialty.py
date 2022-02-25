@@ -33,7 +33,9 @@ class BusinessSpecialtySerializer(serializers.ModelSerializer):
                                                          note=validated_data['note'],
                                                          education_institute_name=validated_data['education_institute_name'])
 
-            create_admin_data_confirm(specialty, None, None)
+            business_profile = specialty.business_profile
+
+            create_admin_data_confirm(specialty, business_profile, None)
 
             return specialty
 
@@ -43,13 +45,15 @@ class BusinessSpecialtySerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
 
+        business_profile = get_object_or_404(BusinessProfile, id=validated_data['business_profile_id'])
+
         instance.title = validated_data['title']
         instance.note = validated_data['note']
         instance.education_institute_name = validated_data['education_institute_name']
 
         try:
             instance.save()
-            check_admin_confirm_latest(instance, None, None)
+            check_admin_confirm_latest(instance, business_profile, None)
 
             return instance
 

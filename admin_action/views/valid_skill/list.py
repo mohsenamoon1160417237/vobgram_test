@@ -8,6 +8,7 @@ from django.shortcuts import get_object_or_404
 from admin_action.permissions.is_admin import IsAdmin
 
 from business_service.model_serializers.view.admin.valid_skill import AdminValidSkillViewSerializer
+from business_service.model_serializers.valid_skill import ValidSkillSerializer
 
 from business_service.models.valid_skill import ValidSkill
 from accounts.models.admin_data_confirm import AdminDataConfirm
@@ -32,7 +33,7 @@ class AdminNotconfirmedValidSkillList(GenericAPIView):
 
                 skills = skills.exclude(id=skill.id)
 
-        serializer = AdminValidSkillViewSerializer(skills, many=True)
+        serializer = ValidSkillSerializer(skills, many=True)
 
         return Response({'status': 'get unconfirmed valid skills',
                          'skills': serializer.data})

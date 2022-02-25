@@ -7,7 +7,10 @@ from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import get_object_or_404
 
 from accounts.permissions.profile_first_step import ProfileFirstStep
+
 from business_service.models.business_skill import BusinessSkill
+from business_service.models.business_specialty import BusinessSpecialty
+
 from accounts.models.admin_data_confirm import AdminDataConfirm
 from accounts.models.profiles.business import BusinessProfile
 
@@ -21,40 +24,42 @@ class SearchBusinessProfile(GenericAPIView):
 
     def get(self, request, query):
 
+        skill_cnt = ContentType.objects.get(app_label='business_service',
+                                            model='validskill')
+
+        skill_admin_confs = AdminDataConfirm.objects.filter(target_ct=skill_cnt,
+                                                            is_latest=True,
+                                                            is_confirmed=True)
+
         skills = BusinessSkill.objects.filter(Q(valid_skill__title__icontains=query) |
                                               Q(valid_skill__description__icontains=query),
-                                              score__gt=0)
-        if skills.count() == 0:
+                                              score__gt=0,
+                                              id__in=skill_admin_confs.values('target_id'))
 
-            return Response({'status': 'no profiles'})
+        spec_cnt = ContentType.objects.get(app_label='business_service',
+                                           model='businessspecialty')
 
-        for skill in skills:
+        spec_admin_confs = AdminDataConfirm.objects.filter(target_ct=spec_cnt,
+                                                           is_latest=True,
+                                                           is_confirmed=True)
 
-            business_profile = skill.business_profile
+        specialties = BusinessSpecialty.objects.filter(id__in=spec_admin_confs.values('target_id'))
 
-            valid_skill = skill.valid_skill
-            valid_skill_cnt = ContentType.objects.get_for_model(valid_skill)
+        prof_cnt = ContentType.objects.get(app_label='accounts',
+                                           model='businessprofile')
 
-            valid_skill_admin_confirm = get_object_or_404(AdminDataConfirm,
-                                                          target_ct=valid_skill_cnt,
-                                                          target_id=valid_skill.id)
+        prof_admin_confs = AdminDataConfirm.objects.filter(target_ct=prof_cnt,
+                                                           is_latest=True)
 
-            valid_skill_confirmed = valid_skill_admin_confirm.is_confirmed
+        for ad_conf in prof_admin_confs:
 
-            business_profile_cnt = ContentType.objects.get_for_model(business_profile)
-            admin_confirms = AdminDataConfirm.objects.filter(target_ct=business_profile_cnt,
-                                                             target_id=skill.id)
+            if ad_conf.is_confirmed is False and ad_conf.admin_profile is not None:
+                prof_admin_confs = prof_admin_confs.exclude(target_id=ad_conf.target_id)
 
-            cmp_name_admin = admin_confirms.filter(data_type='company_name')[0]
-            cmp_phn_admin = admin_confirms.filter(data_type='company_phone_number')[0]
-            cmp_name_conf = cmp_name_admin.is_confirmed
-            cmp_phn_conf = cmp_phn_admin.is_confirmed
+        business_profiles = BusinessProfile.objects.filter(Q(id__in=skills.values('business_profile_id')) |
+                                                           Q(id__in=specialties.values('business_profile_id')),
+                                                           id__in=prof_admin_confs.values('target_id'))
 
-            if cmp_name_conf is False or cmp_phn_conf is False or valid_skill_confirmed is False:
-
-                skills = skills.exclude(business_profile=business_profile)
-
-        business_profiles = BusinessProfile.objects.filter(id__in=skills.values('business_profile_id'))
         business_profiles = business_profiles.order_by('service_number', 'service_rate')
 
         if business_profiles.count() == 0:

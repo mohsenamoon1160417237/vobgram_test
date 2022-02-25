@@ -29,8 +29,8 @@ class BusinessProfileSerializer(serializers.ModelSerializer):
                                                           company_phone_number=validated_data['company_phone_number'],
                                                           bio=validated_data['bio'])
 
-        create_admin_data_confirm(business_profile, 'company_name', validated_data['company_name'])
-        create_admin_data_confirm(business_profile, 'company_phone_number', validated_data['company_phone_number'])
+        create_admin_data_confirm(business_profile, None, 'company_name')
+        create_admin_data_confirm(business_profile, None, 'company_phone_number')
 
         return business_profile
 

@@ -1,4 +1,5 @@
 from django.db import models
+
 from accounts.models.UserRegistration import UserRegistration
 
 
