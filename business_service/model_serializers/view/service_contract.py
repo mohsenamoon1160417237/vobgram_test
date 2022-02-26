@@ -20,6 +20,7 @@ class ServiceContractViewSerializer(serializers.ModelSerializer):
                   'server',
                   'days',
                   'price',
+                  'experts',
                   'bid',
                   'canceled']
 

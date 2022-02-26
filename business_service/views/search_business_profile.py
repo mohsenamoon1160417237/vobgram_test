@@ -4,7 +4,6 @@ from rest_framework.permissions import IsAuthenticated
 
 from django.db.models import Q
 from django.contrib.contenttypes.models import ContentType
-from django.shortcuts import get_object_or_404
 
 from accounts.permissions.profile_first_step import ProfileFirstStep
 
@@ -15,7 +14,6 @@ from accounts.models.admin_data_confirm import AdminDataConfirm
 from accounts.models.profiles.business import BusinessProfile
 
 from business_service.model_serializers.view.public.business_profile import PublicBusinessProfileViewSerializer
-
 
 
 class SearchBusinessProfile(GenericAPIView):

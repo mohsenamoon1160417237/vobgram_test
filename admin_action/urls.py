@@ -21,6 +21,13 @@ from .views.business_specialty.reject import AdminBusinessSpecialtyReject
 
 from .views.contract_assign.list import AdminNotConfirmedContractAssignList
 
+from .views.service_request.list import AdminNotConfirmedServiceRequestList
+from .views.service_request.accept import AdminAcceptServiceRequest
+from .views.service_request.reject import AdminRejectServiceRequest
+
+from .views.service_contract.join import ExepertJoinContract
+from .views.service_contract.leave import ExpertLeaveContract
+
 
 urlpatterns = [
 
@@ -55,5 +62,13 @@ urlpatterns = [
     path('specialty/reject/<int:spec_id>/', AdminBusinessSpecialtyReject.as_view(),
          name='admin_reject_business_specialty'),
 
-    path('list/contract_assigns/', AdminNotConfirmedContractAssignList.as_view(), name='admin_contract_assigns_list')
+    path('list/contract_assigns/', AdminNotConfirmedContractAssignList.as_view(), name='admin_contract_assigns_list'),
+
+    path('list/service_requests/', AdminNotConfirmedServiceRequestList.as_view(), name='admin_service_requests_list'),
+    path('accept/service_request/<int:req_id>/', AdminAcceptServiceRequest.as_view(), name='admin_accept_service_request'),
+    path('reject/service_request/<int:req_id>/', AdminRejectServiceRequest.as_view(), name='admin_reject_service_request'),
+
+    path('contract/join/<int:cont_id>/', ExepertJoinContract.as_view(), name='expert_join_contract'),
+    path('contract/leave/<int:cont_id>/', ExpertLeaveContract.as_view(), name='expert_leave_contract'),
+
 ]
