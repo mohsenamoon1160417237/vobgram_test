@@ -10,7 +10,6 @@ from business_service.models.business_product import BusinessProduct
 from business_service.models.business_skill import BusinessSkill
 
 from accounts.models.profiles.business import BusinessProfile
-from accounts.models.admin_data_confirm import AdminDataConfirm
 
 
 class BusinessProductSerializer(serializers.ModelSerializer):

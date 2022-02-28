@@ -8,7 +8,7 @@ from django.contrib.contenttypes.models import ContentType
 
 from accounts.permissions.profile_first_step import ProfileFirstStep
 
-from accounts.models.admin_data_confirm import AdminDataConfirm
+from accounts.models.system_data_confirm import SystemDataConfirm
 
 from business_service.models.service_request import ServiceRequest
 from business_service.models.valid_skill import ValidSkill
@@ -23,7 +23,7 @@ class CustomerAddSkillToServiceRequest(GenericAPIView):
         serv_request = get_object_or_404(ServiceRequest, id=req_id)
 
         cnt = ContentType.objects.get(app_label='business_service', model='validskill')
-        admin_confs = AdminDataConfirm.objects.filter(target_ct=cnt,
+        admin_confs = SystemDataConfirm.objects.filter(target_ct=cnt,
                                                       is_latest=True,
                                                       is_confirmed=True)
 

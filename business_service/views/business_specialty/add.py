@@ -12,7 +12,7 @@ from business_service.model_serializers.business_specialty import BusinessSpecia
 from business_service.model_serializers.view.business_specialty import BusinessSpecialtyViewSerializer
 
 from business_service.models.business_specialty import BusinessSpecialty
-from accounts.models.admin_data_confirm import AdminDataConfirm
+from accounts.models.system_data_confirm import SystemDataConfirm
 
 
 class ServerAddBusinessSpecialty(GenericAPIView):
@@ -76,7 +76,7 @@ class ServerAddBusinessSpecialty(GenericAPIView):
 
         cnt = ContentType.objects.get_for_model(specialty)
 
-        admin_confirm = get_object_or_404(AdminDataConfirm,
+        admin_confirm = get_object_or_404(SystemDataConfirm,
                                           target_ct=cnt,
                                           target_id=specialty.id)
 

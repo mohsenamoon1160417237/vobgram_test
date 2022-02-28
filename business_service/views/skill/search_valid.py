@@ -6,7 +6,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.db.models import Q
 
 from accounts.permissions.profile_first_step import ProfileFirstStep
-from accounts.models.admin_data_confirm import AdminDataConfirm
+from accounts.models.system_data_confirm import SystemDataConfirm
 
 from business_service.models.valid_skill import ValidSkill
 from business_service.model_serializers.valid_skill import ValidSkillSerializer
@@ -22,9 +22,9 @@ class SearchValidSkill(GenericAPIView):
 
         cnt = ContentType.objects.get(app_label='business_service', model='validskill')
 
-        admin_confs = AdminDataConfirm.objects.filter(target_ct=cnt,
-                                                      is_latest=True,
-                                                      is_confirmed=True)
+        admin_confs = SystemDataConfirm.objects.filter(target_ct=cnt,
+                                                       is_latest=True,
+                                                       is_confirmed=True)
 
         skills = ValidSkill.objects.filter(Q(title__icontains=query) |
                                            Q(description__icontains=query),

@@ -2,24 +2,29 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 
 from rest_framework.permissions import IsAuthenticated
-from admin_action.permissions.is_admin import IsAdmin
+from admin_action.permissions.is_admin_or_expert import IsAdminOrExpert
 
 from business_service.models.contract_assign import ContractAssign
 
 from business_service.model_serializers.view.contract_assign import ContractAssignViewSerializer
 
 
-class AdminNotConfirmedContractAssignList(GenericAPIView):
+class ContractAssignList(GenericAPIView):
 
-    permission_classes = [IsAuthenticated, IsAdmin]
+    permission_classes = [IsAuthenticated, IsAdminOrExpert]
 
     def get(self, request):
 
-        admin_profile = request.user.admin_profile
+        user_type = request.user.user_type
 
-        skills = admin_profile.skills.all()
+        if user_type == 'admin':
 
-        assigns = ContractAssign.objects.filter(contract__service_request__skills__id__in=skills.values('id'))
+            assigns = ContractAssign.objects.all()
+
+        else:
+
+            skills = request.user.expert_profile.skills.all()
+            assigns = ContractAssign.objects.filter(contract__service_request__skills__id__in=skills.values('id'))
 
         serializer = ContractAssignViewSerializer(assigns, many=True)
 

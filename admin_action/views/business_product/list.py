@@ -8,7 +8,7 @@ from django.shortcuts import get_object_or_404
 from admin_action.permissions.is_admin import IsAdmin
 from business_service.model_serializers.view.admin.business_product import AdminBusinessProductViewSerializer
 
-from accounts.models.admin_data_confirm import AdminDataConfirm
+from accounts.models.system_data_confirm import SystemDataConfirm
 from business_service.models.business_product import BusinessProduct
 
 
@@ -24,7 +24,7 @@ class AdminNotConfirmedBusinessProductList(GenericAPIView):
 
             cnt = ContentType.objects.get_for_model(product)
 
-            admin_confirm = get_object_or_404(AdminDataConfirm,
+            admin_confirm = get_object_or_404(SystemDataConfirm,
                                               target_ct=cnt,
                                               target_id=product.id)
 
@@ -38,7 +38,7 @@ class AdminNotConfirmedBusinessProductList(GenericAPIView):
 
                     cnt = ContentType.objects.get_for_model(p_step)
 
-                    admin_confirm = get_object_or_404(AdminDataConfirm,
+                    admin_confirm = get_object_or_404(SystemDataConfirm,
                                                       target_ct=cnt,
                                                       target_id=p_step.id)
 

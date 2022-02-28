@@ -4,10 +4,9 @@ from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import get_object_or_404
 
 from accounts.models.profiles.business import BusinessProfile
-from accounts.models.admin_data_confirm import AdminDataConfirm
+from accounts.models.system_data_confirm import SystemDataConfirm
 
-from accounts.model_serializers.admin_data_confirm import AdminDataConfirmSerializer
-
+from accounts.model_serializers.system_data_confirm import SystemDataConfirmSerializer
 
 
 class AdminBusinessProfileViewSerializer(serializers.ModelSerializer):
@@ -29,22 +28,22 @@ class AdminBusinessProfileViewSerializer(serializers.ModelSerializer):
 
         cnt = ContentType.objects.get_for_model(obj)
 
-        admin_conf = get_object_or_404(AdminDataConfirm,
+        admin_conf = get_object_or_404(SystemDataConfirm,
                                        target_ct=cnt,
                                        target_id=obj.id,
                                        data_type='company_name')
 
-        serializer = AdminDataConfirmSerializer(admin_conf)
+        serializer = SystemDataConfirmSerializer(admin_conf)
         return serializer.data
 
     def get_company_phone_number_conf(self, obj):
 
         cnt = ContentType.objects.get_for_model(obj)
 
-        admin_conf = get_object_or_404(AdminDataConfirm,
+        admin_conf = get_object_or_404(SystemDataConfirm,
                                        target_ct=cnt,
                                        target_id=obj.id,
                                        data_type='company_phone_number')
 
-        serializer = AdminDataConfirmSerializer(admin_conf)
+        serializer = SystemDataConfirmSerializer(admin_conf)
         return serializer.data

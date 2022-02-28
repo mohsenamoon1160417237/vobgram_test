@@ -11,7 +11,7 @@ from business_service.model_serializers.view.admin.valid_skill import AdminValid
 from business_service.model_serializers.valid_skill import ValidSkillSerializer
 
 from business_service.models.valid_skill import ValidSkill
-from accounts.models.admin_data_confirm import AdminDataConfirm
+from accounts.models.system_data_confirm import SystemDataConfirm
 
 
 class AdminNotconfirmedValidSkillList(GenericAPIView):
@@ -25,7 +25,7 @@ class AdminNotconfirmedValidSkillList(GenericAPIView):
         for skill in skills:
 
             cnt = ContentType.objects.get_for_model(skill)
-            admin_confirm = get_object_or_404(AdminDataConfirm,
+            admin_confirm = get_object_or_404(SystemDataConfirm,
                                               target_ct=cnt,
                                               target_id=skill.id)
 

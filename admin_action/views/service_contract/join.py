@@ -9,7 +9,7 @@ from admin_action.permissions.is_admin import IsAdmin
 from business_service.models.service_contract import ServiceContract
 
 
-class ExepertJoinContract(GenericAPIView):
+class ExpertJoinContract(GenericAPIView):
 
     permission_classes = [IsAuthenticated, IsAdmin]
 
@@ -17,7 +17,7 @@ class ExepertJoinContract(GenericAPIView):
 
         contract = get_object_or_404(ServiceContract, id=cont_id)
 
-        contract.experts.add(request.user.admin_profile)
+        contract.experts.add(request.user.expert_profile)
         contract.save()
 
         return Response({'status': 'joint contract'})

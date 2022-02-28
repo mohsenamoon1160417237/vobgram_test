@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404
 from business_service.models.service_request import ServiceRequest
 
 from accounts.models.profiles.personal import PersonalProfile
-from accounts.models.admin_data_confirm import AdminDataConfirm
+from accounts.models.system_data_confirm import SystemDataConfirm
 
 
 class ServiceRequestSerializer(serializers.ModelSerializer):
@@ -35,7 +35,7 @@ class ServiceRequestSerializer(serializers.ModelSerializer):
                                                         max_budget=validated_data['max_budget'],
                                                         max_days=validated_data['max_days'])
 
-        AdminDataConfirm.objects.create(target=service_request)
+        SystemDataConfirm.objects.create(target=service_request)
 
         return service_request
 

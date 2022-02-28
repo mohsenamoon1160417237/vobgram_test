@@ -6,7 +6,7 @@ from accounts.tests.utils.create_first_step import create_first_step
 from .utils.create_business_profile import create_business_profile
 
 from business_service.models.business_specialty import BusinessSpecialty
-from accounts.models.admin_data_confirm import AdminDataConfirm
+from accounts.models.system_data_confirm import SystemDataConfirm
 
 
 class TestBusinessSpecialty(APITestCase):
@@ -43,7 +43,7 @@ class TestBusinessSpecialty(APITestCase):
                                                      title='math',
                                                      note='...',
                                                      education_institute_name='...')
-        AdminDataConfirm.objects.create(target=specialty)
+        SystemDataConfirm.objects.create(target=specialty)
 
         self.client.delete(self.edit_specialty_url)
 

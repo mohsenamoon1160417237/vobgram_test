@@ -5,7 +5,7 @@ from .utils.check_admin_confirm_latest import check_admin_confirm_latest
 
 from business_service.models.business_product_step import BusinessProductStep
 from business_service.models.business_product import BusinessProduct
-from accounts.models.admin_data_confirm import AdminDataConfirm
+from accounts.models.system_data_confirm import SystemDataConfirm
 
 
 
@@ -39,7 +39,7 @@ class BusinessProductStepSerializer(serializers.ModelSerializer):
                                                           step_number=max_step_number
                                                           )
 
-        AdminDataConfirm.objects.create(target=product_step)
+        SystemDataConfirm.objects.create(target=product_step)
         return product_step
 
     def update(self, instance, validated_data):

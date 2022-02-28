@@ -17,7 +17,7 @@ class ExpertLeaveContract(GenericAPIView):
 
         contract = get_object_or_404(ServiceContract, id=cont_id)
 
-        contract.experts.remove(request.user.admin_profile)
+        contract.experts.remove(request.user.expert_profile)
         contract.save()
 
         return Response({'status': 'left contract'})

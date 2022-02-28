@@ -1,12 +1,12 @@
 from django.shortcuts import get_object_or_404
 import datetime
 
-from accounts.models.admin_data_confirm import AdminDataConfirm
+from accounts.models.system_data_confirm import SystemDataConfirm
 
 
 def admin_accept_or_reject(bool_type, data_type, admin_profile, target_ct, target_id, comment):
 
-    admin_confirm = get_object_or_404(AdminDataConfirm,
+    admin_confirm = get_object_or_404(SystemDataConfirm,
                                       target_ct=target_ct,
                                       target_id=target_id,
                                       data_type=data_type)

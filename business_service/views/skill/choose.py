@@ -7,7 +7,7 @@ from django.contrib.contenttypes.models import ContentType
 
 from business_service.models.valid_skill import ValidSkill
 from business_service.models.business_skill import BusinessSkill
-from accounts.models.admin_data_confirm import AdminDataConfirm
+from accounts.models.system_data_confirm import SystemDataConfirm
 
 from accounts.permissions.profile_first_step import ProfileFirstStep
 from accounts.permissions.has_business_profile import HasBusinessProfile
@@ -30,7 +30,7 @@ class ChooseBusinessSkill(GenericAPIView):
                                         title=request.data['title'])
 
         cnt = ContentType.objects.get_for_model(valid_skill)
-        admin_confirm = get_object_or_404(AdminDataConfirm,
+        admin_confirm = get_object_or_404(SystemDataConfirm,
                                           target_ct=cnt,
                                           target_id=valid_skill.id)
 

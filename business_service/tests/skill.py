@@ -8,7 +8,7 @@ from accounts.tests.utils.create_first_step import create_first_step
 
 from business_service.models.valid_skill import ValidSkill
 from business_service.models.business_skill import BusinessSkill
-from accounts.models.admin_data_confirm import AdminDataConfirm
+from accounts.models.system_data_confirm import SystemDataConfirm
 
 
 
@@ -24,8 +24,8 @@ class TestSkill(APITransactionTestCase):
 
         skill = ValidSkill.objects.create(title='web',
                                           description='web development')
-        admin_confirm = AdminDataConfirm.objects.create(target=skill,
-                                                        is_confirmed=True)
+        admin_confirm = SystemDataConfirm.objects.create(target=skill,
+                                                         is_confirmed=True)
         return skill
 
     def test_search_skill_at_least_one_result(self):
@@ -72,8 +72,8 @@ class TestSkill(APITransactionTestCase):
 
         cnt = ContentType.objects.get_for_model(valid_skill)
 
-        admin_confirms = AdminDataConfirm.objects.filter(target_ct=cnt,
-                                                         target_id=valid_skill.id)
+        admin_confirms = SystemDataConfirm.objects.filter(target_ct=cnt,
+                                                          target_id=valid_skill.id)
         assert admin_confirms.exists()
         assert admin_confirms.count() == 1
 
@@ -90,8 +90,8 @@ class TestSkill(APITransactionTestCase):
         valid_skill = ValidSkill.objects.create(title='web',
                                                 description='web development')
 
-        admin_confirm = AdminDataConfirm.objects.create(target=valid_skill,
-                                                        is_confirmed=True)
+        admin_confirm = SystemDataConfirm.objects.create(target=valid_skill,
+                                                         is_confirmed=True)
 
         post_data = {'title': 'web'}
         response = self.client.post(self.choose_skill_url, post_data)
@@ -121,7 +121,7 @@ class TestSkill(APITransactionTestCase):
 
         cnt =  ContentType.objects.get_for_model(valid_Skill)
 
-        admin_confirm = get_object_or_404(AdminDataConfirm,
+        admin_confirm = get_object_or_404(SystemDataConfirm,
                                           target_ct=cnt,
                                           target_id=valid_Skill.id)
 

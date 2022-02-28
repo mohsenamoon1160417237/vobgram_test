@@ -7,7 +7,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 
 
-class AdminDataConfirm(models.Model):
+class SystemDataConfirm(models.Model):
 
     admin_profile = models.ForeignKey(AdminProfile,
                                       on_delete=models.CASCADE,

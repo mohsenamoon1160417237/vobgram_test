@@ -3,7 +3,7 @@ from django.urls import reverse
 
 from accounts.models.profiles.personal import PersonalProfile
 from accounts.models.UserRegistration import UserRegistration
-from accounts.models.admin_data_confirm import AdminDataConfirm
+from accounts.models.system_data_confirm import SystemDataConfirm
 from accounts.models.profiles.business import BusinessProfile
 from accounts.models.profiles.admin import AdminProfile
 
@@ -186,8 +186,8 @@ class UpdateProfile(APITestCase):
         assert bio == 'hello'
 
         cnt = ContentType.objects.get_for_model(business_profile)
-        admin_confirms = AdminDataConfirm.objects.filter(target_ct=cnt,
-                                                         target_id=business_profile.id)
+        admin_confirms = SystemDataConfirm.objects.filter(target_ct=cnt,
+                                                          target_id=business_profile.id)
         assert admin_confirms.exists()
         assert admin_confirms.count() == 2
 
@@ -232,8 +232,8 @@ class UpdateProfile(APITestCase):
         assert bio == 'hello2'
 
         cnt = ContentType.objects.get_for_model(business_profile)
-        admin_confirms = AdminDataConfirm.objects.filter(target_ct=cnt,
-                                                         target_id=business_profile.id)
+        admin_confirms = SystemDataConfirm.objects.filter(target_ct=cnt,
+                                                          target_id=business_profile.id)
         assert admin_confirms.exists()
         assert admin_confirms.count() == 2
 
@@ -259,8 +259,8 @@ class UpdateProfile(APITestCase):
         admin_profile = AdminProfile.objects.create(user=user)
 
         cnt = ContentType.objects.get_for_model(business_profile)
-        admin_confirms = AdminDataConfirm.objects.filter(target_ct=cnt,
-                                                         target_id=business_profile.id)
+        admin_confirms = SystemDataConfirm.objects.filter(target_ct=cnt,
+                                                          target_id=business_profile.id)
         company_name_admin = admin_confirms.filter(data_type='company_name')[0]
         company_phone_number_admin = admin_confirms.filter(data_type='company_phone_number')[0]
 
@@ -289,9 +289,9 @@ class UpdateProfile(APITestCase):
         assert company_phone_number == '2342342'
 
         cnt = ContentType.objects.get_for_model(business_profile)
-        admin_confirms = AdminDataConfirm.objects.filter(target_ct=cnt,
-                                                         target_id=business_profile.id,
-                                                         is_latest=True)
+        admin_confirms = SystemDataConfirm.objects.filter(target_ct=cnt,
+                                                          target_id=business_profile.id,
+                                                          is_latest=True)
 
         company_name_admin = admin_confirms.filter(data_type='company_name')[0]
         company_phone_number_admin = admin_confirms.filter(data_type='company_phone_number')[0]

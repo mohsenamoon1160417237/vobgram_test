@@ -9,7 +9,7 @@ from business_service.tests.utils.create_business_profile import create_business
 
 from business_service.models.business_product import BusinessProduct
 from business_service.models.business_product_step import BusinessProductStep
-from accounts.models.admin_data_confirm import AdminDataConfirm
+from accounts.models.system_data_confirm import SystemDataConfirm
 
 
 
@@ -35,7 +35,7 @@ class TestProductStep(APITestCase):
                                                           to_date='2020-11-04',
                                                           step_number=1)
 
-        AdminDataConfirm.objects.create(target=product_step)
+        SystemDataConfirm.objects.create(target=product_step)
 
         post_data = {'comment': 'accepted'}
 
@@ -43,7 +43,7 @@ class TestProductStep(APITestCase):
 
         cnt = ContentType.objects.get_for_model(product_step)
 
-        admin_confirm = get_object_or_404(AdminDataConfirm,
+        admin_confirm = get_object_or_404(SystemDataConfirm,
                                           target_ct=cnt,
                                           target_id=product_step.id)
 
@@ -66,7 +66,7 @@ class TestProductStep(APITestCase):
                                                           to_date='2020-11-04',
                                                           step_number=1)
 
-        AdminDataConfirm.objects.create(target=product_step)
+        SystemDataConfirm.objects.create(target=product_step)
 
         post_data = {'comment': 'rejected'}
 
@@ -74,7 +74,7 @@ class TestProductStep(APITestCase):
 
         cnt = ContentType.objects.get_for_model(product_step)
 
-        admin_confirm = get_object_or_404(AdminDataConfirm,
+        admin_confirm = get_object_or_404(SystemDataConfirm,
                                           target_ct=cnt,
                                           target_id=product_step.id)
 

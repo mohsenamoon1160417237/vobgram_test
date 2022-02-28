@@ -1,12 +1,12 @@
 from rest_framework import serializers
-from accounts.models.admin_data_confirm import AdminDataConfirm
+from accounts.models.system_data_confirm import SystemDataConfirm
 
 
-class AdminDataConfirmSerializer(serializers.ModelSerializer):
+class SystemDataConfirmSerializer(serializers.ModelSerializer):
 
     class Meta:
 
-        model = AdminDataConfirm
+        model = SystemDataConfirm
 
         fields = ['data_type',
                   'data_value',

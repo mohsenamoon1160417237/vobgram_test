@@ -6,9 +6,9 @@ from django.shortcuts import get_object_or_404
 from business_service.models.business_product import BusinessProduct
 from business_service.models.business_product_step import BusinessProductStep
 
-from accounts.models.admin_data_confirm import AdminDataConfirm
+from accounts.models.system_data_confirm import SystemDataConfirm
 
-from accounts.model_serializers.admin_data_confirm import AdminDataConfirmSerializer
+from accounts.model_serializers.system_data_confirm import SystemDataConfirmSerializer
 from .business_product_step import AdminBusinessProductStepViewSerializer
 
 
@@ -38,9 +38,9 @@ class AdminBusinessProductViewSerializer(serializers.ModelSerializer):
 
         cnt = ContentType.objects.get_for_model(obj)
 
-        admin_conf = get_object_or_404(AdminDataConfirm,
+        admin_conf = get_object_or_404(SystemDataConfirm,
                                        target_ct=cnt,
                                        target_id=obj.id)
 
-        serializer = AdminDataConfirmSerializer(admin_conf)
+        serializer = SystemDataConfirmSerializer(admin_conf)
         return serializer.data

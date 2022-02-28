@@ -10,7 +10,7 @@ from accounts.permissions.profile_first_step import ProfileFirstStep
 
 from business_service.models.service_request import ServiceRequest
 from accounts.models.profiles.business import BusinessProfile
-from accounts.models.admin_data_confirm import AdminDataConfirm
+from accounts.models.system_data_confirm import SystemDataConfirm
 
 
 class CustomerSendServiceRequest(GenericAPIView):
@@ -24,7 +24,7 @@ class CustomerSendServiceRequest(GenericAPIView):
         service = get_object_or_404(ServiceRequest, id=serv_id)
 
         cnt = ContentType.objects.get_for_model(service)
-        admin_conf = get_object_or_404(AdminDataConfirm,
+        admin_conf = get_object_or_404(SystemDataConfirm,
                                        target_ct=cnt,
                                        target_id=service.id)
 

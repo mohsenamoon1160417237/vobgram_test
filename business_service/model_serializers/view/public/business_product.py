@@ -8,8 +8,8 @@ from business_service.models.business_product_step import BusinessProductStep
 from business_service.model_serializers.view.business_product_step import BusinessProductStepViewSerializer
 from business_service.model_serializers.view.business_product_vote import BusinessProductVoteViewSerializer
 
-from accounts.model_serializers.admin_data_confirm import AdminDataConfirmSerializer
-from accounts.models.admin_data_confirm import AdminDataConfirm
+from accounts.model_serializers.system_data_confirm import SystemDataConfirmSerializer
+from accounts.models.system_data_confirm import SystemDataConfirm
 
 
 class PublicBusinessProductViewSerializer(serializers.ModelSerializer):
@@ -29,11 +29,11 @@ class PublicBusinessProductViewSerializer(serializers.ModelSerializer):
     def get_admin_data(self, obj):
 
         cnt = ContentType.objects.get_for_model(obj)
-        admin_confirm = get_object_or_404(AdminDataConfirm,
+        admin_confirm = get_object_or_404(SystemDataConfirm,
                                           target_ct=cnt,
                                           target_id=obj.id)
 
-        serializer = AdminDataConfirmSerializer(instance=admin_confirm)
+        serializer = SystemDataConfirmSerializer(instance=admin_confirm)
         return serializer.data
 
     def get_product_steps(self, obj):
@@ -44,7 +44,7 @@ class PublicBusinessProductViewSerializer(serializers.ModelSerializer):
 
             cnt = ContentType.objects.get_for_model(product_step)
 
-            admin_confirm = get_object_or_404(AdminDataConfirm,
+            admin_confirm = get_object_or_404(SystemDataConfirm,
                                               target_ct=cnt,
                                               target_id=product_step.id,
                                               is_confirmed=True,

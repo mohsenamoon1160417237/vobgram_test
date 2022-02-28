@@ -7,7 +7,7 @@ from django.contrib.contenttypes.models import ContentType
 from .utils.create_admin_user import create_admin_user
 
 from accounts.models.profiles.business import BusinessProfile
-from accounts.models.admin_data_confirm import AdminDataConfirm
+from accounts.models.system_data_confirm import SystemDataConfirm
 
 
 class TestBusinessData(APITestCase):
@@ -28,8 +28,8 @@ class TestBusinessData(APITestCase):
 
         cnt = ContentType.objects.get_for_model(profile)
 
-        AdminDataConfirm.objects.create(target=profile,
-                                        data_type='company_name')
+        SystemDataConfirm.objects.create(target=profile,
+                                         data_type='company_name')
 
         post_data = {'comment': 'hello'}
 
@@ -38,7 +38,7 @@ class TestBusinessData(APITestCase):
 
         assert data['status'] == 'accepted business data'
 
-        cmp_name_conf = get_object_or_404(AdminDataConfirm,
+        cmp_name_conf = get_object_or_404(SystemDataConfirm,
                                           target_ct=cnt,
                                           target_id=profile.id,
                                           data_type='company_name')
@@ -56,8 +56,8 @@ class TestBusinessData(APITestCase):
 
         cnt = ContentType.objects.get_for_model(profile)
 
-        AdminDataConfirm.objects.create(target=profile,
-                                        data_type='company_name')
+        SystemDataConfirm.objects.create(target=profile,
+                                         data_type='company_name')
 
         post_data = {'comment': 'hello'}
 
@@ -66,7 +66,7 @@ class TestBusinessData(APITestCase):
 
         assert data['status'] == 'rejected business data'
 
-        cmp_name_conf = get_object_or_404(AdminDataConfirm,
+        cmp_name_conf = get_object_or_404(SystemDataConfirm,
                                           target_ct=cnt,
                                           target_id=profile.id,
                                           data_type='company_name')

@@ -10,7 +10,7 @@ from accounts.permissions.profile_first_step import ProfileFirstStep
 from business_service.models.business_skill import BusinessSkill
 from business_service.models.business_specialty import BusinessSpecialty
 
-from accounts.models.admin_data_confirm import AdminDataConfirm
+from accounts.models.system_data_confirm import SystemDataConfirm
 from accounts.models.profiles.business import BusinessProfile
 
 from business_service.model_serializers.view.public.business_profile import PublicBusinessProfileViewSerializer
@@ -25,9 +25,9 @@ class SearchBusinessProfile(GenericAPIView):
         skill_cnt = ContentType.objects.get(app_label='business_service',
                                             model='validskill')
 
-        skill_admin_confs = AdminDataConfirm.objects.filter(target_ct=skill_cnt,
-                                                            is_latest=True,
-                                                            is_confirmed=True)
+        skill_admin_confs = SystemDataConfirm.objects.filter(target_ct=skill_cnt,
+                                                             is_latest=True,
+                                                             is_confirmed=True)
 
         skills = BusinessSkill.objects.filter(Q(valid_skill__title__icontains=query) |
                                               Q(valid_skill__description__icontains=query),
@@ -37,17 +37,17 @@ class SearchBusinessProfile(GenericAPIView):
         spec_cnt = ContentType.objects.get(app_label='business_service',
                                            model='businessspecialty')
 
-        spec_admin_confs = AdminDataConfirm.objects.filter(target_ct=spec_cnt,
-                                                           is_latest=True,
-                                                           is_confirmed=True)
+        spec_admin_confs = SystemDataConfirm.objects.filter(target_ct=spec_cnt,
+                                                            is_latest=True,
+                                                            is_confirmed=True)
 
         specialties = BusinessSpecialty.objects.filter(id__in=spec_admin_confs.values('target_id'))
 
         prof_cnt = ContentType.objects.get(app_label='accounts',
                                            model='businessprofile')
 
-        prof_admin_confs = AdminDataConfirm.objects.filter(target_ct=prof_cnt,
-                                                           is_latest=True)
+        prof_admin_confs = SystemDataConfirm.objects.filter(target_ct=prof_cnt,
+                                                            is_latest=True)
 
         for ad_conf in prof_admin_confs:
 

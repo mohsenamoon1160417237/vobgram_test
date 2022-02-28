@@ -8,7 +8,7 @@ from django.shortcuts import get_object_or_404
 from accounts.permissions.profile_first_step import ProfileFirstStep
 from accounts.permissions.has_business_profile import HasBusinessProfile
 
-from accounts.models.admin_data_confirm import AdminDataConfirm
+from accounts.models.system_data_confirm import SystemDataConfirm
 
 from business_service.model_serializers.valid_skill import ValidSkillSerializer
 from business_service.model_serializers.business_skill import BusinessSkillSerializer
@@ -25,7 +25,7 @@ class AddValidSkill(GenericAPIView):
         skill = serializer.save()
 
         cnt = ContentType.objects.get_for_model(skill)
-        admin_conf = get_object_or_404(AdminDataConfirm,
+        admin_conf = get_object_or_404(SystemDataConfirm,
                                        target_ct=cnt,
                                        target_id=skill.id,
                                        is_latest=True)

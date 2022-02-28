@@ -8,7 +8,7 @@ from admin_action.permissions.is_admin import IsAdmin
 
 from business_service.model_serializers.view.business_specialty import BusinessSpecialtyViewSerializer
 
-from accounts.models.admin_data_confirm import AdminDataConfirm
+from accounts.models.system_data_confirm import SystemDataConfirm
 from business_service.models.business_specialty import BusinessSpecialty
 
 
@@ -20,9 +20,9 @@ class AdminNotConfirmedBusinessSpecialtyList(GenericAPIView):
     def get(self, request):
 
         cnt = ContentType.objects.get_for_model(BusinessSpecialty)
-        admin_confs = AdminDataConfirm.objects.filter(target_ct=cnt,
-                                                      is_confirmed=False,
-                                                      is_latest=True)
+        admin_confs = SystemDataConfirm.objects.filter(target_ct=cnt,
+                                                       is_confirmed=False,
+                                                       is_latest=True)
 
         specialties = BusinessSpecialty.objects.filter(id__in=admin_confs.values('target_id'))
 

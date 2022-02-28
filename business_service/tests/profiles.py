@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib.contenttypes.models import ContentType
 
 from accounts.tests.utils.create_first_step import create_first_step
-from accounts.models.admin_data_confirm import AdminDataConfirm
+from accounts.models.system_data_confirm import SystemDataConfirm
 from accounts.models.profiles.business import BusinessProfile
 
 from business_service.models.business_skill import BusinessSkill
@@ -48,7 +48,7 @@ class TestProfiles(APITransactionTestCase):
                                         title='web')
 
         cnt = ContentType.objects.get_for_model(valid_skill)
-        admin_confirm = get_object_or_404(AdminDataConfirm,
+        admin_confirm = get_object_or_404(SystemDataConfirm,
                                           target_ct=cnt,
                                           target_id=valid_skill.id)
 
@@ -61,13 +61,13 @@ class TestProfiles(APITransactionTestCase):
                                              user=user)
 
         cnt = ContentType.objects.get_for_model(business_profile)
-        company_name_admin = get_object_or_404(AdminDataConfirm,
+        company_name_admin = get_object_or_404(SystemDataConfirm,
                                                target_ct=cnt,
                                                target_id=business_profile.id,
                                                data_type='company_name')
         company_name_admin.is_confirmed = True
         company_name_admin.save()
-        company_phone_number_admin = get_object_or_404(AdminDataConfirm,
+        company_phone_number_admin = get_object_or_404(SystemDataConfirm,
                                                        target_ct=cnt,
                                                        target_id=business_profile.id,
                                                        data_type='company_phone_number')

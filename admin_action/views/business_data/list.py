@@ -7,7 +7,7 @@ from django.contrib.contenttypes.models import ContentType
 from admin_action.permissions.is_admin import IsAdmin
 from accounts.model_serializers.view.admin.business_profile import AdminBusinessProfileViewSerializer
 
-from accounts.models.admin_data_confirm import AdminDataConfirm
+from accounts.models.system_data_confirm import SystemDataConfirm
 from accounts.models.profiles.business import BusinessProfile
 
 
@@ -23,14 +23,14 @@ class AdminNotConfirmedBusinessDataList(GenericAPIView):
 
         cnt = ContentType.objects.get_for_model(sample_profile)
 
-        admin_confirms = AdminDataConfirm.objects.filter(target_ct=cnt)
+        admin_confirms = SystemDataConfirm.objects.filter(target_ct=cnt)
 
         for profile in profiles:
 
             cnt = ContentType.objects.get_for_model(profile)
 
-            data_confs = AdminDataConfirm.objects.filter(target_ct=cnt,
-                                                         target_id=profile.id)
+            data_confs = SystemDataConfirm.objects.filter(target_ct=cnt,
+                                                          target_id=profile.id)
 
             cmp_name_conf = data_confs.filter(data_type='company_name')[0]
             cmp_phn_conf = data_confs.filter(data_type='company_phone_number')[0]

@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404
 from .utils.create_admin_user import create_admin_user
 
 from business_service.models.business_specialty import BusinessSpecialty
-from accounts.models.admin_data_confirm import AdminDataConfirm
+from accounts.models.system_data_confirm import SystemDataConfirm
 from accounts.models.profiles.business import BusinessProfile
 
 
@@ -29,13 +29,13 @@ class TestBusinessSpecialty(APITestCase):
                                                      note='good',
                                                      education_institute_name='uni')
 
-        admin_conf = AdminDataConfirm.objects.create(target=specialty)
+        admin_conf = SystemDataConfirm.objects.create(target=specialty)
 
         post_data = {'comment': 'good'}
 
         self.client.post(self.accept_specialty_url, post_data)
 
-        admin_conf = get_object_or_404(AdminDataConfirm, id=admin_conf.id)
+        admin_conf = get_object_or_404(SystemDataConfirm, id=admin_conf.id)
 
         assert admin_conf.is_confirmed is True
 
@@ -53,12 +53,12 @@ class TestBusinessSpecialty(APITestCase):
                                                      note='good',
                                                      education_institute_name='uni')
 
-        admin_conf = AdminDataConfirm.objects.create(target=specialty)
+        admin_conf = SystemDataConfirm.objects.create(target=specialty)
 
         post_data = {'comment': 'good'}
 
         self.client.post(self.reject_specialty_url, post_data)
 
-        admin_conf = get_object_or_404(AdminDataConfirm, id=admin_conf.id)
+        admin_conf = get_object_or_404(SystemDataConfirm, id=admin_conf.id)
 
         assert admin_conf.is_confirmed is False

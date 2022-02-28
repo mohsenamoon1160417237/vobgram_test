@@ -6,7 +6,7 @@ from django.contrib.contenttypes.models import ContentType
 
 from .utils.create_admin_user import create_admin_user
 
-from accounts.models.admin_data_confirm import AdminDataConfirm
+from accounts.models.system_data_confirm import SystemDataConfirm
 from business_service.models.valid_skill import ValidSkill
 
 
@@ -29,12 +29,12 @@ class TestValidSkill(APITestCase):
         user = create_admin_user()
         self.client.force_authenticate(user)
         skill = ValidSkill.objects.create(title='web')
-        AdminDataConfirm.objects.create(target=skill)
+        SystemDataConfirm.objects.create(target=skill)
         self.client.post(self.accept_skill_url)
 
         cnt = ContentType.objects.get_for_model(skill)
 
-        admin_confirm = get_object_or_404(AdminDataConfirm,
+        admin_confirm = get_object_or_404(SystemDataConfirm,
                                           target_ct=cnt,
                                           target_id=1)
 
@@ -46,13 +46,13 @@ class TestValidSkill(APITestCase):
         user = create_admin_user()
         self.client.force_authenticate(user)
         skill = ValidSkill.objects.create(title='web')
-        AdminDataConfirm.objects.create(target=skill)
+        SystemDataConfirm.objects.create(target=skill)
         self.client.post(self.reject_skill_url)
 
         cnt = ContentType.objects.get_for_model(skill)
 
-        admin_confirms = AdminDataConfirm.objects.filter(target_ct=cnt,
-                                                         target_id=1)
+        admin_confirms = SystemDataConfirm.objects.filter(target_ct=cnt,
+                                                          target_id=1)
 
         assert not admin_confirms.exists()
 

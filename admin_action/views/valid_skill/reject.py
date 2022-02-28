@@ -13,7 +13,7 @@ from business_service.models.valid_skill import ValidSkill
 from business_service.models.business_skill import BusinessSkill
 from business_service.models.business_product import BusinessProduct
 
-from accounts.models.admin_data_confirm import AdminDataConfirm
+from accounts.models.system_data_confirm import SystemDataConfirm
 
 
 class AdminRejectValidSKill(GenericAPIView):
@@ -27,7 +27,7 @@ class AdminRejectValidSKill(GenericAPIView):
         business_skills = BusinessSkill.objects.filter(valid_skill=valid_skill)
 
         cnt = ContentType.objects.get_for_model(valid_skill)
-        admin_confirm = get_object_or_404(AdminDataConfirm,
+        admin_confirm = get_object_or_404(SystemDataConfirm,
                                           target_ct=cnt,
                                           target_id=valid_skill.id)
         admin_confirm.delete()

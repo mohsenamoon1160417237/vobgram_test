@@ -8,7 +8,7 @@ from .utils.create_admin_user import create_admin_user
 from business_service.tests.utils.create_business_profile import create_business_profile
 
 from business_service.models.business_product import BusinessProduct
-from accounts.models.admin_data_confirm import AdminDataConfirm
+from accounts.models.system_data_confirm import SystemDataConfirm
 
 
 class TestProduct(APITestCase):
@@ -26,7 +26,7 @@ class TestProduct(APITestCase):
                                                  title='app',
                                                  description='...')
 
-        AdminDataConfirm.objects.create(target=product)
+        SystemDataConfirm.objects.create(target=product)
 
         post_data = {'comment': 'accepted'}
 
@@ -34,7 +34,7 @@ class TestProduct(APITestCase):
 
         cnt = ContentType.objects.get_for_model(product)
 
-        admin_confirm = get_object_or_404(AdminDataConfirm,
+        admin_confirm = get_object_or_404(SystemDataConfirm,
                                           target_ct=cnt,
                                           target_id=product.id)
 
@@ -50,7 +50,7 @@ class TestProduct(APITestCase):
                                                  title='app',
                                                  description='...')
 
-        AdminDataConfirm.objects.create(target=product)
+        SystemDataConfirm.objects.create(target=product)
 
         post_data = {'comment': 'rejected'}
 
@@ -58,7 +58,7 @@ class TestProduct(APITestCase):
 
         cnt = ContentType.objects.get_for_model(product)
 
-        admin_confirm = get_object_or_404(AdminDataConfirm,
+        admin_confirm = get_object_or_404(SystemDataConfirm,
                                           target_ct=cnt,
                                           target_id=product.id)
 
