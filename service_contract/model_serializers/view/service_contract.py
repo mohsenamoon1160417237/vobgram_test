@@ -1,8 +1,8 @@
 from rest_framework import serializers
 
-from business_service.models.service_contract import ServiceContract
-from .service_request.customer import CustomerServiceRequestViewSerializer
-from .public.business_profile import PublicBusinessProfileViewSerializer
+from service_contract.models.service_contract import ServiceContract
+from business_service.model_serializers.view.service_request.customer import CustomerServiceRequestViewSerializer
+from business_service.model_serializers.view.public.business_profile import PublicBusinessProfileViewSerializer
 
 from accounts.model_serializers.view.admin_profile import AdminProfileViewSerializer
 

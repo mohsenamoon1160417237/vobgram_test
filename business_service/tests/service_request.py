@@ -7,8 +7,8 @@ from .utils.create_business_profile import create_business_profile
 
 from business_service.models.service_request import ServiceRequest
 from business_service.models.service_request_bid import ServiceRequestBid
-from business_service.models.service_contract import ServiceContract
 from business_service.models.service_review import ServiceReview
+from service_contract.models.service_contract import ServiceContract
 
 
 class TestServiceRequest(APITestCase):

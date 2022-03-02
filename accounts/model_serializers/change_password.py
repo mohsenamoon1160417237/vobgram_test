@@ -2,7 +2,6 @@ from rest_framework import serializers
 from accounts.models.UserRegistration import UserRegistration
 
 
-
 class ChangePasswordSerializer(serializers.ModelSerializer):
 
     current_password = serializers.CharField(max_length=30)

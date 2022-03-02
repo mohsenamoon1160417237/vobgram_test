@@ -24,10 +24,6 @@ from .views.service_request.customer_add_skill import CustomerAddSkillToServiceR
 from .views.service_request.list.customer import CustomerServiceRequestList
 from .views.service_request.list.server_received import ServerReceivedServiceRequestList
 
-from .views.service_request.contract_assign.get import GetContractAssign
-from .views.service_request.contract_assign.customer import CustomerAssignContract
-from .views.service_request.contract_assign.server import ServerAssignContract
-
 from .views.business_specialty.add import ServerAddBusinessSpecialty
 from .views.business_specialty.list import ServerBusinessSpecialtyList
 
@@ -68,9 +64,5 @@ urlpatterns = [
     path('add/business_specialty/', ServerAddBusinessSpecialty.as_view(), name='add_business_specialty'),
     path('edit/business_specialty/<int:spec_id>/', ServerAddBusinessSpecialty.as_view(),
          name='edit_get_business_specialty'),
-    path('list/business_specialty/', ServerBusinessSpecialtyList.as_view(), name='business_specialty_list'),
-
-    path('get/contract_assign/<int:ctr_asgn_id>/', GetContractAssign.as_view(), name='get_contract_assign'),
-    path('assign/customer/<int:ctr_asgn_id>/', CustomerAssignContract.as_view(), name='customer_assign_contract'),
-    path('assign/server/<int:ctr_asgn_id>/', ServerAssignContract.as_view(), name='server_assign_contract'),
+    path('list/business_specialty/', ServerBusinessSpecialtyList.as_view(), name='business_specialty_list')
 ]

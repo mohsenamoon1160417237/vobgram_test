@@ -1,8 +1,8 @@
 from rest_framework import serializers
 
-from business_service.models.contract_assign import ContractAssign
+from service_contract.models.contract_assign import ContractAssign
 
-from .service_contract import ServiceContractViewSerializer
+from service_contract.model_serializers.view.service_contract import ServiceContractViewSerializer
 
 
 class ContractAssignViewSerializer(serializers.ModelSerializer):

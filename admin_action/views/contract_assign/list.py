@@ -4,9 +4,9 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from admin_action.permissions.is_admin_or_expert import IsAdminOrExpert
 
-from business_service.models.contract_assign import ContractAssign
+from service_contract.models.contract_assign import ContractAssign
 
-from business_service.model_serializers.view.contract_assign import ContractAssignViewSerializer
+from service_contract.model_serializers.view.contract_assign import ContractAssignViewSerializer
 
 
 class ContractAssignList(GenericAPIView):

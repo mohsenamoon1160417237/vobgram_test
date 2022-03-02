@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from admin_action.permissions.is_admin import IsAdmin
 
-from business_service.models.service_contract import ServiceContract
+from service_contract.models.service_contract import ServiceContract
 
 
 class ExpertJoinContract(GenericAPIView):

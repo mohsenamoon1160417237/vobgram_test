@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404
 from accounts.permissions.profile_first_step import ProfileFirstStep
 
 from business_service.models.service_request import ServiceRequest
-from business_service.models.service_contract import ServiceContract
+from service_contract.models.service_contract import ServiceContract
 
 from business_service.model_serializers.service_review import ServiceReviewSerializer
 

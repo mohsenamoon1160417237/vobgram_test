@@ -4,7 +4,7 @@ from django.db import IntegrityError
 
 from business_service.models.service_review import ServiceReview
 from business_service.models.service_request import ServiceRequest
-from business_service.models.service_contract import ServiceContract
+from service_contract.models.service_contract import ServiceContract
 
 from .utils.update_business_profile_rate import update_business_profile_rate
 

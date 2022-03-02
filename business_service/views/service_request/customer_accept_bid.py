@@ -8,8 +8,8 @@ from accounts.permissions.profile_first_step import ProfileFirstStep
 
 from accounts.models.system_data_confirm import SystemDataConfirm
 from business_service.models.service_request_bid import ServiceRequestBid
-from business_service.models.service_contract import ServiceContract
-from business_service.models.contract_assign import ContractAssign
+from service_contract.models.contract_assign import ContractAssign
+from service_contract.models.service_contract import ServiceContract
 
 
 class CustomerAcceptBid(GenericAPIView):

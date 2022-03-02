@@ -1,0 +1,2 @@
+docker build --tag django-vobogram-test .
+docker run --publish 8000:8000 django-vobogram-test
