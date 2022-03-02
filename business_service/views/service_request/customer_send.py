@@ -48,8 +48,7 @@ class CustomerSendServiceRequest(GenericAPIView):
 
         create_systemNotif(profile.user,
                            'You have received a service request from "{} {}"'.format(first_name, last_name),
-                           cnt,
-                           serv_id,
+                           service,
                            None)
 
         return Response({'status': 'sent service request'})

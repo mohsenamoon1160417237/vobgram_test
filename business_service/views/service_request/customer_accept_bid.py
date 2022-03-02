@@ -3,7 +3,6 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import IsAuthenticated
 
 from django.shortcuts import get_object_or_404
-from django.contrib.contenttypes.models import ContentType
 
 from accounts.permissions.profile_first_step import ProfileFirstStep
 from system_notification.utils.create_systemNotification import create_systemNotif
@@ -21,7 +20,6 @@ class CustomerAcceptBid(GenericAPIView):
     def post(self, request, bid_id):
 
         bid = get_object_or_404(ServiceRequestBid, id=bid_id)
-        cnt = ContentType.objects.get_for_model(bid)
 
         service_request = bid.service_request
 
@@ -49,8 +47,7 @@ class CustomerAcceptBid(GenericAPIView):
 
         create_systemNotif(business_profile.user,
                            '"{} {}" has accepted your bid'.format(first_name, last_name),
-                           cnt,
-                           bid_id,
+                           bid,
                            None)
 
         return Response({'status': 'created service contract'})

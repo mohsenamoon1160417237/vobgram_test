@@ -31,8 +31,7 @@ class AdminRejectServiceRequest(GenericAPIView):
 
         create_systemNotif(user,
                            'Service request "{}" has been rejected by admin'.format(service_request.title),
-                           cnt,
-                           req_id,
+                           service_request,
                            None)
 
         return Response({'status': 'rejected service request'})

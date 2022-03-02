@@ -35,8 +35,7 @@ class AdminAcceptBusinessData(GenericAPIView):
         create_systemNotif(business_profile.user,
                            'Your {} "{}" has been confirmed by admin'.format(data_type,
                                                                              acc_field),
-                           cnt,
-                           prof_id,
+                           business_profile,
                            data_type)
 
         return Response({'status': 'accepted business data'})

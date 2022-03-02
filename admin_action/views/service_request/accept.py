@@ -31,8 +31,7 @@ class AdminAcceptServiceRequest(GenericAPIView):
 
         create_systemNotif(user,
                            'Service request "{}" has been confirmed by admin'.format(service_request.title),
-                           cnt,
-                           req_id,
+                           service_request,
                            None)
 
         return Response({'status': 'accepted service request'})

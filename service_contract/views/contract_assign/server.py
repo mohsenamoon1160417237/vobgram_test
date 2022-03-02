@@ -3,7 +3,6 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import IsAuthenticated
 
 from django.shortcuts import get_object_or_404
-from django.contrib.contenttypes.models import ContentType
 
 from accounts.permissions.profile_first_step import ProfileFirstStep
 from system_notification.utils.create_systemNotification import create_systemNotif
@@ -19,8 +18,6 @@ class ServerAssignContract(GenericAPIView):
 
         contract_assign = get_object_or_404(ContractAssign, id=ctr_asgn_id)
 
-        cnt = ContentType.objects.get_for_model(contract_assign)
-
         contract_assign.server_assigned = True
         contract_assign.save()
 
@@ -30,8 +27,7 @@ class ServerAssignContract(GenericAPIView):
 
         create_systemNotif(rec,
                            '"{} {}" has assigned the contract'.format(first_name, last_name),
-                           cnt,
-                           ctr_asgn_id,
+                           contract_assign,
                            None)
 
         return Response({'status': 'server assigned contract'})

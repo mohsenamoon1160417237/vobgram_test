@@ -35,8 +35,7 @@ class AdminAcceptValidSkill(GenericAPIView):
 
         create_systemNotif(business_profile.user,
                            'Skill "{}" has been confirmed by admin'.format(skill.title),
-                           cnt,
-                           skill_id,
+                           skill,
                            None)
 
         return Response({'status': 'accepted skill'})

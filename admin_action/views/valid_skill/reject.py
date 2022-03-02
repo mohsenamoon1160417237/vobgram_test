@@ -57,7 +57,6 @@ class AdminRejectValidSKill(GenericAPIView):
 
         create_systemNotif(business_profile.user,
                            'Skill "{}" has been rejected by admin'.format(valid_skill.title),
-                           cnt,
                            None,
                            None)
 

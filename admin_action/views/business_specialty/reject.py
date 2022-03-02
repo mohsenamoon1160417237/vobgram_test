@@ -28,8 +28,7 @@ class AdminBusinessSpecialtyReject(GenericAPIView):
 
         create_systemNotif(specialty.user,
                            'Your specialty "{}" has been rejected by admin'.format(specialty.title),
-                           cnt,
-                           spec_id,
+                           specialty,
                            None)
 
         return Response({'status': 'rejected specialty'})

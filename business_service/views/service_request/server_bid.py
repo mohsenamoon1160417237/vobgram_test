@@ -4,7 +4,6 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.serializers import ValidationError
 
 from django.shortcuts import get_object_or_404
-from django.contrib.contenttypes.models import ContentType
 
 from accounts.permissions.profile_first_step import ProfileFirstStep
 from accounts.permissions.has_business_profile import HasBusinessProfile
@@ -44,15 +43,12 @@ class ServerServiceRequestBid(GenericAPIView):
 
         bid = serializer.save()
 
-        cnt = ContentType.objects.get_for_model(bid)
-
         first_name = request.user.personal_profile.first_name
         last_name = request.user.personal_profile.last_name
 
         create_systemNotif(service_request.requester.user,
                            '"{} {}" bid on your request'.format(first_name, last_name),
-                           cnt,
-                           bid.id,
+                           bid,
                            None)
 
         return Response({'status': 'bid service request',

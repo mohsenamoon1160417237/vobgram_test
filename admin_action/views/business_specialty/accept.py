@@ -28,8 +28,7 @@ class AdminBusinessSpecialtyAccept(GenericAPIView):
 
         create_systemNotif(specialty.user,
                            'Your specialty "{}" has been confirmed by admin'.format(specialty.title),
-                           cnt,
-                           spec_id,
+                           specialty,
                            None)
 
         return Response({'status': 'accepted specialty'})
