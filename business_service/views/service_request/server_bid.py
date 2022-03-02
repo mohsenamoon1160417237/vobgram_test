@@ -4,9 +4,11 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.serializers import ValidationError
 
 from django.shortcuts import get_object_or_404
+from django.contrib.contenttypes.models import ContentType
 
 from accounts.permissions.profile_first_step import ProfileFirstStep
 from accounts.permissions.has_business_profile import HasBusinessProfile
+from system_notification.utils.create_systemNotification import create_systemNotif
 
 from business_service.models.service_request import ServiceRequest
 
@@ -40,7 +42,18 @@ class ServerServiceRequestBid(GenericAPIView):
 
             raise ValidationError({'error': 'The request is closed'})
 
-        serializer.save()
+        bid = serializer.save()
+
+        cnt = ContentType.objects.get_for_model(bid)
+
+        first_name = request.user.personal_profile.first_name
+        last_name = request.user.personal_profile.last_name
+
+        create_systemNotif(service_request.requester.user,
+                           '"{} {}" bid on your request'.format(first_name, last_name),
+                           cnt,
+                           bid.id,
+                           None)
 
         return Response({'status': 'bid service request',
                          'bid': serializer.data})

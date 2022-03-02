@@ -9,7 +9,6 @@ class SystemDataConfirmSerializer(serializers.ModelSerializer):
         model = SystemDataConfirm
 
         fields = ['data_type',
-                  'data_value',
                   'is_confirmed',
                   'comment',
                   'date_time',

@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'business_service',
     'admin_action',
     'service_contract',
+    'system_notification',
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
     'django.contrib.admin',

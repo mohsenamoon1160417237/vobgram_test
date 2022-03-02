@@ -3,8 +3,10 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import IsAuthenticated
 
 from django.shortcuts import get_object_or_404
+from django.contrib.contenttypes.models import ContentType
 
 from accounts.permissions.profile_first_step import ProfileFirstStep
+from system_notification.utils.create_systemNotification import create_systemNotif
 
 from accounts.models.system_data_confirm import SystemDataConfirm
 from business_service.models.service_request_bid import ServiceRequestBid
@@ -19,12 +21,14 @@ class CustomerAcceptBid(GenericAPIView):
     def post(self, request, bid_id):
 
         bid = get_object_or_404(ServiceRequestBid, id=bid_id)
+        cnt = ContentType.objects.get_for_model(bid)
+
         service_request = bid.service_request
 
         service_request.finished = True
         service_request.save()
 
-        business_profile = request.user.business_profile
+        business_profile = bid.bidder
 
         contract = ServiceContract.objects.create(service_request=service_request,
                                                   server=business_profile,
@@ -35,9 +39,18 @@ class CustomerAcceptBid(GenericAPIView):
         contract_assign = ContractAssign.objects.create(contract=contract)
 
         admin_conf = SystemDataConfirm.objects.create(target=contract_assign,
-                                                     business_profile=business_profile)
+                                                      business_profile=business_profile)
 
         contract_assign.admin_conf = admin_conf
         contract_assign.save()
+
+        first_name = request.user.personal_profile.first_name
+        last_name = request.user.personal_profile.last_name
+
+        create_systemNotif(business_profile.user,
+                           '"{} {}" has accepted your bid'.format(first_name, last_name),
+                           cnt,
+                           bid_id,
+                           None)
 
         return Response({'status': 'created service contract'})

@@ -7,6 +7,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib.contenttypes.models import ContentType
 
 from accounts.permissions.profile_first_step import ProfileFirstStep
+from system_notification.utils.create_systemNotification import create_systemNotif
 
 from business_service.models.service_request import ServiceRequest
 from accounts.models.profiles.business import BusinessProfile
@@ -41,5 +42,14 @@ class CustomerSendServiceRequest(GenericAPIView):
         service.receivers.add(profile)
 
         service.save()
+
+        first_name = request.user.personal_profile.first_name
+        last_name = request.user.personal_profile.last_name
+
+        create_systemNotif(profile.user,
+                           'You have received a service request from "{} {}"'.format(first_name, last_name),
+                           cnt,
+                           serv_id,
+                           None)
 
         return Response({'status': 'sent service request'})

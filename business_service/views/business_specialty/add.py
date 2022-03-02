@@ -13,6 +13,7 @@ from business_service.model_serializers.view.business_specialty import BusinessS
 
 from business_service.models.business_specialty import BusinessSpecialty
 from accounts.models.system_data_confirm import SystemDataConfirm
+from system_notification.models.system_notification import SystemNotification
 
 
 class ServerAddBusinessSpecialty(GenericAPIView):
@@ -81,6 +82,15 @@ class ServerAddBusinessSpecialty(GenericAPIView):
                                           target_id=specialty.id)
 
         admin_confirm.delete()
+
+        notifications = SystemNotification.objects.filter(target_ct=cnt,
+                                                          target_id=spec_id)
+        if notifications.exists():
+
+            notification = notifications[0]
+            notification.target_id = None
+            notification.save()
+
         specialty.delete()
 
         return Response({'status': 'deleted business specialty'})

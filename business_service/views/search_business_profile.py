@@ -41,7 +41,9 @@ class SearchBusinessProfile(GenericAPIView):
                                                             is_latest=True,
                                                             is_confirmed=True)
 
-        specialties = BusinessSpecialty.objects.filter(id__in=spec_admin_confs.values('target_id'))
+        specialties = BusinessSpecialty.objects.filter(Q(title__icontains=query) |
+                                                       Q(note__icontains=query),
+                                                       id__in=spec_admin_confs.values('target_id'))
 
         prof_cnt = ContentType.objects.get(app_label='accounts',
                                            model='businessprofile')

@@ -13,7 +13,6 @@ from accounts.model_serializers.business_profile import BusinessProfileSerialize
 
 
 
-
 class BusinessData(GenericAPIView):
 
     permission_classes = [IsAuthenticated, ProfileFirstStep]
@@ -26,8 +25,8 @@ class BusinessData(GenericAPIView):
             business_profile = business_profiles[0]
             cnt = ContentType.objects.get_for_model(business_profile)
             admin_data_confirms = SystemDataConfirm.objects.filter(target_ct=cnt,
-                                                                  target_id=business_profile.id,
-                                                                  is_latest=True)
+                                                                   target_id=business_profile.id,
+                                                                   is_latest=True)
             business_profile_serializer = BusinessProfileSerializer(business_profile)
             admin_confirm_serializer = SystemDataConfirmSerializer(admin_data_confirms, many=True)
 
