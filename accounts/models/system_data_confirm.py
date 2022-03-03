@@ -19,7 +19,7 @@ class SystemDataConfirm(models.Model):
                                          null=True)
     target_ct = models.ForeignKey(ContentType,
                                   on_delete=models.CASCADE,
-                                  related_name='obj')
+                                  related_name='conf_obj')
     target_id = models.PositiveIntegerField()
     target = GenericForeignKey('target_ct', 'target_id')
     data_type = models.CharField(max_length=30,

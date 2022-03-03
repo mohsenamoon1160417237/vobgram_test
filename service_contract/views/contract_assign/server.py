@@ -20,13 +20,17 @@ class ServerAssignContract(GenericAPIView):
 
         contract_assign.server_assigned = True
         contract_assign.save()
+        contract = contract_assign.contract
+        service_request = contract.service_request
 
         rec = contract_assign.contract.service_request.requester
         first_name = request.user.personal_profile.first_name
         last_name = request.user.personal_profile.last_name
 
         create_systemNotif(rec,
-                           '"{} {}" has assigned the contract'.format(first_name, last_name),
+                           '"{} {}" has assigned the contract "{}"'.format(first_name,
+                                                                           last_name,
+                                                                           service_request.title),
                            contract_assign,
                            None)
 

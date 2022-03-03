@@ -46,7 +46,9 @@ class CustomerAcceptBid(GenericAPIView):
         last_name = request.user.personal_profile.last_name
 
         create_systemNotif(business_profile.user,
-                           '"{} {}" has accepted your bid'.format(first_name, last_name),
+                           '"{} {}" has accepted your bid on "{}" service request'.format(first_name,
+                                                                                          last_name,
+                                                                                          contract.service_request.title),
                            bid,
                            None)
 

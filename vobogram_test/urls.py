@@ -23,4 +23,5 @@ urlpatterns = [
     path('business_service/', include('business_service.urls')),
     path('admin/', include('admin_action.urls')),
     path('contract/', include('service_contract.urls')),
+    path('notification/', include('system_notification.urls')),
 ]

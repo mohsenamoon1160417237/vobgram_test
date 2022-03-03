@@ -27,24 +27,22 @@ class ExpertJoinContract(GenericAPIView):
         first_name = request.user.personal_profile.first_name
         last_name = request.user.personal_profile.last_name
 
-        server = contract.server
-        customer = contract.service_request.requester
+        server = contract.server.user
+        customer = contract.service_request.requester.user
         project_title = contract.service_request.title
 
         create_systemNotif(server,
                            '"{} {}" has joined to the project "{}"'.format(first_name,
                                                                            last_name,
                                                                            project_title),
-                           cnt,
-                           cont_id,
+                           contract,
                            None)
 
         create_systemNotif(customer,
                            '"{} {}" has joined to the project "{}"'.format(first_name,
                                                                            last_name,
                                                                            project_title),
-                           cnt,
-                           cont_id,
+                           contract,
                            None)
 
         return Response({'status': 'joint contract'})

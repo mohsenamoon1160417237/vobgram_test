@@ -47,7 +47,7 @@ class CustomerSendServiceRequest(GenericAPIView):
         last_name = request.user.personal_profile.last_name
 
         create_systemNotif(profile.user,
-                           'You have received a service request from "{} {}"'.format(first_name, last_name),
+                           '"{} {}" has sent you a service request'.format(first_name, last_name),
                            service,
                            None)
 

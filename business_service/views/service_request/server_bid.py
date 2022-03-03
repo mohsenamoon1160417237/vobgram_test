@@ -47,7 +47,7 @@ class ServerServiceRequestBid(GenericAPIView):
         last_name = request.user.personal_profile.last_name
 
         create_systemNotif(service_request.requester.user,
-                           '"{} {}" bid on your request'.format(first_name, last_name),
+                           '"{} {}" has bid on your request'.format(first_name, last_name),
                            bid,
                            None)
 
