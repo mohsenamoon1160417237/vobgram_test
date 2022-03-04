@@ -1,7 +1,7 @@
 from accounts.models.system_data_confirm import SystemDataConfirm
 
-from business_service.models.valid_skill import ValidSkill
-from business_service.models.business_skill import BusinessSkill
+from business_skill.models.valid_skill import ValidSkill
+from business_skill.models.business_skill import BusinessSkill
 
 
 

@@ -1,11 +1,5 @@
 from django.urls import path
 
-from .views.skill.search_valid import SearchValidSkill
-from .views.skill.add_valid import AddValidSkill
-from .views.skill.choose import ChooseBusinessSkill
-from .views.skill.private_list import PrivateUserBusinessSkillList
-
-from .views.search_business_profile import SearchBusinessProfile
 from .views.view_profile import ViewProfile
 
 from .views.business_product.add import AddBusinessProduct
@@ -24,17 +18,10 @@ from .views.service_request.customer_add_skill import CustomerAddSkillToServiceR
 from .views.service_request.list.customer import CustomerServiceRequestList
 from .views.service_request.list.server_received import ServerReceivedServiceRequestList
 
-from .views.business_specialty.add import ServerAddBusinessSpecialty
-from .views.business_specialty.list import ServerBusinessSpecialtyList
 
 
 urlpatterns = [
 
-    path('search_skill/<str:query>/', SearchValidSkill.as_view(), name='search_valid_skill'),
-    path('add_skill/', AddValidSkill.as_view(), name='add_valid_skill'),
-    path('choose_skill/', ChooseBusinessSkill.as_view(), name='choose_skill'),
-    path('list/skills/', PrivateUserBusinessSkillList.as_view(), name='user_business_skill_list'),
-    path('search_business_profile/<str:query>/', SearchBusinessProfile.as_view(), name='search_business_profile'),
     path('profile/<int:id>/', ViewProfile.as_view(), name='view_profile'),
     path('add_product/', AddBusinessProduct.as_view(), name='add_business_product'),
     path('add_product/<int:prod_id>/', AddBusinessProduct.as_view(), name='edit_get_business_product'),
@@ -61,8 +48,4 @@ urlpatterns = [
     path('list/server/service_requests/', ServerReceivedServiceRequestList.as_view(), name='server_service_request_list'),
     path('list/bids/<int:serv_id>/', ServiceRequestBidList.as_view(), name='service_request_bid_list'),
 
-    path('add/business_specialty/', ServerAddBusinessSpecialty.as_view(), name='add_business_specialty'),
-    path('edit/business_specialty/<int:spec_id>/', ServerAddBusinessSpecialty.as_view(),
-         name='edit_get_business_specialty'),
-    path('list/business_specialty/', ServerBusinessSpecialtyList.as_view(), name='business_specialty_list')
 ]

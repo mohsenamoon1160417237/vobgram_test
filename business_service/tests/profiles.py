@@ -7,8 +7,8 @@ from accounts.tests.utils.create_first_step import create_first_step
 from accounts.models.system_data_confirm import SystemDataConfirm
 from accounts.models.profiles.business import BusinessProfile
 
-from business_service.models.business_skill import BusinessSkill
-from business_service.models.valid_skill import ValidSkill
+from business_skill.models.business_skill import BusinessSkill
+from business_skill.models.valid_skill import ValidSkill
 
 
 

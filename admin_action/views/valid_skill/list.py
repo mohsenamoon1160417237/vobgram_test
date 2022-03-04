@@ -7,10 +7,9 @@ from django.shortcuts import get_object_or_404
 
 from admin_action.permissions.is_admin import IsAdmin
 
-from business_service.model_serializers.view.admin.valid_skill import AdminValidSkillViewSerializer
-from business_service.model_serializers.valid_skill import ValidSkillSerializer
+from business_skill.model_serializers.valid_skill import ValidSkillSerializer
 
-from business_service.models.valid_skill import ValidSkill
+from business_skill.models.valid_skill import ValidSkill
 from accounts.models.system_data_confirm import SystemDataConfirm
 
 

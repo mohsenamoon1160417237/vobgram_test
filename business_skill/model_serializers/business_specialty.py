@@ -4,10 +4,10 @@ from django.db import IntegrityError
 
 from accounts.model_serializers.utils.create_admin_data_confirm import create_admin_data_confirm
 
-from business_service.models.business_specialty import BusinessSpecialty
+from business_skill.models.business_specialty import BusinessSpecialty
 from accounts.models.profiles.business import BusinessProfile
 
-from .utils.check_admin_confirm_latest import check_admin_confirm_latest
+from business_service.model_serializers.utils.check_admin_confirm_latest import check_admin_confirm_latest
 
 
 class BusinessSpecialtySerializer(serializers.ModelSerializer):
@@ -20,7 +20,11 @@ class BusinessSpecialtySerializer(serializers.ModelSerializer):
         fields = ['business_profile_id',
                   'title',
                   'note',
-                  'education_institute_name']
+                  'education_institute_name',
+                  'id']
+
+        read_only_fields = ['id']
+        write_only_fields = ['business_profile_id']
 
     def create(self, validated_data):
 

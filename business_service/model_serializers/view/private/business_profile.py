@@ -3,13 +3,13 @@ from rest_framework.serializers import SerializerMethodField
 
 from accounts.models.profiles.business import BusinessProfile
 from business_service.models.business_product import BusinessProduct
-from business_service.models.business_skill import BusinessSkill
-from business_service.models.business_specialty import BusinessSpecialty
+from business_skill.models.business_skill import BusinessSkill
+from business_skill.models.business_specialty import BusinessSpecialty
 
 from accounts.model_serializers.view.private_user_register import PrivateUserRegisterViewSerializer
-from business_service.model_serializers.view.business_skill import BusinessSkillViewSerializer
+from business_skill.model_serializers.view.business_skill import BusinessSkillViewSerializer
 from business_service.model_serializers.view.private.business_product import PrivateBusinessProductViewSerializer
-from business_service.model_serializers.view.business_specialty import BusinessSpecialtyViewSerializer
+from business_skill.model_serializers.business_specialty import BusinessSpecialtySerializer
 
 
 
@@ -56,6 +56,6 @@ class PrivateBusinessProfileViewSerializer(serializers.ModelSerializer):
 
         specialties = BusinessSpecialty.objects.filter(business_profile=obj)
 
-        serializer = BusinessSpecialtyViewSerializer(specialties, many=True)
+        serializer = BusinessSpecialtySerializer(specialties, many=True)
 
         return serializer.data

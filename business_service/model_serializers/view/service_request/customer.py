@@ -3,7 +3,7 @@ from rest_framework import serializers
 from business_service.models.service_request import ServiceRequest
 
 from accounts.model_serializers.view.personal_profile import PersonalProfileViewSerializer
-from business_service.model_serializers.valid_skill import ValidSkillSerializer
+from business_skill.model_serializers.valid_skill import ValidSkillSerializer
 
 
 class CustomerServiceRequestViewSerializer(serializers.ModelSerializer):

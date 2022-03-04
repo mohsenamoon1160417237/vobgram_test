@@ -11,7 +11,7 @@ from accounts.permissions.profile_first_step import ProfileFirstStep
 from accounts.models.system_data_confirm import SystemDataConfirm
 
 from business_service.models.service_request import ServiceRequest
-from business_service.models.valid_skill import ValidSkill
+from business_skill.models.valid_skill import ValidSkill
 
 
 class CustomerAddSkillToServiceRequest(GenericAPIView):

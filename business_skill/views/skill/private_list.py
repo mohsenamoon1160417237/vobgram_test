@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from accounts.permissions.profile_first_step import ProfileFirstStep
 from accounts.permissions.has_business_profile import HasBusinessProfile
 
-from business_service.model_serializers.view.business_skill import BusinessSkillViewSerializer
+from business_skill.model_serializers.view.business_skill import BusinessSkillViewSerializer
 
 
 

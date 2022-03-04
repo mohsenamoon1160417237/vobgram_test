@@ -25,8 +25,8 @@ from .views.service_request.list import AdminNotConfirmedServiceRequestList
 from .views.service_request.accept import AdminAcceptServiceRequest
 from .views.service_request.reject import AdminRejectServiceRequest
 
-from .views.service_contract.join import ExpertJoinContract
-from .views.service_contract.leave import ExpertLeaveContract
+from .views.service_contract.join import SupVisorJoinContract
+from .views.service_contract.leave import SupVisorLeaveContract
 
 
 urlpatterns = [
@@ -68,7 +68,7 @@ urlpatterns = [
     path('accept/service_request/<int:req_id>/', AdminAcceptServiceRequest.as_view(), name='admin_accept_service_request'),
     path('reject/service_request/<int:req_id>/', AdminRejectServiceRequest.as_view(), name='admin_reject_service_request'),
 
-    path('contract/join/<int:cont_id>/', ExpertJoinContract.as_view(), name='expert_join_contract'),
-    path('contract/leave/<int:cont_id>/', ExpertLeaveContract.as_view(), name='expert_leave_contract'),
+    path('contract/join/<int:cont_id>/', SupVisorJoinContract.as_view(), name='sup_vs_join_contract'),
+    path('contract/leave/<int:cont_id>/', SupVisorLeaveContract.as_view(), name='sup_vs_leave_contract'),
 
 ]

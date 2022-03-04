@@ -7,8 +7,8 @@ from django.contrib.contenttypes.models import ContentType
 
 from accounts.permissions.profile_first_step import ProfileFirstStep
 
-from business_service.models.business_skill import BusinessSkill
-from business_service.models.business_specialty import BusinessSpecialty
+from business_skill.models.business_skill import BusinessSkill
+from business_skill.models.business_specialty import BusinessSpecialty
 
 from accounts.models.system_data_confirm import SystemDataConfirm
 from accounts.models.profiles.business import BusinessProfile

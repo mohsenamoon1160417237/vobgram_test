@@ -2,16 +2,14 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
-import datetime
-
 from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import get_object_or_404
 
 from admin_action.permissions.is_admin import IsAdmin
 from system_notification.utils.create_systemNotification import create_systemNotif
 
-from business_service.models.valid_skill import ValidSkill
-from business_service.models.business_skill import BusinessSkill
+from business_skill.models.valid_skill import ValidSkill
+from business_skill.models.business_skill import BusinessSkill
 from business_service.models.business_product import BusinessProduct
 
 from accounts.models.system_data_confirm import SystemDataConfirm

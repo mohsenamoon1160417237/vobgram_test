@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from business_service.models.business_skill import BusinessSkill
-from business_service.model_serializers.valid_skill import ValidSkillSerializer
+from business_skill.models.business_skill import BusinessSkill
+from business_skill.model_serializers.valid_skill import ValidSkillSerializer
 
 
 class BusinessSkillViewSerializer(serializers.ModelSerializer):

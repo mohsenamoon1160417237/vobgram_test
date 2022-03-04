@@ -3,7 +3,7 @@ from django.db import models
 from accounts.models.profiles.business import BusinessProfile
 from accounts.models.profiles.personal import PersonalProfile
 
-from business_service.models.valid_skill import ValidSkill
+from business_skill.models.valid_skill import ValidSkill
 
 
 class ServiceRequest(models.Model):
@@ -17,8 +17,8 @@ class ServiceRequest(models.Model):
     least_budget = models.PositiveIntegerField()
     max_budget = models.PositiveIntegerField()
     max_days = models.PositiveIntegerField(null=True)
-    receivers = models.ManyToManyField(BusinessProfile,
-                                       related_name='service_requests')
+    receiver = models.ManyToManyField(BusinessProfile,
+                                      related_name='service_requests')
     finished = models.BooleanField(default=False)
-    skills = models.ManyToManyField(ValidSkill,
-                                    related_name='service_requests')
+    skill = models.ManyToManyField(ValidSkill,
+                                   related_name='service_requests')

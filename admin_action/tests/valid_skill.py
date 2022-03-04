@@ -7,7 +7,7 @@ from django.contrib.contenttypes.models import ContentType
 from .utils.create_admin_user import create_admin_user
 
 from accounts.models.system_data_confirm import SystemDataConfirm
-from business_service.models.valid_skill import ValidSkill
+from business_skill.models.valid_skill import ValidSkill
 
 
 class TestValidSkill(APITestCase):

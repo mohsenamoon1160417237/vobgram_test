@@ -39,7 +39,7 @@ class CustomerSendServiceRequest(GenericAPIView):
 
                 raise serializers.ValidationError({'error': 'The request has been rejected by admin'})
 
-        service.receivers.add(profile)
+        service.receiver.add(profile)
 
         service.save()
 

@@ -9,7 +9,7 @@ from admin_action.permissions.is_admin import IsAdmin
 from system_notification.utils.create_systemNotification import create_systemNotif
 from admin_action.views.utils.admin_accept_or_reject import admin_accept_or_reject
 
-from business_service.models.business_specialty import BusinessSpecialty
+from business_skill.models.business_specialty import BusinessSpecialty
 
 
 class AdminBusinessSpecialtyAccept(GenericAPIView):

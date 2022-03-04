@@ -7,7 +7,7 @@ from accounts.model_serializers.utils.create_admin_data_confirm import create_ad
 from .utils.check_admin_confirm_latest import check_admin_confirm_latest
 
 from business_service.models.business_product import BusinessProduct
-from business_service.models.business_skill import BusinessSkill
+from business_skill.models.business_skill import BusinessSkill
 
 from accounts.models.profiles.business import BusinessProfile
 

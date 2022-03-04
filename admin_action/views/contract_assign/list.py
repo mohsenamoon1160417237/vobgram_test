@@ -2,7 +2,7 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 
 from rest_framework.permissions import IsAuthenticated
-from admin_action.permissions.is_admin_or_expert import IsAdminOrExpert
+from admin_action.permissions.is_admin_or_sup_vs import IsAdminOrSupVisor
 
 from service_contract.models.contract_assign import ContractAssign
 
@@ -11,7 +11,7 @@ from service_contract.model_serializers.view.contract_assign import ContractAssi
 
 class ContractAssignList(GenericAPIView):
 
-    permission_classes = [IsAuthenticated, IsAdminOrExpert]
+    permission_classes = [IsAuthenticated, IsAdminOrSupVisor]
 
     def get(self, request):
 
@@ -23,8 +23,8 @@ class ContractAssignList(GenericAPIView):
 
         else:
 
-            skills = request.user.expert_profile.skills.all()
-            assigns = ContractAssign.objects.filter(contract__service_request__skills__id__in=skills.values('id'))
+            skills = request.user.expert_profile.skill.all()
+            assigns = ContractAssign.objects.filter(contract__service_request__skill__id__in=skills.values('id'))
 
         serializer = ContractAssignViewSerializer(assigns, many=True)
 

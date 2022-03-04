@@ -6,10 +6,10 @@ from django.contrib.contenttypes.models import ContentType
 
 from admin_action.permissions.is_admin import IsAdmin
 
-from business_service.model_serializers.view.business_specialty import BusinessSpecialtyViewSerializer
+from business_skill.model_serializers.business_specialty import BusinessSpecialtySerializer
 
 from accounts.models.system_data_confirm import SystemDataConfirm
-from business_service.models.business_specialty import BusinessSpecialty
+from business_skill.models.business_specialty import BusinessSpecialty
 
 
 
@@ -26,7 +26,7 @@ class AdminNotConfirmedBusinessSpecialtyList(GenericAPIView):
 
         specialties = BusinessSpecialty.objects.filter(id__in=admin_confs.values('target_id'))
 
-        serializer = BusinessSpecialtyViewSerializer(specialties, many=True)
+        serializer = BusinessSpecialtySerializer(specialties, many=True)
 
         return Response({'status': 'get unconfirmed specialties list',
                          'specialties': serializer.data})

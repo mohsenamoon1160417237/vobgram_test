@@ -6,8 +6,8 @@ from django.contrib.contenttypes.models import ContentType
 
 from accounts.tests.utils.create_first_step import create_first_step
 
-from business_service.models.valid_skill import ValidSkill
-from business_service.models.business_skill import BusinessSkill
+from business_skill.models.valid_skill import ValidSkill
+from business_skill.models.business_skill import BusinessSkill
 from accounts.models.system_data_confirm import SystemDataConfirm
 
 

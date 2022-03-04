@@ -10,7 +10,7 @@ from system_notification.utils.create_systemNotification import create_systemNot
 
 from admin_action.permissions.is_admin import IsAdmin
 
-from business_service.models.valid_skill import ValidSkill
+from business_skill.models.valid_skill import ValidSkill
 from accounts.models.system_data_confirm import SystemDataConfirm
 
 

@@ -2,26 +2,23 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 
 from django.shortcuts import get_object_or_404
-from django.contrib.contenttypes.models import ContentType
 
 from rest_framework.permissions import IsAuthenticated
-from admin_action.permissions.is_admin import IsAdmin
+from admin_action.permissions.is_sup_vs import IsSupVisor
 from system_notification.utils.create_systemNotification import create_systemNotif
 
 from service_contract.models.service_contract import ServiceContract
 
 
-class ExpertJoinContract(GenericAPIView):
+class SupVisorJoinContract(GenericAPIView):
 
-    permission_classes = [IsAuthenticated, IsAdmin]
+    permission_classes = [IsAuthenticated, IsSupVisor]
 
     def post(self, request, cont_id):
 
         contract = get_object_or_404(ServiceContract, id=cont_id)
 
-        cnt = ContentType.objects.get_for_model(contract)
-
-        contract.experts.add(request.user.expert_profile)
+        contract.sup_visor.add(request.user.sup_vs_profile)
         contract.save()
 
         first_name = request.user.personal_profile.first_name

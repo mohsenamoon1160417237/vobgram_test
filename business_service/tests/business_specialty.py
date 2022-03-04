@@ -5,7 +5,7 @@ from django.urls import reverse
 from accounts.tests.utils.create_first_step import create_first_step
 from .utils.create_business_profile import create_business_profile
 
-from business_service.models.business_specialty import BusinessSpecialty
+from business_skill.models.business_specialty import BusinessSpecialty
 from accounts.models.system_data_confirm import SystemDataConfirm
 
 

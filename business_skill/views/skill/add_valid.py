@@ -10,8 +10,8 @@ from accounts.permissions.has_business_profile import HasBusinessProfile
 
 from accounts.models.system_data_confirm import SystemDataConfirm
 
-from business_service.model_serializers.valid_skill import ValidSkillSerializer
-from business_service.model_serializers.business_skill import BusinessSkillSerializer
+from business_skill.model_serializers.valid_skill import ValidSkillSerializer
+from business_skill.model_serializers.business_skill import BusinessSkillSerializer
 
 
 class AddValidSkill(GenericAPIView):

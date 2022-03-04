@@ -10,7 +10,7 @@ from accounts.permissions.has_business_profile import HasBusinessProfile
 from accounts.models.system_data_confirm import SystemDataConfirm
 
 from business_service.models.business_product import BusinessProduct
-from business_service.models.business_skill import BusinessSkill
+from business_skill.models.business_skill import BusinessSkill
 
 from business_service.model_serializers.view.private.business_product import PrivateBusinessProductViewSerializer
 from business_service.model_serializers.business_product import BusinessProductSerializer

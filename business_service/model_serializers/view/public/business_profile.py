@@ -8,13 +8,13 @@ from accounts.models.profiles.business import BusinessProfile
 from accounts.models.system_data_confirm import SystemDataConfirm
 
 from business_service.models.business_product import BusinessProduct
-from business_service.models.business_skill import BusinessSkill
-from business_service.models.business_specialty import BusinessSpecialty
+from business_skill.models.business_skill import BusinessSkill
+from business_skill.models.business_specialty import BusinessSpecialty
 
 from accounts.model_serializers.view.public_user_register import PublicUserRegisterViewSerializer
-from business_service.model_serializers.view.business_skill import BusinessSkillViewSerializer
+from business_skill.model_serializers.view.business_skill import BusinessSkillViewSerializer
 from business_service.model_serializers.view.public.business_product import PublicBusinessProductViewSerializer
-from business_service.model_serializers.view.business_specialty import BusinessSpecialtyViewSerializer
+from business_skill.model_serializers.business_specialty import BusinessSpecialtySerializer
 
 
 
@@ -74,6 +74,6 @@ class PublicBusinessProfileViewSerializer(serializers.ModelSerializer):
 
         specialties = BusinessSpecialty.objects.filter(business_profile=obj)
 
-        serializer = BusinessSpecialtyViewSerializer(specialties, many=True)
+        serializer = BusinessSpecialtySerializer(specialties, many=True)
 
         return serializer.data

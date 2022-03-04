@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404
 
 from .utils.create_admin_user import create_admin_user
 
-from business_service.models.business_specialty import BusinessSpecialty
+from business_skill.models.business_specialty import BusinessSpecialty
 from accounts.models.system_data_confirm import SystemDataConfirm
 from accounts.models.profiles.business import BusinessProfile
 

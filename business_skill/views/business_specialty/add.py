@@ -8,10 +8,9 @@ from django.contrib.contenttypes.models import ContentType
 from accounts.permissions.profile_first_step import ProfileFirstStep
 from accounts.permissions.has_business_profile import HasBusinessProfile
 
-from business_service.model_serializers.business_specialty import BusinessSpecialtySerializer
-from business_service.model_serializers.view.business_specialty import BusinessSpecialtyViewSerializer
+from business_skill.model_serializers.business_specialty import BusinessSpecialtySerializer
 
-from business_service.models.business_specialty import BusinessSpecialty
+from business_skill.models.business_specialty import BusinessSpecialty
 from accounts.models.system_data_confirm import SystemDataConfirm
 from system_notification.models.system_notification import SystemNotification
 
@@ -24,7 +23,7 @@ class ServerAddBusinessSpecialty(GenericAPIView):
 
         specialty = get_object_or_404(BusinessSpecialty, id=spec_id)
 
-        serializer = BusinessSpecialtyViewSerializer(specialty)
+        serializer = BusinessSpecialtySerializer(specialty)
 
         return Response({'status': 'get business specialty',
                          'specialty': serializer.data})

@@ -1,12 +1,12 @@
 from rest_framework.permissions import BasePermission
 
 
-class IsAdminOrExpert(BasePermission):
+class IsSupVisor(BasePermission):
 
-    message = 'You are not an expert or admin'
+    message = 'You are not a super visor user'
 
     def has_permission(self, request, view):
 
         user_type = request.user.user_type
 
-        return user_type == 'admin' or user_type == 'expert'
+        return user_type == 'super_visor'

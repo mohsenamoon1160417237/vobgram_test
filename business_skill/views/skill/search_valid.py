@@ -8,8 +8,8 @@ from django.db.models import Q
 from accounts.permissions.profile_first_step import ProfileFirstStep
 from accounts.models.system_data_confirm import SystemDataConfirm
 
-from business_service.models.valid_skill import ValidSkill
-from business_service.model_serializers.valid_skill import ValidSkillSerializer
+from business_skill.models.valid_skill import ValidSkill
+from business_skill.model_serializers.valid_skill import ValidSkillSerializer
 
 
 

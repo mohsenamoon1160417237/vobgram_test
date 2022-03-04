@@ -1,7 +1,7 @@
 from django.db import models
 
 from accounts.models.profiles.business import BusinessProfile
-from .business_skill import BusinessSkill
+from business_skill.models.business_skill import BusinessSkill
 
 
 class BusinessProduct(models.Model):

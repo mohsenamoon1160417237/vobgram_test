@@ -2,9 +2,9 @@ from rest_framework import serializers
 from django.shortcuts import get_object_or_404
 from django.db import IntegrityError
 
-from business_service.models.business_skill import BusinessSkill
+from business_skill.models.business_skill import BusinessSkill
 from accounts.models.profiles.business import BusinessProfile
-from business_service.models.valid_skill import ValidSkill
+from business_skill.models.valid_skill import ValidSkill
 
 
 class BusinessSkillSerializer(serializers.ModelSerializer):
