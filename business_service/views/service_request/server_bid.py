@@ -33,7 +33,7 @@ class ServerServiceRequestBid(GenericAPIView):
         serializer = ServiceRequestBidSerializer(data=serializer_data)
         serializer.is_valid(raise_exception=True)
 
-        if request.user.business_profile not in service_request.receivers.all():
+        if request.user.business_profile not in service_request.receiver.all():
 
             raise ValidationError({'error': 'You can not bid on this request'})
 

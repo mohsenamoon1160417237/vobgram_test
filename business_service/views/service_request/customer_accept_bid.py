@@ -30,17 +30,14 @@ class CustomerAcceptBid(GenericAPIView):
 
         contract = ServiceContract.objects.create(service_request=service_request,
                                                   server=business_profile,
+                                                  customer=request.user.customer_profile,
                                                   days=bid.days,
                                                   price=bid.price,
+                                                  title=service_request.title,
+                                                  note=service_request.note,
                                                   bid=bid)
 
-        contract_assign = ContractAssign.objects.create(contract=contract)
-
-        admin_conf = SystemDataConfirm.objects.create(target=contract_assign,
-                                                      business_profile=business_profile)
-
-        contract_assign.admin_conf = admin_conf
-        contract_assign.save()
+        ContractAssign.objects.create(contract=contract)
 
         first_name = request.user.personal_profile.first_name
         last_name = request.user.personal_profile.last_name
@@ -48,7 +45,7 @@ class CustomerAcceptBid(GenericAPIView):
         create_systemNotif(business_profile.user,
                            '"{} {}" has accepted your bid on "{}" service request'.format(first_name,
                                                                                           last_name,
-                                                                                          contract.service_request.title),
+                                                                                          contract.title),
                            bid,
                            None)
 

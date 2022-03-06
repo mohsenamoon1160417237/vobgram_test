@@ -33,6 +33,7 @@ class ServiceContractSerializer(serializers.ModelSerializer):
                   'sup_visors',
                   'bid',
                   'canceled',
+                  'title',
                   'note',
                   'id',
                   'customer',
@@ -83,6 +84,7 @@ class ServiceContractSerializer(serializers.ModelSerializer):
                                                   server=server,
                                                   price=validated_data['price'],
                                                   days=validated_data['days'],
+                                                  title=validated_data['title'],
                                                   note=validated_data['note'])
 
         first_name = customer.user.personal_profile.first_name

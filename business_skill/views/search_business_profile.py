@@ -22,7 +22,7 @@ class SearchBusinessProfile(GenericAPIView):
 
     def get(self, request, query):
 
-        skill_cnt = ContentType.objects.get(app_label='business_service',
+        skill_cnt = ContentType.objects.get(app_label='business_skill',
                                             model='validskill')
 
         skill_admin_confs = SystemDataConfirm.objects.filter(target_ct=skill_cnt,
@@ -34,7 +34,7 @@ class SearchBusinessProfile(GenericAPIView):
                                               score__gt=0,
                                               id__in=skill_admin_confs.values('target_id'))
 
-        spec_cnt = ContentType.objects.get(app_label='business_service',
+        spec_cnt = ContentType.objects.get(app_label='business_skill',
                                            model='businessspecialty')
 
         spec_admin_confs = SystemDataConfirm.objects.filter(target_ct=spec_cnt,
@@ -45,20 +45,8 @@ class SearchBusinessProfile(GenericAPIView):
                                                        Q(note__icontains=query),
                                                        id__in=spec_admin_confs.values('target_id'))
 
-        prof_cnt = ContentType.objects.get(app_label='accounts',
-                                           model='businessprofile')
-
-        prof_admin_confs = SystemDataConfirm.objects.filter(target_ct=prof_cnt,
-                                                            is_latest=True)
-
-        for ad_conf in prof_admin_confs:
-
-            if ad_conf.is_confirmed is False and ad_conf.admin_profile is not None:
-                prof_admin_confs = prof_admin_confs.exclude(target_id=ad_conf.target_id)
-
         business_profiles = BusinessProfile.objects.filter(Q(id__in=skills.values('business_profile_id')) |
-                                                           Q(id__in=specialties.values('business_profile_id')),
-                                                           id__in=prof_admin_confs.values('target_id'))
+                                                           Q(id__in=specialties.values('business_profile_id')))
 
         business_profiles = business_profiles.order_by('service_number', 'service_rate')
 

@@ -18,11 +18,11 @@ class ServiceContract(models.Model):
                                         null=True)
     customer = models.ForeignKey(CustomerProfile,
                                  on_delete=models.CASCADE,
-                                 related_name='service_contracts',
-                                 null=True)
+                                 related_name='service_contracts')
     sup_visor = models.ManyToManyField(SupVsProfile,
                                        related_name='contracts')
-    note = models.TextField(null=True)
+    title = models.CharField(max_length=200)
+    note = models.TextField()
     server = models.ForeignKey(BusinessProfile,
                                on_delete=models.CASCADE,
                                related_name='service_contracts')

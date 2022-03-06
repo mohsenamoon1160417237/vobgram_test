@@ -4,6 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from accounts.permissions.profile_first_step import ProfileFirstStep
 
+from service_contract.models.contract_assign import ContractAssign
 from service_contract.model_serializers.service_contract import ServiceContractSerializer
 
 
@@ -20,7 +21,9 @@ class CustomerDirectContract(GenericAPIView):
 
         serializer.is_valid(raise_exception=True)
 
-        serializer.save()
+        contract = serializer.save()
+
+        ContractAssign.objects.create(contract=contract)
 
         return Response({'status': 'created a direct contract',
                          'contract': serializer.data})

@@ -34,6 +34,6 @@ class CustomerServiceRequestViewSerializer(serializers.ModelSerializer):
 
     def get_skills(self, obj):
 
-        skills = obj.skills.all()
+        skills = obj.skill.all()
         serializer = ValidSkillSerializer(skills, many=True)
         return serializer.data
