@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 
 from business_service.models.service_request import ServiceRequest
@@ -5,15 +7,22 @@ from business_service.models.service_request_bid import ServiceRequestBid
 
 from accounts.models.profiles.business import BusinessProfile
 from accounts.models.profiles.sup_vs import SupVsProfile
+from accounts.models.profiles.customer import CustomerProfile
 
 
 class ServiceContract(models.Model):
 
     service_request = models.ForeignKey(ServiceRequest,
                                         on_delete=models.CASCADE,
-                                        related_name='service_contracts')
+                                        related_name='service_contracts',
+                                        null=True)
+    customer = models.ForeignKey(CustomerProfile,
+                                 on_delete=models.CASCADE,
+                                 related_name='service_contracts',
+                                 null=True)
     sup_visor = models.ManyToManyField(SupVsProfile,
                                        related_name='contracts')
+    note = models.TextField(null=True)
     server = models.ForeignKey(BusinessProfile,
                                on_delete=models.CASCADE,
                                related_name='service_contracts')
@@ -21,5 +30,8 @@ class ServiceContract(models.Model):
     price = models.PositiveIntegerField()
     bid = models.OneToOneField(ServiceRequestBid,
                                on_delete=models.CASCADE,
-                               related_name='service_contract')
+                               related_name='service_contract',
+                               null=True)
     canceled = models.BooleanField(default=False)
+    order_num = models.CharField(max_length=100,
+                                 default=uuid.uuid4())

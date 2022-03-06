@@ -8,7 +8,6 @@ from accounts.permissions.has_business_profile import HasBusinessProfile
 from business_skill.model_serializers.view.business_skill import BusinessSkillViewSerializer
 
 
-
 class PrivateUserBusinessSkillList(GenericAPIView):
 
     permission_classes = [IsAuthenticated, ProfileFirstStep, HasBusinessProfile]

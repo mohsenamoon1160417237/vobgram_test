@@ -11,6 +11,7 @@ class ServiceRequest(models.Model):
     requester = models.ForeignKey(PersonalProfile,
                                   on_delete=models.CASCADE,
                                   related_name='service_requests')
+    request_type = models.CharField(max_length=100)
     service_type = models.CharField(max_length=30)
     title = models.CharField(max_length=100)
     note = models.TextField()

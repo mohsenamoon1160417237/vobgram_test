@@ -12,8 +12,9 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
 
+        user_type = validated_data['user_type']
         instance.set_password(validated_data['password'])
-        instance.user_type = validated_data['user_type']
+        instance.user_type = user_type
         instance.registered = True
         instance.save()
         return instance

@@ -17,7 +17,7 @@ from .views.service_request.customer_add_skill import CustomerAddSkillToServiceR
 
 from .views.service_request.list.customer import CustomerServiceRequestList
 from .views.service_request.list.server_received import ServerReceivedServiceRequestList
-
+from .views.service_request.list.server_public import ServerPublicServiceRequestList
 
 
 urlpatterns = [
@@ -47,5 +47,6 @@ urlpatterns = [
     path('list/customer/service_requests/', CustomerServiceRequestList.as_view(), name='customer_service_request_list'),
     path('list/server/service_requests/', ServerReceivedServiceRequestList.as_view(), name='server_service_request_list'),
     path('list/bids/<int:serv_id>/', ServiceRequestBidList.as_view(), name='service_request_bid_list'),
+    path('list/public/service_requests/', ServerPublicServiceRequestList.as_view(), name='server_public_requests'),
 
 ]

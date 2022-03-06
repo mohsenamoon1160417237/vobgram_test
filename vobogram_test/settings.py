@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'accounts',
     'business_service',
     'admin_action',
+    'business_skill',
     'service_contract',
     'system_notification',
     'rest_framework',

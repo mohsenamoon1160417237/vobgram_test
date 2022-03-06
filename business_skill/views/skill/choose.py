@@ -15,7 +15,6 @@ from accounts.permissions.has_business_profile import HasBusinessProfile
 from business_skill.model_serializers.business_skill import BusinessSkillSerializer
 
 
-
 class ChooseBusinessSkill(GenericAPIView):
 
     permission_classes = [IsAuthenticated, ProfileFirstStep, HasBusinessProfile]

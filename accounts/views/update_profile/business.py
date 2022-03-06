@@ -12,7 +12,6 @@ from accounts.model_serializers.system_data_confirm import SystemDataConfirmSeri
 from accounts.model_serializers.business_profile import BusinessProfileSerializer
 
 
-
 class BusinessData(GenericAPIView):
 
     permission_classes = [IsAuthenticated, ProfileFirstStep]
@@ -42,15 +41,9 @@ class BusinessData(GenericAPIView):
 
     def post(self, request):
 
-        data = request.data
-
-        serializer_data = {
-            'company_name': data['company_name'],
-            'company_phone_number': data['company_phone_number'],
-            'user_id': request.user.id,
-            'bio': request.data['bio'],
-            'status': None
-        }
+        serializer_data = request.data
+        serializer_data['user_id'] = request.user.id
+        serializer_data['status'] = None
 
         business_profiles = BusinessProfile.objects.filter(user=request.user)
         if business_profiles.exists():

@@ -17,6 +17,7 @@ class ServiceRequestSerializer(serializers.ModelSerializer):
 
         fields = ['requester_id',
                   'service_type',
+                  'request_type',
                   'title',
                   'note',
                   'least_budget',
@@ -29,6 +30,7 @@ class ServiceRequestSerializer(serializers.ModelSerializer):
 
         service_request = ServiceRequest.objects.create(requester=requester,
                                                         service_type=validated_data['service_type'],
+                                                        request_type=validated_data['request_type'],
                                                         title=validated_data['title'],
                                                         note=validated_data['note'],
                                                         least_budget=validated_data['least_budget'],

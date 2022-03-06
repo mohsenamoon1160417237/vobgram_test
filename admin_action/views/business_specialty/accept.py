@@ -26,7 +26,7 @@ class AdminBusinessSpecialtyAccept(GenericAPIView):
 
         admin_accept_or_reject(True, None, admin_profile, cnt, specialty.id, request.data['comment'])
 
-        create_systemNotif(specialty.user,
+        create_systemNotif(specialty.business_profile.user,
                            'Your specialty "{}" has been confirmed by admin'.format(specialty.title),
                            specialty,
                            None)

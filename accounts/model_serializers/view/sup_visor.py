@@ -10,14 +10,11 @@ class SupVisorProfileViewSerializer(serializers.ModelSerializer):
     user = serializers.SerializerMethodField()
 
     class Meta:
-
         model = SupVsProfile
         fields = ['user',
                   'id']
 
     def get_user(self, obj):
-
         user = obj.user
         serializer = PublicUserRegisterViewSerializer(user)
         return serializer.data
-    

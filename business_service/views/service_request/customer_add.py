@@ -26,16 +26,10 @@ class CustomerAddServiceRequest(GenericAPIView):
 
     def post(self, request):
 
-        data = request.data
         requester_id = request.user.personal_profile.id
 
-        serializer_data = {'requester_id': requester_id,
-                           'service_type': data['service_type'],
-                           'title': data['title'],
-                           'note': data['note'],
-                           'least_budget': data['least_budget'],
-                           'max_budget': data['max_budget'],
-                           'max_days': data['max_days']}
+        serializer_data = request.data
+        serializer_data['requester_id'] = requester_id
 
         serializer = ServiceRequestSerializer(data=serializer_data)
         serializer.is_valid(raise_exception=True)
@@ -48,17 +42,10 @@ class CustomerAddServiceRequest(GenericAPIView):
 
         service_request = get_object_or_404(ServiceRequest, id=serv_id)
 
-        data = request.data
-
         requester_id = request.user.personal_profile.id
 
-        serializer_data = {'requester_id': requester_id,
-                           'service_type': data['service_type'],
-                           'title': data['title'],
-                           'note': data['note'],
-                           'least_budget': data['least_budget'],
-                           'max_budget': data['max_budget'],
-                           'max_days': data['max_days']}
+        serializer_data = request.data
+        serializer_data['requester_id'] = requester_id
 
         serializer = ServiceRequestSerializer(service_request, data=serializer_data)
         serializer.is_valid(raise_exception=True)

@@ -12,11 +12,9 @@ from business_skill.models.valid_skill import ValidSkill
 from business_skill.model_serializers.valid_skill import ValidSkillSerializer
 
 
-
 class SearchValidSkill(GenericAPIView):
 
     permission_classes = [IsAuthenticated, ProfileFirstStep]
-
 
     def get(self, request, query):
 

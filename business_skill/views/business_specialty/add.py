@@ -33,12 +33,8 @@ class ServerAddBusinessSpecialty(GenericAPIView):
         user = request.user
         business_profile = user.business_profile
 
-        serializer_data = {
-            'business_profile_id': business_profile.id,
-            'title': request.data['title'],
-            'note': request.data['note'],
-            'education_institute_name': request.data['education_institute_name']
-        }
+        serializer_data = request.data
+        serializer_data['business_profile_id'] = business_profile.id
 
         serializer = BusinessSpecialtySerializer(data=serializer_data)
         serializer.is_valid(raise_exception=True)
@@ -55,12 +51,8 @@ class ServerAddBusinessSpecialty(GenericAPIView):
         user = request.user
         business_profile = user.business_profile
 
-        serializer_data = {
-            'business_profile_id': business_profile.id,
-            'title': request.data['title'],
-            'note': request.data['note'],
-            'education_institute_name': request.data['education_institute_name']
-        }
+        serializer_data = request.data
+        serializer_data['business_profile_id'] = business_profile.id
 
         serializer = BusinessSpecialtySerializer(specialty, serializer_data)
         serializer.is_valid(raise_exception=True)

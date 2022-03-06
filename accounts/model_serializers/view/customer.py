@@ -1,17 +1,16 @@
 from rest_framework import serializers
 
-from accounts.models.profiles.sup_vs import SupVsProfile
+from accounts.models.profiles.customer import CustomerProfile
+from .public_user_register import PublicUserRegisterViewSerializer
 
-from accounts.model_serializers.view.public_user_register import PublicUserRegisterViewSerializer
 
-
-class SupVisorProfileViewSerializer(serializers.ModelSerializer):
+class CustomerProfileViewSerializer(serializers.ModelSerializer):
 
     user = serializers.SerializerMethodField()
 
     class Meta:
 
-        model = SupVsProfile
+        model = CustomerProfile
         fields = ['user',
                   'id']
 

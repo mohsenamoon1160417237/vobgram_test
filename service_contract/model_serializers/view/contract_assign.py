@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from service_contract.models.contract_assign import ContractAssign
 
-from service_contract.model_serializers.view.service_contract import ServiceContractViewSerializer
+from service_contract.model_serializers.service_contract import ServiceContractSerializer
 
 
 class ContractAssignViewSerializer(serializers.ModelSerializer):
@@ -20,5 +20,5 @@ class ContractAssignViewSerializer(serializers.ModelSerializer):
     def get_contract(self, obj):
 
         contract = obj.contract
-        serializer = ServiceContractViewSerializer(contract)
+        serializer = ServiceContractSerializer(contract)
         return serializer.data

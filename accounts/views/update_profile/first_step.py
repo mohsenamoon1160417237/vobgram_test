@@ -24,16 +24,10 @@ class UpdateProfileFirstStep(GenericAPIView):
 
     def post(self, request):
 
-        data = request.data
         user_id = request.user.id
 
-        serializer_data = {
-            'first_name': data['first_name'],
-            'last_name': data['last_name'],
-            'email': data['email'],
-            'username': data['username'],
-            'user_id': user_id
-        }
+        serializer_data = request.data
+        serializer_data['user_id'] = user_id
 
         profiles = PersonalProfile.objects.filter(user__id=user_id)
         if profiles.exists():
