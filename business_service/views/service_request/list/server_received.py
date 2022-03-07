@@ -4,13 +4,14 @@ from rest_framework.permissions import IsAuthenticated
 
 from accounts.permissions.profile_first_step import ProfileFirstStep
 from accounts.permissions.has_business_profile import HasBusinessProfile
+from accounts.permissions.has_username import HasUsername
 
 from business_service.model_serializers.view.service_request.server import ServerReceivedServiceRequestViewSerializer
 
 
 class ServerReceivedServiceRequestList(GenericAPIView):
 
-    permission_classes = [IsAuthenticated, ProfileFirstStep, HasBusinessProfile]
+    permission_classes = [IsAuthenticated, ProfileFirstStep, HasBusinessProfile, HasUsername]
 
     def get(self, request):
 

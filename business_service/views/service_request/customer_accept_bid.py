@@ -5,9 +5,10 @@ from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
 
 from accounts.permissions.profile_first_step import ProfileFirstStep
+from accounts.permissions.has_username import HasUsername
+
 from system_notification.utils.create_systemNotification import create_systemNotif
 
-from accounts.models.system_data_confirm import SystemDataConfirm
 from business_service.models.service_request_bid import ServiceRequestBid
 from service_contract.models.contract_assign import ContractAssign
 from service_contract.models.service_contract import ServiceContract
@@ -15,7 +16,7 @@ from service_contract.models.service_contract import ServiceContract
 
 class CustomerAcceptBid(GenericAPIView):
 
-    permission_classes = [IsAuthenticated, ProfileFirstStep]
+    permission_classes = [IsAuthenticated, ProfileFirstStep, HasUsername]
 
     def post(self, request, bid_id):
 

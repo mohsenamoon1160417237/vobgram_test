@@ -3,6 +3,7 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import IsAuthenticated
 
 from accounts.permissions.profile_first_step import ProfileFirstStep
+from accounts.permissions.has_username import HasUsername
 
 from business_service.model_serializers.view.service_request.customer import CustomerServiceRequestViewSerializer
 from business_service.models.service_request import ServiceRequest
@@ -10,7 +11,7 @@ from business_service.models.service_request import ServiceRequest
 
 class CustomerServiceRequestList(GenericAPIView):
 
-    permission_classes = [IsAuthenticated, ProfileFirstStep]
+    permission_classes = [IsAuthenticated, ProfileFirstStep, HasUsername]
 
     def get(self, request):
 

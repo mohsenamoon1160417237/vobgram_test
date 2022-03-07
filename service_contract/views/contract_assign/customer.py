@@ -5,6 +5,8 @@ from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
 
 from accounts.permissions.profile_first_step import ProfileFirstStep
+from accounts.permissions.has_username import HasUsername
+
 from system_notification.utils.create_systemNotification import create_systemNotif
 
 from service_contract.models.contract_assign import ContractAssign
@@ -12,7 +14,7 @@ from service_contract.models.contract_assign import ContractAssign
 
 class CustomerAssignContract(GenericAPIView):
 
-    permission_classes = [IsAuthenticated, ProfileFirstStep]
+    permission_classes = [IsAuthenticated, ProfileFirstStep, HasUsername]
 
     def post(self, request, ctr_asgn_id):
 

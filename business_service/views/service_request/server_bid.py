@@ -7,6 +7,8 @@ from django.shortcuts import get_object_or_404
 
 from accounts.permissions.profile_first_step import ProfileFirstStep
 from accounts.permissions.has_business_profile import HasBusinessProfile
+from accounts.permissions.has_username import HasUsername
+
 from system_notification.utils.create_systemNotification import create_systemNotif
 
 from business_service.models.service_request import ServiceRequest
@@ -16,7 +18,7 @@ from business_service.model_serializers.service_request_bid import ServiceReques
 
 class ServerServiceRequestBid(GenericAPIView):
 
-    permission_classes = [IsAuthenticated, ProfileFirstStep, HasBusinessProfile]
+    permission_classes = [IsAuthenticated, ProfileFirstStep, HasBusinessProfile, HasUsername]
 
     def post(self, request, serv_id):
 

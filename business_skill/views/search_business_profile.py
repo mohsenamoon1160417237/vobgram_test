@@ -6,6 +6,9 @@ from django.db.models import Q
 from django.contrib.contenttypes.models import ContentType
 
 from accounts.permissions.profile_first_step import ProfileFirstStep
+from accounts.permissions.has_username import HasUsername
+
+from business_skill.views.utils.search_skillByTag import searchSkillByTag
 
 from business_skill.models.business_skill import BusinessSkill
 from business_skill.models.business_specialty import BusinessSpecialty
@@ -18,21 +21,14 @@ from business_service.model_serializers.view.public.business_profile import Publ
 
 class SearchBusinessProfile(GenericAPIView):
 
-    permission_classes = [IsAuthenticated, ProfileFirstStep]
+    permission_classes = [IsAuthenticated, ProfileFirstStep, HasUsername]
 
     def get(self, request, query):
 
-        skill_cnt = ContentType.objects.get(app_label='business_skill',
-                                            model='validskill')
+        valid_skills = searchSkillByTag(query)
 
-        skill_admin_confs = SystemDataConfirm.objects.filter(target_ct=skill_cnt,
-                                                             is_latest=True,
-                                                             is_confirmed=True)
-
-        skills = BusinessSkill.objects.filter(Q(valid_skill__title__icontains=query) |
-                                              Q(valid_skill__description__icontains=query),
-                                              score__gt=0,
-                                              id__in=skill_admin_confs.values('target_id'))
+        business_skills = BusinessSkill.objects.filter(valid_skill__id__in=valid_skills.values('id'),
+                                                       score__gt=0)
 
         spec_cnt = ContentType.objects.get(app_label='business_skill',
                                            model='businessspecialty')
@@ -45,7 +41,7 @@ class SearchBusinessProfile(GenericAPIView):
                                                        Q(note__icontains=query),
                                                        id__in=spec_admin_confs.values('target_id'))
 
-        business_profiles = BusinessProfile.objects.filter(Q(id__in=skills.values('business_profile_id')) |
+        business_profiles = BusinessProfile.objects.filter(Q(id__in=business_skills.values('business_profile_id')) |
                                                            Q(id__in=specialties.values('business_profile_id')))
 
         business_profiles = business_profiles.order_by('service_number', 'service_rate')

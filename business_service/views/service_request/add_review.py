@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
 
 from accounts.permissions.profile_first_step import ProfileFirstStep
+from accounts.permissions.has_username import HasUsername
 
 from business_service.models.service_request import ServiceRequest
 from service_contract.models.service_contract import ServiceContract
@@ -15,7 +16,7 @@ from business_service.model_serializers.service_review import ServiceReviewSeria
 
 class AddServiceReview(GenericAPIView):
 
-    permission_classes = [IsAuthenticated, ProfileFirstStep]
+    permission_classes = [IsAuthenticated, ProfileFirstStep, HasUsername]
 
     def post(self, request, serv_id):
 

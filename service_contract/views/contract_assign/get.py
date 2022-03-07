@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
 
 from accounts.permissions.profile_first_step import ProfileFirstStep
+from accounts.permissions.has_username import HasUsername
 
 from service_contract.models.contract_assign import ContractAssign
 from service_contract.model_serializers.view.contract_assign import ContractAssignViewSerializer
@@ -12,7 +13,7 @@ from service_contract.model_serializers.view.contract_assign import ContractAssi
 
 class GetContractAssign(GenericAPIView):
 
-    permission_classes = [IsAuthenticated, ProfileFirstStep]
+    permission_classes = [IsAuthenticated, ProfileFirstStep, HasUsername]
 
     def get(self, request, ctr_asgn_id):
 

@@ -3,6 +3,7 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import IsAuthenticated
 
 from accounts.permissions.profile_first_step import ProfileFirstStep
+from accounts.permissions.has_username import HasUsername
 
 from service_contract.models.contract_assign import ContractAssign
 from service_contract.model_serializers.service_contract import ServiceContractSerializer
@@ -10,7 +11,7 @@ from service_contract.model_serializers.service_contract import ServiceContractS
 
 class CustomerDirectContract(GenericAPIView):
 
-    permission_classes = [IsAuthenticated, ProfileFirstStep]
+    permission_classes = [IsAuthenticated, ProfileFirstStep, HasUsername]
 
     def post(self, request, server_id):
 

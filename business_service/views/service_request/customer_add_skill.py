@@ -7,6 +7,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib.contenttypes.models import ContentType
 
 from accounts.permissions.profile_first_step import ProfileFirstStep
+from accounts.permissions.has_username import HasUsername
 
 from accounts.models.system_data_confirm import SystemDataConfirm
 
@@ -16,7 +17,7 @@ from business_skill.models.valid_skill import ValidSkill
 
 class CustomerAddSkillToServiceRequest(GenericAPIView):
 
-    permission_classes = [IsAuthenticated, ProfileFirstStep]
+    permission_classes = [IsAuthenticated, ProfileFirstStep, HasUsername]
 
     def post(self, request, req_id, skill_ttl):
 

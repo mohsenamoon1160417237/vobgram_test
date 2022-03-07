@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
 
 from accounts.permissions.profile_first_step import ProfileFirstStep
+from accounts.permissions.has_username import HasUsername
 
 from business_service.model_serializers.view.service_request_bid import ServiceRequestBidViewSerializer
 
@@ -14,7 +15,7 @@ from business_service.models.service_request_bid import ServiceRequestBid
 
 class ServiceRequestBidList(GenericAPIView):
 
-    permission_classes = [IsAuthenticated, ProfileFirstStep]
+    permission_classes = [IsAuthenticated, ProfileFirstStep, HasUsername]
 
     def get(self, request, serv_id):
 
