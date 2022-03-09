@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'business_skill',
     'service_contract',
     'system_notification',
+    'pre_order_service',
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
     'django.contrib.admin',

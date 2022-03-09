@@ -12,16 +12,17 @@ from accounts.models.system_data_confirm import SystemDataConfirm
 from business_skill.models.business_specialty import BusinessSpecialty
 
 
-
 class AdminNotConfirmedBusinessSpecialtyList(GenericAPIView):
 
     permission_classes = [IsAuthenticated, IsAdmin]
 
     def get(self, request):
 
-        cnt = ContentType.objects.get_for_model(BusinessSpecialty)
+        cnt = ContentType.objects.get(app_label='business_skill',
+                                      model='businessspecialty')
+
         admin_confs = SystemDataConfirm.objects.filter(target_ct=cnt,
-                                                       is_confirmed=False,
+                                                       admin_profile__isnull=True,
                                                        is_latest=True)
 
         specialties = BusinessSpecialty.objects.filter(id__in=admin_confs.values('target_id'))

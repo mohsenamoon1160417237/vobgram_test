@@ -18,28 +18,32 @@ class SupVisorJoinContract(GenericAPIView):
 
         contract = get_object_or_404(ServiceContract, id=cont_id)
 
-        contract.sup_visor.add(request.user.sup_vs_profile)
-        contract.save()
+        sup_vs_profile = request.user.sup_vs_profile
 
-        first_name = request.user.personal_profile.first_name
-        last_name = request.user.personal_profile.last_name
+        if not sup_vs_profile in contract.sup_visor.all():
 
-        server = contract.server.user
-        customer = contract.service_request.requester.user
-        project_title = contract.service_request.title
+            contract.sup_visor.add(sup_vs_profile)
+            contract.save()
 
-        create_systemNotif(server,
-                           '"{} {}" has joined to the project "{}"'.format(first_name,
-                                                                           last_name,
-                                                                           project_title),
-                           contract,
-                           None)
+            first_name = request.user.personal_profile.first_name
+            last_name = request.user.personal_profile.last_name
 
-        create_systemNotif(customer,
-                           '"{} {}" has joined to the project "{}"'.format(first_name,
-                                                                           last_name,
-                                                                           project_title),
-                           contract,
-                           None)
+            server = contract.server.user
+            customer = contract.service_request.requester.user
+            project_title = contract.service_request.title
+
+            create_systemNotif(server,
+                               '"{} {}" has joined to the project "{}"'.format(first_name,
+                                                                               last_name,
+                                                                               project_title),
+                               contract,
+                            None)
+
+            create_systemNotif(customer,
+                               '"{} {}" has joined to the project "{}"'.format(first_name,
+                                                                               last_name,
+                                                                               project_title),
+                               contract,
+                               None)
 
         return Response({'status': 'joint contract'})

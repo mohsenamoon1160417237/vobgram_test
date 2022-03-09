@@ -28,6 +28,9 @@ from .views.service_request.reject import AdminRejectServiceRequest
 from .views.service_contract.join import SupVisorJoinContract
 from .views.service_contract.leave import SupVisorLeaveContract
 
+from .views.pre_order_service.list import NotConfirmedAdminPreOrderServiceList
+from .views.pre_order_service.accept import AdminAcceptPreOrderService
+
 
 urlpatterns = [
 
@@ -70,5 +73,14 @@ urlpatterns = [
 
     path('contract/join/<int:cont_id>/', SupVisorJoinContract.as_view(), name='sup_vs_join_contract'),
     path('contract/leave/<int:cont_id>/', SupVisorLeaveContract.as_view(), name='sup_vs_leave_contract'),
+
+    path('list/pre_order_service/', NotConfirmedAdminPreOrderServiceList.as_view(),
+         name='admin_pre_order_service_list'),
+
+    path('accept/pre_order_service/<int:ord_id>/', AdminAcceptPreOrderService.as_view(),
+         name='admin_accept_pre_order_service'),
+
+    path('reject/pre_order_service/<int:ord_id>/', AdminRejectServiceRequest.as_view(),
+         name='admin_reject_pre_order_service')
 
 ]

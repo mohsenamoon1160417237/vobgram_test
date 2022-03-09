@@ -24,7 +24,6 @@ class AdminNotConfirmedServiceRequestList(GenericAPIView):
 
         admin_confs = SystemDataConfirm.objects.filter(target_ct=cnt,
                                                        is_latest=True,
-                                                       is_confirmed=False,
                                                        admin_profile__isnull=True)
 
         service_requests = ServiceRequest.objects.filter(id__in=admin_confs.values('target_id'))

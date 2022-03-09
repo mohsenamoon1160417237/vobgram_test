@@ -5,7 +5,7 @@ from accounts.models.profiles.business import BusinessProfile
 from accounts.models.UserRegistration import UserRegistration
 
 from .utils.create_admin_data_confirm import create_admin_data_confirm
-from business_service.model_serializers.utils.check_admin_confirm_latest import check_admin_confirm_latest
+from admin_action.views.utils.check_system_confirm_latest import check_system_confirm_latest
 
 
 class BusinessProfileSerializer(serializers.ModelSerializer):
@@ -38,11 +38,11 @@ class BusinessProfileSerializer(serializers.ModelSerializer):
 
         instance.company_name = validated_data.get('company_name', instance.company_name)
 
-        check_admin_confirm_latest(instance, 'company_name', validated_data['company_name'])
+        check_system_confirm_latest(instance, 'company_name', validated_data['company_name'])
 
         instance.company_phone_number = validated_data.get('company_phone_number', instance.company_phone_number)
 
-        check_admin_confirm_latest(instance, 'company_phone_number', validated_data['company_phone_number'])
+        check_system_confirm_latest(instance, 'company_phone_number', validated_data['company_phone_number'])
 
         instance.bio = validated_data.get('bio', instance.bio)
 

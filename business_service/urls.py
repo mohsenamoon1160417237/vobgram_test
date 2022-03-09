@@ -14,6 +14,7 @@ from .views.service_request.customer_bid_list import ServiceRequestBidList
 from .views.service_request.customer_accept_bid import CustomerAcceptBid
 from .views.service_request.add_review import AddServiceReview
 from .views.service_request.customer_add_skill import CustomerAddSkillToServiceRequest
+from .views.service_request.customer_remove_skill import CustomerRemoveSkillOfServiceRequest
 
 from .views.service_request.list.customer import CustomerServiceRequestList
 from .views.service_request.list.server_received import ServerReceivedServiceRequestList
@@ -44,6 +45,10 @@ urlpatterns = [
     path('add/review/<int:serv_id>/', AddServiceReview.as_view(), name='add_service_review'),
     path('add/service_request/skill/<int:req_id>/<str:skill_ttl>/', CustomerAddSkillToServiceRequest.as_view(),
          name='customer_add_skill_to_service_request'),
+
+    path('remove/service_request/skill/<int:req_id>/<str:skill_ttl>/', CustomerRemoveSkillOfServiceRequest.as_view(),
+         name='customer_remove_skill_from_service_request'),
+
     path('list/customer/service_requests/', CustomerServiceRequestList.as_view(), name='customer_service_request_list'),
     path('list/server/service_requests/', ServerReceivedServiceRequestList.as_view(), name='server_service_request_list'),
     path('list/bids/<int:serv_id>/', ServiceRequestBidList.as_view(), name='service_request_bid_list'),

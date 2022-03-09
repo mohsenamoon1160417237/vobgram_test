@@ -25,4 +25,5 @@ urlpatterns = [
     path('contract/', include('service_contract.urls')),
     path('notification/', include('system_notification.urls')),
     path('skill/', include('business_skill.urls')),
+    path('pre_order/', include('pre_order_service.urls')),
 ]

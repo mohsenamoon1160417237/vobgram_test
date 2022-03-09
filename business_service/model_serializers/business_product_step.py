@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.shortcuts import get_object_or_404
 
-from .utils.check_admin_confirm_latest import check_admin_confirm_latest
+from admin_action.views.utils.check_system_confirm_latest import check_system_confirm_latest
 
 from business_service.models.business_product_step import BusinessProductStep
 from business_service.models.business_product import BusinessProduct
@@ -49,7 +49,7 @@ class BusinessProductStepSerializer(serializers.ModelSerializer):
         instance.from_date = validated_data['from_date']
         instance.to_date = validated_data['to_date']
 
-        check_admin_confirm_latest(instance, None, None)
+        check_system_confirm_latest(instance, None, None)
 
         instance.save()
 

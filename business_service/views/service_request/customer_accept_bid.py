@@ -38,6 +38,11 @@ class CustomerAcceptBid(GenericAPIView):
                                                   note=service_request.note,
                                                   bid=bid)
 
+        for skill in service_request.skill.all():
+
+            contract.skill.add(skill)
+            contract.save()
+
         ContractAssign.objects.create(contract=contract)
 
         first_name = request.user.personal_profile.first_name

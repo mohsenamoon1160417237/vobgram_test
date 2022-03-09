@@ -7,7 +7,7 @@ from accounts.model_serializers.utils.create_admin_data_confirm import create_ad
 from business_skill.models.business_specialty import BusinessSpecialty
 from accounts.models.profiles.business import BusinessProfile
 
-from business_service.model_serializers.utils.check_admin_confirm_latest import check_admin_confirm_latest
+from admin_action.views.utils.check_system_confirm_latest import check_system_confirm_latest
 
 
 class BusinessSpecialtySerializer(serializers.ModelSerializer):
@@ -57,7 +57,7 @@ class BusinessSpecialtySerializer(serializers.ModelSerializer):
 
         try:
             instance.save()
-            check_admin_confirm_latest(instance, business_profile, None)
+            check_system_confirm_latest(instance, business_profile, None)
 
             return instance
 

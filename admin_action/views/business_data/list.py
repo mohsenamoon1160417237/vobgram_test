@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
 from django.contrib.contenttypes.models import ContentType
+from django.shortcuts import get_object_or_404
 
 from admin_action.permissions.is_admin import IsAdmin
 from accounts.model_serializers.view.admin.business_profile import AdminBusinessProfileViewSerializer
@@ -19,9 +20,8 @@ class AdminNotConfirmedBusinessDataList(GenericAPIView):
 
         profiles = BusinessProfile.objects.all()
 
-        sample_profile = profiles[0]
-
-        cnt = ContentType.objects.get_for_model(sample_profile)
+        cnt = ContentType.objects.get(app_label='accounts',
+                                      model='businessprofile')
 
         admin_confirms = SystemDataConfirm.objects.filter(target_ct=cnt)
 
@@ -29,16 +29,21 @@ class AdminNotConfirmedBusinessDataList(GenericAPIView):
 
             cnt = ContentType.objects.get_for_model(profile)
 
-            data_confs = SystemDataConfirm.objects.filter(target_ct=cnt,
-                                                          target_id=profile.id)
+            cmp_name_conf = get_object_or_404(SystemDataConfirm,
+                                              target_ct=cnt,
+                                              target_id=profile.id,
+                                              is_latest=True,
+                                              data_type='company_name')
 
-            cmp_name_conf = data_confs.filter(data_type='company_name')[0]
-            cmp_phn_conf = data_confs.filter(data_type='company_phone_number')[0]
+            cmp_phn_conf = cmp_name_conf = get_object_or_404(SystemDataConfirm,
+                                                             target_ct=cnt,
+                                                             target_id=profile.id,
+                                                             is_latest=True,
+                                                             data_type='company_phone_number')
 
-            data_conf_true = cmp_phn_conf.is_confirmed is True and cmp_name_conf.is_confirmed is True
             data_conf_checked = cmp_name_conf.admin_profile is not None and cmp_phn_conf.admin_profile is not None
 
-            if data_conf_true or data_conf_checked:
+            if data_conf_checked:
 
                 profiles = profiles.exclude(id=profile.id)
 

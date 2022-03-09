@@ -9,6 +9,8 @@ from accounts.models.profiles.business import BusinessProfile
 from accounts.models.profiles.sup_vs import SupVsProfile
 from accounts.models.profiles.customer import CustomerProfile
 
+from business_skill.models.valid_skill import ValidSkill
+
 
 class ServiceContract(models.Model):
 
@@ -21,6 +23,8 @@ class ServiceContract(models.Model):
                                  related_name='service_contracts')
     sup_visor = models.ManyToManyField(SupVsProfile,
                                        related_name='contracts')
+    skill = models.ManyToManyField(ValidSkill,
+                                   related_name='contracts')
     title = models.CharField(max_length=200)
     note = models.TextField()
     server = models.ForeignKey(BusinessProfile,
@@ -33,5 +37,3 @@ class ServiceContract(models.Model):
                                related_name='service_contract',
                                null=True)
     canceled = models.BooleanField(default=False)
-    order_num = models.CharField(max_length=100,
-                                 default=uuid.uuid4())

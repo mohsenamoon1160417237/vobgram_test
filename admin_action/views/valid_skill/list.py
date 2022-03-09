@@ -3,7 +3,6 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
 from django.contrib.contenttypes.models import ContentType
-from django.shortcuts import get_object_or_404
 
 from admin_action.permissions.is_admin import IsAdmin
 
@@ -19,18 +18,14 @@ class AdminNotconfirmedValidSkillList(GenericAPIView):
 
     def get(self, request):
 
-        skills = ValidSkill.objects.all()
+        cnt = ContentType.objects.get(app_label='business_skill',
+                                      model='validskill')
 
-        for skill in skills:
+        confs = SystemDataConfirm.objects.filter(target_ct=cnt,
+                                                 is_latest=True,
+                                                 admin_profile__isnull=True)
 
-            cnt = ContentType.objects.get_for_model(skill)
-            admin_confirm = get_object_or_404(SystemDataConfirm,
-                                              target_ct=cnt,
-                                              target_id=skill.id)
-
-            if admin_confirm.is_confirmed is True or admin_confirm.admin_profile is not None:
-
-                skills = skills.exclude(id=skill.id)
+        skills = ValidSkill.objects.filter(id__in=confs.values('target_id'))
 
         serializer = ValidSkillSerializer(skills, many=True)
 

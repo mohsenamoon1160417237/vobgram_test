@@ -15,7 +15,7 @@ from business_service.models.service_request import ServiceRequest
 from business_skill.models.valid_skill import ValidSkill
 
 
-class CustomerAddSkillToServiceRequest(GenericAPIView):
+class CustomerRemoveSkillOfServiceRequest(GenericAPIView):
 
     permission_classes = [IsAuthenticated, ProfileFirstStep, HasUsername]
 
@@ -35,12 +35,12 @@ class CustomerAddSkillToServiceRequest(GenericAPIView):
 
             skill = skills[0]
 
-            if not skill in serv_request.skill.all():
+            if skill in serv_request.skill.all():
 
-                serv_request.skill.add(skill)
+                serv_request.skill.remove(skill)
                 serv_request.save()
 
-            return Response({'status': 'Added skill to service request'})
+            return Response({'status': 'Removed skill from service request'})
 
         else:
 

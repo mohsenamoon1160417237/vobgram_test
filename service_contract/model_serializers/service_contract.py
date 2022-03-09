@@ -11,6 +11,8 @@ from business_service.model_serializers.view.public.business_profile import Publ
 from accounts.model_serializers.view.sup_visor import SupVisorProfileViewSerializer
 from accounts.model_serializers.view.customer import CustomerProfileViewSerializer
 
+from business_skill.model_serializers.valid_skill import ValidSkillSerializer
+
 from system_notification.utils.create_systemNotification import create_systemNotif
 
 
@@ -20,6 +22,7 @@ class ServiceContractSerializer(serializers.ModelSerializer):
     server = serializers.SerializerMethodField()
     sup_visors = serializers.SerializerMethodField()
     customer = serializers.SerializerMethodField()
+    skills = serializers.SerializerMethodField()
     customer_id = serializers.IntegerField()
     server_id = serializers.IntegerField()
 
@@ -35,6 +38,7 @@ class ServiceContractSerializer(serializers.ModelSerializer):
                   'canceled',
                   'title',
                   'note',
+                  'skills',
                   'id',
                   'customer',
                   'customer_id',
@@ -46,6 +50,7 @@ class ServiceContractSerializer(serializers.ModelSerializer):
                             'canceled',
                             'sup_visors',
                             'customer',
+                            'skills',
                             'id']
 
         write_only_fields = ['customer_id',
@@ -73,6 +78,12 @@ class ServiceContractSerializer(serializers.ModelSerializer):
 
         customer = obj.customer
         serializer = CustomerProfileViewSerializer(customer)
+        return serializer.data
+
+    def get_skills(self, obj):
+
+        skills = obj.skill.all()
+        serializer = ValidSkillSerializer(skills, many=True)
         return serializer.data
 
     def create(self, validated_data):

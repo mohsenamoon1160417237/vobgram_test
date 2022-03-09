@@ -23,8 +23,8 @@ class ContractAssignList(GenericAPIView):
 
         else:
 
-            skills = request.user.expert_profile.skill.all()
-            assigns = ContractAssign.objects.filter(contract__service_request__skill__id__in=skills.values('id'))
+            skills = request.user.sup_vs_profile.skill.all()
+            assigns = ContractAssign.objects.filter(contract__skill__id__in=skills.values('id'))
 
         serializer = ContractAssignViewSerializer(assigns, many=True)
 
