@@ -16,14 +16,17 @@ class CustomerServiceRequestViewSerializer(serializers.ModelSerializer):
         model = ServiceRequest
         fields = ['requester',
                   'service_type',
+                  'request_type',
                   'skills',
                   'title',
                   'note',
-                  'least_budget',
-                  'max_budget',
+                  'min_price',
+                  'max_price',
                   'max_days',
                   'finished',
                   'id']
+
+        read_only_fields = ['request_type']
 
     def get_requester(self, obj):
 

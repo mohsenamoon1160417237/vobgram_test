@@ -6,7 +6,6 @@ from accounts.model_serializers.first_step import ProfileFirstStepSerializer
 from accounts.models.profiles.personal import PersonalProfile
 
 
-
 class UpdateProfileFirstStep(GenericAPIView):
 
     permission_classes = [IsAuthenticated]
@@ -18,9 +17,9 @@ class UpdateProfileFirstStep(GenericAPIView):
         if profiles.exists():
             profile = profiles[0]
             serializer = ProfileFirstStepSerializer(profile)
-            serializer.data['fields'] = 'not empty'
-            return Response(serializer.data)
-        return Response({})
+            return Response({'profile': serializer.data,
+                             'status': 'found profile'})
+        return Response({'status': 'no profile'})
 
     def post(self, request):
 
@@ -30,6 +29,7 @@ class UpdateProfileFirstStep(GenericAPIView):
         serializer_data['user_id'] = user_id
 
         profiles = PersonalProfile.objects.filter(user__id=user_id)
+
         if profiles.exists():
             profile = profiles[0]
             serializer = ProfileFirstStepSerializer(profile, data=serializer_data)
@@ -38,7 +38,6 @@ class UpdateProfileFirstStep(GenericAPIView):
 
         serializer.is_valid(raise_exception=True)
         serializer.save(user_id=user_id)
-        response = Response()
-        serializer_data.pop('user_id')
-        response.data = serializer_data
+        response = Response({'status': 'created profile',
+                             'profile': serializer.data})
         return response

@@ -28,16 +28,16 @@ class ServiceRequestBidSerializer(serializers.ModelSerializer):
         service_request = get_object_or_404(ServiceRequest,
                                             id=data['service_request_id'])
 
-        least_budj = service_request.least_budget
-        max_budj = service_request.max_budget
+        min_price = service_request.min_price
+        max_price = service_request.max_price
 
         price = data['price']
 
-        if price < least_budj:
+        if price < min_price:
 
             raise serializers.ValidationError('price is too low')
 
-        elif price > max_budj:
+        elif price > max_price:
 
             raise serializers.ValidationError('price is too high')
 

@@ -18,7 +18,10 @@ from business_service.model_serializers.service_request_bid import ServiceReques
 
 class ServerServiceRequestBid(GenericAPIView):
 
-    permission_classes = [IsAuthenticated, ProfileFirstStep, HasBusinessProfile, HasUsername]
+    permission_classes = [IsAuthenticated,
+                          ProfileFirstStep,
+                          HasBusinessProfile,
+                          HasUsername]
 
     def post(self, request, serv_id):
 
@@ -35,7 +38,7 @@ class ServerServiceRequestBid(GenericAPIView):
         serializer = ServiceRequestBidSerializer(data=serializer_data)
         serializer.is_valid(raise_exception=True)
 
-        if request.user.business_profile not in service_request.receiver.all():
+        if service_request.request_type == 'private' and request.user.business_profile not in service_request.receiver.all():
 
             raise ValidationError({'error': 'You can not bid on this request'})
 

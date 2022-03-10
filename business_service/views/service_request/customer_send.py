@@ -8,21 +8,30 @@ from django.contrib.contenttypes.models import ContentType
 
 from accounts.permissions.profile_first_step import ProfileFirstStep
 from accounts.permissions.has_username import HasUsername
+from accounts.permissions.obj.has_business_profile import ObjHasBusinessProfile
+
+from accounts.models.UserRegistration import UserRegistration
 
 from system_notification.utils.create_systemNotification import create_systemNotif
 
 from business_service.models.service_request import ServiceRequest
-from accounts.models.profiles.business import BusinessProfile
 from accounts.models.system_data_confirm import SystemDataConfirm
 
 
 class CustomerSendServiceRequest(GenericAPIView):
 
-    permission_classes = [IsAuthenticated, ProfileFirstStep, HasUsername]
+    permission_classes = [IsAuthenticated,
+                          ProfileFirstStep,
+                          HasUsername,
+                          ObjHasBusinessProfile]
 
-    def post(self, request, prof_id, serv_id):
+    def post(self, request, user_id, serv_id):
 
-        profile = get_object_or_404(BusinessProfile, id=prof_id)
+        user = get_object_or_404(UserRegistration, id=user_id)
+
+        self.check_object_permissions(request, user)
+
+        profile = user.business_profile
 
         service = get_object_or_404(ServiceRequest, id=serv_id)
 

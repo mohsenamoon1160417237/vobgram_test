@@ -2,6 +2,7 @@ from rest_framework import serializers
 from django.shortcuts import get_object_or_404
 
 from service_contract.models.service_contract import ServiceContract
+from business_service.models.service_request import ServiceRequest
 from accounts.models.profiles.customer import CustomerProfile
 from accounts.models.profiles.business import BusinessProfile
 
@@ -22,23 +23,21 @@ class ServiceContractSerializer(serializers.ModelSerializer):
     server = serializers.SerializerMethodField()
     sup_visors = serializers.SerializerMethodField()
     customer = serializers.SerializerMethodField()
-    skills = serializers.SerializerMethodField()
     customer_id = serializers.IntegerField()
     server_id = serializers.IntegerField()
+    service_request_id = serializers.IntegerField()
 
     class Meta:
 
         model = ServiceContract
-        fields = ['service_request',
+        fields = ['service_request_id',
+                  'service_request',
                   'server',
                   'days',
                   'price',
                   'sup_visors',
                   'bid',
                   'canceled',
-                  'title',
-                  'note',
-                  'skills',
                   'id',
                   'customer',
                   'customer_id',
@@ -90,13 +89,14 @@ class ServiceContractSerializer(serializers.ModelSerializer):
 
         customer = get_object_or_404(CustomerProfile, id=validated_data['customer_id'])
         server = get_object_or_404(BusinessProfile, id=validated_data['server_id'])
+        service_request = get_object_or_404(ServiceRequest,
+                                            id=validated_data['service_request_id'])
 
-        contract = ServiceContract.objects.create(customer=customer,
+        contract = ServiceContract.objects.create(service_request=service_request,
+                                                  customer=customer,
                                                   server=server,
                                                   price=validated_data['price'],
-                                                  days=validated_data['days'],
-                                                  title=validated_data['title'],
-                                                  note=validated_data['note'])
+                                                  days=validated_data['days'])
 
         first_name = customer.user.personal_profile.first_name
         last_name = customer.user.personal_profile.last_name

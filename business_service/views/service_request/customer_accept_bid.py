@@ -16,7 +16,9 @@ from service_contract.models.service_contract import ServiceContract
 
 class CustomerAcceptBid(GenericAPIView):
 
-    permission_classes = [IsAuthenticated, ProfileFirstStep, HasUsername]
+    permission_classes = [IsAuthenticated,
+                          ProfileFirstStep,
+                          HasUsername]
 
     def post(self, request, bid_id):
 
@@ -34,14 +36,7 @@ class CustomerAcceptBid(GenericAPIView):
                                                   customer=request.user.customer_profile,
                                                   days=bid.days,
                                                   price=bid.price,
-                                                  title=service_request.title,
-                                                  note=service_request.note,
                                                   bid=bid)
-
-        for skill in service_request.skill.all():
-
-            contract.skill.add(skill)
-            contract.save()
 
         ContractAssign.objects.create(contract=contract)
 
@@ -51,7 +46,7 @@ class CustomerAcceptBid(GenericAPIView):
         create_systemNotif(business_profile.user,
                            '"{} {}" has accepted your bid on "{}" service request'.format(first_name,
                                                                                           last_name,
-                                                                                          contract.title),
+                                                                                          service_request.title),
                            bid,
                            None)
 

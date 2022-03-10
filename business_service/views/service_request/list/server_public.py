@@ -10,8 +10,7 @@ from accounts.models.system_data_confirm import SystemDataConfirm
 from business_skill.models.business_skill import BusinessSkill
 from business_service.models.service_request import ServiceRequest
 
-from business_service.model_serializers.view.service_request.server import ServerReceivedServiceRequestViewSerializer
-
+from business_service.model_serializers.view.service_request.customer import CustomerServiceRequestViewSerializer
 
 class ServerPublicServiceRequestList(GenericAPIView):
 
@@ -21,16 +20,8 @@ class ServerPublicServiceRequestList(GenericAPIView):
 
         business_profile = request.user.business_profile
 
-        skill_cnt = ContentType.objects.get(app_label='business_skill',
-                                            model='businessskill')
-
-        skill_admin_confs = SystemDataConfirm.objects.filter(is_latest=True,
-                                                             target_ct=skill_cnt,
-                                                             is_confirmed=True,
-                                                             business_profile=business_profile)
-
         skills = BusinessSkill.objects.filter(business_profile=business_profile,
-                                              id__in=skill_admin_confs.values('target_id'))
+                                              score__gt=0)
 
         valid_skills = skills.values('valid_skill')
 
@@ -43,9 +34,10 @@ class ServerPublicServiceRequestList(GenericAPIView):
 
         requests = ServiceRequest.objects.filter(skill__in=valid_skills,
                                                  request_type='public',
-                                                 id__in=request_admin_confs.values('target_id'))
+                                                 id__in=request_admin_confs.values('target_id'),
+                                                 finished=False)
 
-        serializer = ServerReceivedServiceRequestViewSerializer(requests, many=True)
+        serializer = CustomerServiceRequestViewSerializer(requests, many=True)
 
         return Response({'status': 'get service requests',
                          'service requests': serializer.data})

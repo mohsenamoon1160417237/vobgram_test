@@ -11,4 +11,4 @@ class BusinessProfile(models.Model):
     bio = models.TextField(null=True,
                            blank=True)
     service_number = models.PositiveIntegerField(default=0)
-    service_rate = models.PositiveIntegerField(default=0)
+    service_rate = models.FloatField(default=0)

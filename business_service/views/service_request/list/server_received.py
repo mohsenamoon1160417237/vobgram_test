@@ -11,7 +11,10 @@ from business_service.model_serializers.view.service_request.server import Serve
 
 class ServerReceivedServiceRequestList(GenericAPIView):
 
-    permission_classes = [IsAuthenticated, ProfileFirstStep, HasBusinessProfile, HasUsername]
+    permission_classes = [IsAuthenticated,
+                          ProfileFirstStep,
+                          HasBusinessProfile,
+                          HasUsername]
 
     def get(self, request):
 

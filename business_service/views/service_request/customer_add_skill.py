@@ -23,7 +23,7 @@ class CustomerAddSkillToServiceRequest(GenericAPIView):
 
         serv_request = get_object_or_404(ServiceRequest, id=req_id)
 
-        cnt = ContentType.objects.get(app_label='business_service', model='validskill')
+        cnt = ContentType.objects.get(app_label='business_skill', model='validskill')
         admin_confs = SystemDataConfirm.objects.filter(target_ct=cnt,
                                                        is_latest=True,
                                                        is_confirmed=True)

@@ -7,5 +7,6 @@ class HasBusinessProfile(BasePermission):
     message = 'You must add your business data'
 
     def has_permission(self, request, view):
+
         business_profiles = BusinessProfile.objects.filter(user=request.user)
         return business_profiles.exists()

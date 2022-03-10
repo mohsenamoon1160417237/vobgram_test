@@ -15,8 +15,8 @@ class ServiceRequest(models.Model):
     service_type = models.CharField(max_length=30)
     title = models.CharField(max_length=100)
     note = models.TextField()
-    least_budget = models.PositiveIntegerField()
-    max_budget = models.PositiveIntegerField()
+    min_price = models.PositiveIntegerField(null=True)
+    max_price = models.PositiveIntegerField(null=True)
     max_days = models.PositiveIntegerField(null=True)
     receiver = models.ManyToManyField(BusinessProfile,
                                       related_name='service_requests')

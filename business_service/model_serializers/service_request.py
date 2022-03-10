@@ -20,8 +20,8 @@ class ServiceRequestSerializer(serializers.ModelSerializer):
                   'request_type',
                   'title',
                   'note',
-                  'least_budget',
-                  'max_budget',
+                  'min_price',
+                  'max_price',
                   'max_days']
 
     def create(self, validated_data):
@@ -33,8 +33,8 @@ class ServiceRequestSerializer(serializers.ModelSerializer):
                                                         request_type=validated_data['request_type'],
                                                         title=validated_data['title'],
                                                         note=validated_data['note'],
-                                                        least_budget=validated_data['least_budget'],
-                                                        max_budget=validated_data['max_budget'],
+                                                        min_price=validated_data['min_price'],
+                                                        max_price=validated_data['max_price'],
                                                         max_days=validated_data['max_days'])
 
         SystemDataConfirm.objects.create(target=service_request)
@@ -46,8 +46,8 @@ class ServiceRequestSerializer(serializers.ModelSerializer):
         instance.service_type = validated_data['service_type']
         instance.title = validated_data['title']
         instance.note = validated_data['note']
-        instance.least_budget = validated_data['least_budget']
-        instance.max_budget = validated_data['max_budget']
+        instance.min_price = validated_data['min_price']
+        instance.max_price = validated_data['max_price']
         instance.max_days = validated_data['max_days']
 
         instance.save()
