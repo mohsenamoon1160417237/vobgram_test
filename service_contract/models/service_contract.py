@@ -19,11 +19,6 @@ class ServiceContract(models.Model):
                                  related_name='service_contracts')
     sup_visor = models.ManyToManyField(SupVsProfile,
                                        related_name='contracts')
-    title = models.CharField(max_length=200,
-                             null=True,
-                             blank=True)
-    note = models.TextField(null=True,
-                            blank=True)
     server = models.ForeignKey(BusinessProfile,
                                on_delete=models.CASCADE,
                                related_name='service_contracts')

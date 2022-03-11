@@ -21,17 +21,13 @@ class CustomerChangeRequestToPublic(GenericAPIView):
                           ProfileFirstStep,
                           HasUsername]
 
-    def post(self, request, req_id):
+    def post(self, request, ctr_id):
 
-        service_request = get_object_or_404(ServiceRequest, id=req_id)
-
-        contract = get_object_or_404(ServiceContract,
-                                     service_request=service_request,
-                                     canceled=False)
-
+        contract = get_object_or_404(ServiceContract, id=ctr_id)
         contract.canceled = True
         contract.save()
 
+        service_request = contract.service_request
         service_request.finished = False
         service_request.request_type = 'public'
         service_request.min_price = request.data['min_price']

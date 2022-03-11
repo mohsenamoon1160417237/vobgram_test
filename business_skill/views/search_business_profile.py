@@ -27,8 +27,7 @@ class SearchBusinessProfile(GenericAPIView):
 
         valid_skills = searchSkillByTag(query)
 
-        business_skills = BusinessSkill.objects.filter(valid_skill__id__in=valid_skills.values('id'),
-                                                       score__gt=0)
+        business_skills = BusinessSkill.objects.filter(valid_skill__id__in=valid_skills.values('id'))
 
         spec_cnt = ContentType.objects.get(app_label='business_skill',
                                            model='businessspecialty')

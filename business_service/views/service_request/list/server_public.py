@@ -20,8 +20,7 @@ class ServerPublicServiceRequestList(GenericAPIView):
 
         business_profile = request.user.business_profile
 
-        skills = BusinessSkill.objects.filter(business_profile=business_profile,
-                                              score__gt=0)
+        skills = BusinessSkill.objects.filter(business_profile=business_profile)
 
         valid_skills = skills.values('valid_skill')
 

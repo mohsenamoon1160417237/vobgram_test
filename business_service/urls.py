@@ -47,7 +47,7 @@ urlpatterns = [
     path('add/review/<int:serv_id>/', AddServiceReview.as_view(), name='add_service_review'),
     path('add/service_request/skill/<int:req_id>/<str:skill_ttl>/', CustomerAddSkillToServiceRequest.as_view(),
          name='customer_add_skill_to_service_request'),
-    path('customer/change/public/<int:req_id>/', CustomerChangeRequestToPublic.as_view(),
+    path('customer/change/public/<int:ctr_id>/', CustomerChangeRequestToPublic.as_view(),
          name='customer_change_request_to_public'),
 
     path('remove/service_request/skill/<int:req_id>/<str:skill_ttl>/', CustomerRemoveSkillOfServiceRequest.as_view(),
