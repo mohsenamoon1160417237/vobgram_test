@@ -10,7 +10,7 @@ from admin_action.permissions.is_admin import IsAdmin
 from accounts.models.profiles.business import BusinessProfile
 
 from admin_action.views.utils.admin_accept_or_reject import admin_accept_or_reject
-from system_notification.utils.create_systemNotification import create_systemNotif
+from system_notification.utils.sys_notif_manager import SystemNotificationManager
 
 
 class AdminRejectBusinessData(GenericAPIView):
@@ -32,10 +32,10 @@ class AdminRejectBusinessData(GenericAPIView):
         else:
             acc_field = business_profile.company_name
 
-        create_systemNotif(business_profile.user,
-                           'Your {} "{}" has been rejected by admin'.format(data_type,
-                                                                            acc_field),
-                           business_profile,
-                           data_type)
+        msg = 'Your {} "{}" has been rejected by admin'.format(data_type,
+                                                               acc_field)
+
+        notif_mng = SystemNotificationManager(business_profile.user, msg)
+        notif_mng.doCreate()
 
         return Response({'status': 'rejected business data'})

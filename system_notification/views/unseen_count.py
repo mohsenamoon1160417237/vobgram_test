@@ -3,11 +3,11 @@ from rest_framework.response import Response
 
 from rest_framework.permissions import IsAuthenticated
 
-from system_notification.models.system_notification import SystemNotification
 from system_notification.utils.sys_notif_manager import SystemNotificationManager
+from system_notification.models.system_notification import SystemNotification
 
 
-class NotificationList(GenericAPIView):
+class UnseenNotificationCount(GenericAPIView):
 
     permission_classes = [IsAuthenticated]
 
@@ -15,7 +15,7 @@ class NotificationList(GenericAPIView):
 
         notif_mng = SystemNotificationManager(request.user)
 
-        data = notif_mng.list_notifs()
+        count = notif_mng.count_unseenNotifs()
 
-        return Response({'status': 'get notifications list',
-                         'notifications': data})
+        return Response({'status': 'get unseen notifications count',
+                         'count': count})

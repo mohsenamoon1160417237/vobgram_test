@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404
 
 from rest_framework.permissions import IsAuthenticated
 from admin_action.permissions.is_sup_vs import IsSupVisor
-from system_notification.utils.create_systemNotification import create_systemNotif
+from system_notification.utils.sys_notif_manager import SystemNotificationManager
 
 from service_contract.models.service_contract import ServiceContract
 
@@ -32,18 +32,14 @@ class SupVisorLeaveContract(GenericAPIView):
             customer = contract.service_request.requester.user
             project_title = contract.service_request.title
 
-            create_systemNotif(server,
-                               '"{} {}" has left the project "{}"'.format(first_name,
-                                                                          last_name,
-                                                                          project_title),
-                               contract,
-                               None)
+            msg = '"{} {}" has left the project "{}"'.format(first_name,
+                                                             last_name,
+                                                             project_title)
 
-            create_systemNotif(customer,
-                               '"{} {}" has left the project "{}"'.format(first_name,
-                                                                          last_name,
-                                                                          project_title),
-                               contract,
-                               None)
+            notif_mng1 = SystemNotificationManager(server, msg)
+            notif_mng1.doCreate()
+
+            notif_mng2 = SystemNotificationManager(customer, msg)
+            notif_mng2.doCreate()
 
         return Response({'status': 'left contract'})

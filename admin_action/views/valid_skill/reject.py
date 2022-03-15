@@ -6,7 +6,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import get_object_or_404
 
 from admin_action.permissions.is_admin import IsAdmin
-from system_notification.utils.create_systemNotification import create_systemNotif
+from system_notification.utils.sys_notif_manager import SystemNotificationManager
 
 from business_skill.models.valid_skill import ValidSkill
 from business_skill.models.business_skill import BusinessSkill
@@ -53,10 +53,10 @@ class AdminRejectValidSKill(GenericAPIView):
         notification.target_id = None
         notification.save()
 
-        create_systemNotif(business_profile.user,
-                           'Skill "{}" has been rejected by admin'.format(valid_skill.title),
-                           None,
-                           None)
+        msg = 'Skill "{}" has been rejected by admin'.format(valid_skill.title)
+
+        notif_mng = SystemNotificationManager(business_profile.user, msg)
+        notif_mng.doCreate()
 
         valid_skill.delete()
 

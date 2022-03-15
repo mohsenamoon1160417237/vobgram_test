@@ -14,7 +14,7 @@ from accounts.model_serializers.view.customer import CustomerProfileViewSerializ
 
 from business_skill.model_serializers.valid_skill import ValidSkillSerializer
 
-from system_notification.utils.create_systemNotification import create_systemNotif
+from system_notification.utils.sys_notif_manager import SystemNotificationManager
 
 
 class ServiceContractSerializer(serializers.ModelSerializer):
@@ -101,9 +101,9 @@ class ServiceContractSerializer(serializers.ModelSerializer):
         first_name = customer.user.personal_profile.first_name
         last_name = customer.user.personal_profile.last_name
 
-        create_systemNotif(server.user,
-                           '"{} {}" has created a contract with you'.format(first_name, last_name),
-                           contract,
-                           None)
+        msg = '"{} {}" has created a contract with you'.format(first_name, last_name)
+
+        notif_mng = SystemNotificationManager(server.user, msg)
+        notif_mng.doCreate()
 
         return contract

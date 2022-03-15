@@ -8,7 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 from admin_action.permissions.is_admin import IsAdmin
 
 from admin_action.views.utils.admin_accept_or_reject import admin_accept_or_reject
-from system_notification.utils.create_systemNotification import create_systemNotif
+from system_notification.utils.sys_notif_manager import SystemNotificationManager
 
 from business_service.models.service_request import ServiceRequest
 
@@ -29,9 +29,9 @@ class AdminAcceptServiceRequest(GenericAPIView):
 
         user = service_request.requester.user
 
-        create_systemNotif(user,
-                           'Service request "{}" has been confirmed by admin'.format(service_request.title),
-                           service_request,
-                           None)
+        msg = 'Service request "{}" has been confirmed by admin'.format(service_request.title)
+
+        notif_mng = SystemNotificationManager(user, msg)
+        notif_mng.doCreate()
 
         return Response({'status': 'accepted service request'})

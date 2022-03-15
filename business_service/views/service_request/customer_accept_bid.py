@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404
 from accounts.permissions.profile_first_step import ProfileFirstStep
 from accounts.permissions.has_username import HasUsername
 
-from system_notification.utils.create_systemNotification import create_systemNotif
+from system_notification.utils.sys_notif_manager import SystemNotificationManager
 
 from business_service.models.service_request_bid import ServiceRequestBid
 from service_contract.models.contract_assign import ContractAssign
@@ -43,11 +43,10 @@ class CustomerAcceptBid(GenericAPIView):
         first_name = request.user.personal_profile.first_name
         last_name = request.user.personal_profile.last_name
 
-        create_systemNotif(business_profile.user,
-                           '"{} {}" has accepted your bid on "{}" service request'.format(first_name,
-                                                                                          last_name,
-                                                                                          service_request.title),
-                           bid,
-                           None)
+        msg = '"{} {}" has accepted your bid on "{}" service request'.format(first_name,
+                                                                             last_name,
+                                                                             service_request.title)
+        notif_mng = SystemNotificationManager(business_profile.user, msg)
+        notif_mng.doCreate()
 
         return Response({'status': 'created service contract'})

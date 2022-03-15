@@ -6,7 +6,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import get_object_or_404
 
 from admin_action.views.utils.admin_accept_or_reject import admin_accept_or_reject
-from system_notification.utils.create_systemNotification import create_systemNotif
+from system_notification.utils.sys_notif_manager import SystemNotificationManager
 
 from admin_action.permissions.is_admin import IsAdmin
 
@@ -33,9 +33,9 @@ class AdminAcceptValidSkill(GenericAPIView):
 
         business_profile = sys_conf.business_profile
 
-        create_systemNotif(business_profile.user,
-                           'Skill "{}" has been confirmed by admin'.format(skill.title),
-                           skill,
-                           None)
+        msg = 'Skill "{}" has been confirmed by admin'.format(skill.title)
+
+        notif_mng = SystemNotificationManager(business_profile.user, msg)
+        notif_mng.doCreate()
 
         return Response({'status': 'accepted skill'})

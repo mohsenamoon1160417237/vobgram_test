@@ -9,7 +9,7 @@ from accounts.permissions.profile_first_step import ProfileFirstStep
 from accounts.permissions.has_business_profile import HasBusinessProfile
 from accounts.permissions.has_username import HasUsername
 
-from system_notification.utils.create_systemNotification import create_systemNotif
+from system_notification.utils.sys_notif_manager import SystemNotificationManager
 
 from business_service.models.service_request import ServiceRequest
 
@@ -51,10 +51,10 @@ class ServerServiceRequestBid(GenericAPIView):
         first_name = request.user.personal_profile.first_name
         last_name = request.user.personal_profile.last_name
 
-        create_systemNotif(service_request.requester.user,
-                           '"{} {}" has bid on your request'.format(first_name, last_name),
-                           bid,
-                           None)
+        msg = '"{} {}" has bid on your request'.format(first_name, last_name)
+
+        notif_mng = SystemNotificationManager(service_request.requester.user, msg)
+        notif_mng.doCreate()
 
         return Response({'status': 'bid service request',
                          'bid': serializer.data})

@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404
 from accounts.permissions.profile_first_step import ProfileFirstStep
 from accounts.permissions.has_username import HasUsername
 
-from system_notification.utils.create_systemNotification import create_systemNotif
+from system_notification.utils.sys_notif_manager import SystemNotificationManager
 
 from service_contract.models.contract_assign import ContractAssign
 
@@ -29,11 +29,11 @@ class CustomerAssignContract(GenericAPIView):
         first_name = request.user.personal_profile.first_name
         last_name = request.user.personal_profile.last_name
 
-        create_systemNotif(rec,
-                           '"{} {}" has assigned the contract "{}"'.format(first_name,
-                                                                           last_name,
-                                                                           service_request.title),
-                           contract_assign,
-                           None)
+        msg = '"{} {}" has assigned the contract "{}"'.format(first_name,
+                                                              last_name,
+                                                              service_request.title)
+
+        notif_mng = SystemNotificationManager(rec, msg)
+        notif_mng.doCreate()
 
         return Response({'status': 'customer assigned contract'})

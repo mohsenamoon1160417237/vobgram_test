@@ -8,7 +8,7 @@ from django.shortcuts import get_object_or_404
 from admin_action.permissions.is_admin import IsAdmin
 
 from admin_action.views.utils.admin_accept_or_reject import admin_accept_or_reject
-from system_notification.utils.create_systemNotification import create_systemNotif
+from system_notification.utils.sys_notif_manager import SystemNotificationManager
 from business_skill.models.business_specialty import BusinessSpecialty
 
 
@@ -26,9 +26,9 @@ class AdminBusinessSpecialtyReject(GenericAPIView):
 
         admin_accept_or_reject(False, None, admin_profile, cnt, specialty.id, request.data['comment'])
 
-        create_systemNotif(specialty.business_profile.user,
-                           'Your specialty "{}" has been rejected by admin'.format(specialty.title),
-                           specialty,
-                           None)
+        msg = 'Your specialty "{}" has been rejected by admin'.format(specialty.title)
+
+        notif_mng = SystemNotificationManager(specialty.business_profile.user, msg)
+        notif_mng.doCreate()
 
         return Response({'status': 'rejected specialty'})

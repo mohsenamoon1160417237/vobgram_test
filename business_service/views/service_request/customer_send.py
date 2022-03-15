@@ -12,7 +12,7 @@ from accounts.permissions.obj.has_business_profile import ObjHasBusinessProfile
 
 from accounts.models.UserRegistration import UserRegistration
 
-from system_notification.utils.create_systemNotification import create_systemNotif
+from system_notification.utils.sys_notif_manager import SystemNotificationManager
 
 from business_service.models.service_request import ServiceRequest
 from accounts.models.system_data_confirm import SystemDataConfirm
@@ -57,9 +57,9 @@ class CustomerSendServiceRequest(GenericAPIView):
         first_name = request.user.personal_profile.first_name
         last_name = request.user.personal_profile.last_name
 
-        create_systemNotif(profile.user,
-                           '"{} {}" has sent you a service request'.format(first_name, last_name),
-                           service,
-                           None)
+        msg = '"{} {}" has sent you a service request'.format(first_name, last_name)
+
+        notif_mng = SystemNotificationManager(profile.user, msg)
+        notif_mng.doCreate()
 
         return Response({'status': 'sent service request'})
