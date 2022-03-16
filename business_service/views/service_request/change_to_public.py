@@ -10,8 +10,6 @@ from accounts.permissions.has_username import HasUsername
 
 from accounts.models.system_data_confirm import SystemDataConfirm
 
-from business_service.models.service_request import ServiceRequest
-
 from service_contract.models.service_contract import ServiceContract
 
 

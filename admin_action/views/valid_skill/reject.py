@@ -31,7 +31,7 @@ class AdminRejectValidSKill(GenericAPIView):
                                           target_ct=cnt,
                                           target_id=valid_skill.id)
 
-        business_profile = admin_confirm.business_profile
+        user = admin_confirm.user
 
         admin_confirm.delete()
 
@@ -55,7 +55,7 @@ class AdminRejectValidSKill(GenericAPIView):
 
         msg = 'Skill "{}" has been rejected by admin'.format(valid_skill.title)
 
-        notif_mng = SystemNotificationManager(business_profile.user, msg)
+        notif_mng = SystemNotificationManager(user, msg)
         notif_mng.doCreate()
 
         valid_skill.delete()

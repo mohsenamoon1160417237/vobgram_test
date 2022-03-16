@@ -31,10 +31,9 @@ class ServerAddBusinessSpecialty(GenericAPIView):
     def post(self, request):
 
         user = request.user
-        business_profile = user.business_profile
 
         serializer_data = request.data
-        serializer_data['business_profile_id'] = business_profile.id
+        serializer_data['user_id'] = user.id
 
         serializer = BusinessSpecialtySerializer(data=serializer_data)
         serializer.is_valid(raise_exception=True)
@@ -49,10 +48,9 @@ class ServerAddBusinessSpecialty(GenericAPIView):
         specialty = get_object_or_404(BusinessSpecialty, id=spec_id)
 
         user = request.user
-        business_profile = user.business_profile
 
         serializer_data = request.data
-        serializer_data['business_profile_id'] = business_profile.id
+        serializer_data['user_id'] = user.id
 
         serializer = BusinessSpecialtySerializer(specialty, serializer_data)
         serializer.is_valid(raise_exception=True)

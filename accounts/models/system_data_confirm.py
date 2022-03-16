@@ -1,7 +1,7 @@
 from django.db import models
 
 from .profiles.admin import AdminProfile
-from .profiles.business import BusinessProfile
+from accounts.models.UserRegistration import UserRegistration
 
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
@@ -13,10 +13,10 @@ class SystemDataConfirm(models.Model):
                                       on_delete=models.CASCADE,
                                       related_name='admin_data_confirms',
                                       null=True)
-    business_profile = models.ForeignKey(BusinessProfile,
-                                         on_delete=models.CASCADE,
-                                         related_name='admin_data_confirms',
-                                         null=True)
+    user = models.ForeignKey(UserRegistration,
+                             on_delete=models.CASCADE,
+                             related_name='admin_data_confirms',
+                             null=True)
     target_ct = models.ForeignKey(ContentType,
                                   on_delete=models.CASCADE,
                                   related_name='conf_obj')

@@ -12,6 +12,7 @@ from business_service.models.service_request import ServiceRequest
 
 from business_service.model_serializers.view.service_request.customer import CustomerServiceRequestViewSerializer
 
+
 class ServerPublicServiceRequestList(GenericAPIView):
 
     permission_classes = [IsAuthenticated, ProfileFirstStep, HasBusinessProfile]

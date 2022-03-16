@@ -31,11 +31,11 @@ class AdminAcceptValidSkill(GenericAPIView):
                                      target_ct=cnt,
                                      target_id=skill_id)
 
-        business_profile = sys_conf.business_profile
+        user = sys_conf.user
 
         msg = 'Skill "{}" has been confirmed by admin'.format(skill.title)
 
-        notif_mng = SystemNotificationManager(business_profile.user, msg)
+        notif_mng = SystemNotificationManager(user, msg)
         notif_mng.doCreate()
 
         return Response({'status': 'accepted skill'})

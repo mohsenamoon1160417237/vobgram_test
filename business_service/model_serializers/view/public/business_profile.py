@@ -17,7 +17,6 @@ from business_service.model_serializers.view.public.business_product import Publ
 from business_skill.model_serializers.business_specialty import BusinessSpecialtySerializer
 
 
-
 class PublicBusinessProfileViewSerializer(serializers.ModelSerializer):
 
     business_skills = SerializerMethodField('get_skills')
@@ -72,7 +71,7 @@ class PublicBusinessProfileViewSerializer(serializers.ModelSerializer):
 
     def get_specialties(self, obj):
 
-        specialties = BusinessSpecialty.objects.filter(business_profile=obj)
+        specialties = BusinessSpecialty.objects.filter(user=obj.user)
 
         serializer = BusinessSpecialtySerializer(specialties, many=True)
 

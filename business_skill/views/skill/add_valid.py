@@ -32,7 +32,7 @@ class AddValidSkill(GenericAPIView):
 
         business_profile = request.user.business_profile
 
-        admin_conf.business_profile = business_profile
+        admin_conf.user = request.user
         admin_conf.save()
 
         business_profile_id = business_profile.id

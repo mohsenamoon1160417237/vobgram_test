@@ -28,7 +28,7 @@ class AdminBusinessSpecialtyReject(GenericAPIView):
 
         msg = 'Your specialty "{}" has been rejected by admin'.format(specialty.title)
 
-        notif_mng = SystemNotificationManager(specialty.business_profile.user, msg)
+        notif_mng = SystemNotificationManager(specialty.user, msg)
         notif_mng.doCreate()
 
         return Response({'status': 'rejected specialty'})

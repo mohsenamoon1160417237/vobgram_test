@@ -13,13 +13,11 @@ class ServerBusinessSpecialtyList(GenericAPIView):
 
     permission_classes = [IsAuthenticated, ProfileFirstStep, HasBusinessProfile]
 
-
     def get(self, request):
 
         user = request.user
-        business_profile = user.business_profile
 
-        specialties = BusinessSpecialty.objects.filter(business_profile=business_profile)
+        specialties = BusinessSpecialty.objects.filter(user=user)
 
         serializer = BusinessSpecialtySerializer(specialties, many=True)
 
