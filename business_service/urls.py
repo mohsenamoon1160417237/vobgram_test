@@ -21,6 +21,8 @@ from .views.service_request.list.customer import CustomerServiceRequestList
 from .views.service_request.list.server_received import ServerReceivedServiceRequestList
 from .views.service_request.list.server_public import ServerPublicServiceRequestList
 
+from .views.app_bot import AppBotView
+
 
 urlpatterns = [
 
@@ -57,5 +59,8 @@ urlpatterns = [
     path('list/server/service_requests/', ServerReceivedServiceRequestList.as_view(), name='server_service_request_list'),
     path('list/bids/<int:serv_id>/', ServiceRequestBidList.as_view(), name='service_request_bid_list'),
     path('list/public/service_requests/', ServerPublicServiceRequestList.as_view(), name='server_public_requests'),
+
+    path('bot/crd/<int:bot_id>/', AppBotView.as_view()),
+    path('bot/crt/', AppBotView.as_view()),
 
 ]
